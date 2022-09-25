@@ -28,11 +28,21 @@ precedent_button_rect = precedent_button.get_rect()
 precedent_button_rect.x = 100
 precedent_button_rect.y = 110
 
+like_button = pygame.image.load('assets/like.png')
+like_button_rect = like_button.get_rect()
+like_button_rect.x = 50
+like_button_rect.y = 190
+
+dislike_button = pygame.image.load('assets/dislike.png')
+dislike_button_rect = dislike_button.get_rect()
+dislike_button_rect.x = 450
+dislike_button_rect.y = 200
+
+
 
 running = True
 action = False
 start = False
-i=0
 playlist = list()
 playlist.append("Song/2055.mp3")
 playlist.append("Song/All Star.mp3")
@@ -64,6 +74,8 @@ while running:
     screen.blit(play_button,play_button_rect)
     screen.blit(pause_button,pause_button_rect)
     screen.blit(next_button,next_button_rect)
+    screen.blit(like_button,like_button_rect)
+    screen.blit(dislike_button,dislike_button_rect)
     pygame.display.flip()
 
 
@@ -102,10 +114,17 @@ while running:
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
                 print(i)
+            elif like_button_rect.collidepoint(event.pos):
+                like+=1
+                print(like)
 
+            elif dislike_button_rect.collidepoint(event.pos):
+                dislike+=1
+                print(dislike)
 
 
         else :
+
             if not action and not start:
                 for song in playlist:
                     i = 0
@@ -113,4 +132,6 @@ while running:
                     pygame.mixer.music.play()
                     print("Loading song ...")
                     start = True
+                    like = 0
+                    dislike = 0
                 print("Votre playlist contient : ", len(playlist), " morceaux")
