@@ -11,4 +11,4 @@ Playlist bouge en fonction des votes
 * tableur 
 (+ peut mettre un mode premium pour avoir plus de vote contre de la moulla)
 
-#### Made with Daniel-Jack ,TheShadowGhost745, Densi12, ACC : by [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) [@Densi12](https://github.com/Densi2) [@ACC](https://github.com/Accel-O)
+#### Made with Freaks ,TheShadowGhost745, Densi12, ACC : by [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) [@Densi12](https://github.com/Densi2) [@ACC](https://github.com/Accel-O)
