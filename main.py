@@ -1,5 +1,6 @@
 import pygame
 
+
 pygame.init()
 pygame.mixer.init()
 
@@ -66,6 +67,7 @@ playlist.append("Song/Si j savais.mp3")
 playlist.append("Song/Train de vie.mp3")
 playlist.append("Song/Tricheur.mp3")
 
+print(playlist)
 
 while running:
 
