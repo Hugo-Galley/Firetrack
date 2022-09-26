@@ -18,7 +18,7 @@ def recup():
     #fn()
 
     #Connexion
-    connexion = sqlite3.connect("basededonnees-NSImusic-projet_v1.db")
+    connexion = sqlite3.connect("Data Base/donné_musique.db")
 
     #Récupération d'un curseur
     curseur = connexion.cursor()
