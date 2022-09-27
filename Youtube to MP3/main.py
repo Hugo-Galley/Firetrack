@@ -10,7 +10,7 @@ yt = YouTube(
 video = yt.streams.get_audio_only()
 
 # dossier ou va se télécharger la music
-destination = "Downloaded_Songs/"
+destination = "../Song"
 
 # téléchargement de la musique
 out_file = video.download(output_path=destination)
