@@ -1,5 +1,7 @@
 import pygame
 
+import init_music
+import  download_music
 
 pygame.init()
 pygame.mixer.init()
@@ -40,34 +42,16 @@ dislike_button_rect.x = 450
 dislike_button_rect.y = 200
 
 
+artist = input("ajouter le nom de l'artiste (remplacer les espace par des _)")
+music = input("ajouter le nom de la musique (remplacer les espace par des _)")
+download_music.add_video(artist,music)
 
 running = True
 action = False
 start = False
 playlist = list()
-playlist.append("Song/2055.mp3")
-playlist.append("Song/All Star.mp3")
-playlist.append("Song/Doja.mp3")
-playlist.append("Song/Au DD.mp3")
-playlist.append("Song/Diva.mp3")
-playlist.append("Song/Blueberry Faygo .mp3")
-playlist.append("Song/Gasolina.mp3")
-playlist.append("Song/Goosebumps.mp3")
-playlist.append("Song/La vie quon mène.mp3")
-playlist.append("Song/LE ZEN ET LES SEINS.mp3")
-playlist.append("Song/Lemonade.mp3")
-playlist.append("Song/Love me.mp3")
-playlist.append("Song/Macarena.mp3")
-playlist.append("Song/Mood.mp3")
-playlist.append("Song/Papiers.mp3")
-playlist.append("Song/Parfum.mp3")
-playlist.append("Song/Problèmes.mp3")
-playlist.append("Song/Roxanne.mp3")
-playlist.append("Song/Si j savais.mp3")
-playlist.append("Song/Train de vie.mp3")
-playlist.append("Song/Tricheur.mp3")
-
-print(playlist)
+for i in init_music.recup():
+    playlist.append(i)
 
 while running:
 
@@ -79,7 +63,6 @@ while running:
     screen.blit(like_button,like_button_rect)
     screen.blit(dislike_button,dislike_button_rect)
     pygame.display.flip()
-
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -98,14 +81,15 @@ while running:
                 pygame.mixer.music.pause()
                 action = True
                 print("pause")
-            elif next_button_rect.collidepoint(event.pos):
-                if i < len(playlist)-1:
+            elif next_button_rect.collidepoint(event.pos) :
+                if i < len(playlist)-1 :
                     i+=1
                 else:
                     i = 0
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
-                print(i)
+                pygame.mixer.music.queue(playlist[song - 1])
+                print(playlist[i])
 
             elif precedent_button_rect.collidepoint(event.pos):
                 if i > 0:
@@ -115,7 +99,8 @@ while running:
 
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
-                print(i)
+                pygame.mixer.music.queue(playlist[song - 1])
+                print(playlist[i])
             elif like_button_rect.collidepoint(event.pos):
                 like+=1
                 print(like)
@@ -124,14 +109,30 @@ while running:
                 dislike+=1
                 print(dislike)
 
+            elif input_box.collidepoint(event.pos):
+
+                if event.type == pygame.KEYDOWN:
+                    if event.type == pygame.K_RETURN:
+                        print(texte)
+                        texte = ''
+                    elif event.key == pygame.K_BACKSPACE:
+                        texte = texte[:-1]
+                    else :
+                        texte += event.unicode
+
+                pygame.mixer.music.load(playlist[i])
+                pygame.mixer.music.play()
+                print(playlist[i])
+
 
         else :
 
             if not action and not start:
-                for song in playlist:
+                for song in range(len(playlist)):
                     i = 0
-                    pygame.mixer.music.load(song)
+                    pygame.mixer.music.load(playlist[song])
                     pygame.mixer.music.play()
+                    pygame.mixer.music.queue(playlist[song - 1])
                     print("Loading song ...")
                     start = True
                     like = 0
