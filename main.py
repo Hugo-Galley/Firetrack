@@ -1,8 +1,5 @@
 import pygame
-
-import init_music
-import  download_music
-import tink
+import  playlis_fonction
 
 pygame.init()
 pygame.mixer.init()
@@ -44,13 +41,13 @@ dislike_button_rect.y = 200
 
 
 
-download_music.add_video(tink.choix_artiste(),tink.choix_music())
+playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
 
 running = True
 action = False
 start = False
 playlist = list()
-for i in init_music.recup():
+for i in playlis_fonction.recup():
     playlist.append(i)
 
 while running:
