@@ -499,7 +499,7 @@ class Ui_MainWindow(object):
         self.close_window_button.setText("")
         self.label_5.setText("")
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"PEAK MUSIC", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Despacito_UI ver.69", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Lemonade", None))
         self.pushButton_7.setText("")
     # retranslateUi
 
