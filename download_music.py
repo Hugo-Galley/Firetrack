@@ -19,15 +19,17 @@ def download_video(link):
     )
 
     # extraire l'audio
-    video = yt.streams.filter(file_extension="mp3",only_audio=True)
+    video = yt.streams.get_audio_only()
 
 
     # dossier ou va se télécharger la music
     destination = "Song"
 
     # téléchargement de la musique
-    video.download(output_path=destination)
-
+    out_file = video.download(output_path=destination)
+    base, ext = os.path.splitext(out_file)
+    new_file = base + '.mp3'
+    os.rename(out_file, new_file)
 
 
 
