@@ -21,7 +21,6 @@ def recup():
     donnees_liste = []
     playlist = []
     for fichier in range(len(file_list)):
-        print("musique :", fichier)
         i=i+1
         file_list[fichier] = 'Song/' + file_list[fichier]
         playlist.append(file_list[fichier])
