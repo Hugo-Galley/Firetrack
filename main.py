@@ -3,6 +3,7 @@ import  playlis_fonction
 
 pygame.init()
 pygame.mixer.init()
+clock = pygame.time.Clock
 
 pygame.display.set_caption("Firetracker")
 screen = pygame.display.set_mode((500, 300))
@@ -39,9 +40,12 @@ dislike_button_rect = dislike_button.get_rect()
 dislike_button_rect.x = 450
 dislike_button_rect.y = 200
 
+add_button = pygame.image.load('assets/add.png')
+add_button_rect = add_button.get_rect()
+add_button_rect.x = 20
+add_button_rect.y = 10
 
 
-playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
 
 running = True
 action = False
@@ -59,6 +63,7 @@ while running:
     screen.blit(next_button,next_button_rect)
     screen.blit(like_button,like_button_rect)
     screen.blit(dislike_button,dislike_button_rect)
+    screen.blit(add_button,add_button_rect)
     pygame.display.flip()
 
     for event in pygame.event.get():
@@ -104,16 +109,10 @@ while running:
                 dislike+=1
                 print(dislike)
 
-            elif input_box.collidepoint(event.pos):
+            elif add_button_rect.collidepoint(event.pos):
+                playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
 
-                if event.type == pygame.KEYDOWN:
-                    if event.type == pygame.K_RETURN:
-                        print(texte)
-                        texte = ''
-                    elif event.key == pygame.K_BACKSPACE:
-                        texte = texte[:-1]
-                    else :
-                        texte += event.unicode
+
 
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
@@ -132,3 +131,4 @@ while running:
                     like = 0
                     dislike = 0
                 print("Votre playlist contient : ", len(playlist), " morceaux")
+clock.tick(60)
