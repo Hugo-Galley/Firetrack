@@ -22,17 +22,17 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         #######################################################################
-        ## # Remove window tittle bar
+        ## # Retire la base Windows
         ########################################################################    
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint) 
 
         #######################################################################
-        ## # Set main background to transparent
+        ## # Rendre l'arrièe plan transparent
         ########################################################################  
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
       
         #######################################################################
-        ## # Shadow effect style
+        ## # Effet d'ombre
         ########################################################################  
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(50)
@@ -41,49 +41,49 @@ class MainWindow(QMainWindow):
         self.shadow.setColor(QColor(0, 92, 157, 550))
         
         #######################################################################
-        ## # Appy shadow to central widget
+        ## # Applique l'ombre sur le widget central
         ########################################################################  
         self.ui.centralwidget.setGraphicsEffect(self.shadow)
 
         #######################################################################
-        # Set window Icon
-        # This icon and title will not appear on our app main window because we removed the title bar
+        # Icône de la fenêtre
+        # P.S- ça ne va pas s'afficher. ça fait parti de la barre de fenêtre Windows
         #######################################################################
         self.setWindowIcon(QtGui.QIcon(":/icons/icons/headphones.svg"))
-        # Set window tittle
+        # Nom de la fenêtre
         self.setWindowTitle("Despacito UI")
 
         #################################################################################
-        # Window Size grip to resize window
+        # Poignée de taille de fenêtre Windows
         #################################################################################
         QSizeGrip(self.ui.size_grip)
 
         #######################################################################
-        #Minimize window
+        #Minimize la fenêtre
         self.ui.minimize_window_button.clicked.connect(lambda: self.showMinimized())
         #######################################################################
-        #Close window
+        #Ferme la fenêtre
         self.ui.close_window_button.clicked.connect(lambda: self.close())
         self.ui.exit_button.clicked.connect(lambda: self.close())
 
 
         #######################################################################
-        #Restore/Maximize window
+        #Rétablis/Maximize la fenêtre
         self.ui.restore_window_button.clicked.connect(lambda: self.restore_or_maximize_window())
 
 
         # ###############################################
-        # Function to Move window on mouse drag event on the tittle bar
+        # Fonction de déplacement lors de glissement de souris
         # ###############################################
         def moveWindow(e):
-            # Detect if the window is  normal size
+            # Détecte si la fenêtre est de taille normale
             # ###############################################  
             if self.isMaximized() == False: #Not maximized
-                # Move window only when window is normal size  
+                # Déplace la fenêtre que si elle est de taille normale 
                 # ###############################################
-                #if left mouse button is clicked (Only accept left mouse button clicks)
+                #SI le bouton gauche de la souris est appuyé
                 if e.buttons() == Qt.LeftButton:  
-                    #Move window 
+                    #Déplacer la fenêtre 
                     self.move(self.pos() + e.globalPos() - self.clickPosition)
                     self.clickPosition = e.globalPos()
                     e.accept()
@@ -97,7 +97,7 @@ class MainWindow(QMainWindow):
 
 
         #######################################################################
-        #Left Menu toggle button
+        #Bouton d'ectivation du menu de gauche
         self.ui.open_close_side_bar_btn.clicked.connect(lambda: self.slideLeftMenu())
 
 
@@ -107,28 +107,28 @@ class MainWindow(QMainWindow):
 
 
     ########################################################################
-    # Slide left menu function
+    # Slide menu non fonctionnel###
     ########################################################################
     def slideLeftMenu(self):
-        # Get current left menu width
+        # Prend la largeur actuelle du menu
         width = self.ui.slide_menu_container.width()
 
-        # If minimized
+        # Si minimisé
         if width == 0:
-            # Expand menu
+            # Etendre le menu
             newWidth = 200
             self.ui.open_close_side_bar_btn.setIcon(QtGui.QIcon(u":/icons/icons/chevron-left.svg"))
-        # If maximized
+        # Si maximisé
         else:
-            # Restore menu
+            # Restore le menu
             newWidth = 0
             self.ui.open_close_side_bar_btn.setIcon(QtGui.QIcon(u":/icons/icons/align-left.svg"))
 
-        # Animate the transition
-        self.animation = QPropertyAnimation(self.ui.slide_menu_container, b"maximumWidth")#Animate minimumWidht
+        # Animation de transition
+        self.animation = QPropertyAnimation(self.ui.slide_menu_container, b"maximumWidth")#Anime la largeur minimum du menu
         self.animation.setDuration(250)
-        self.animation.setStartValue(width)#Start value is the current menu width
-        self.animation.setEndValue(newWidth)#end value is the new menu width
+        self.animation.setStartValue(width)#Valeur de base de largeur du menu
+        self.animation.setEndValue(newWidth)#Valeur finale de laergeur du menu
         self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
         self.animation.start()
     #######################################################################
@@ -138,13 +138,13 @@ class MainWindow(QMainWindow):
 
 
     #######################################################################
-    # Add mouse events to the window
+    # Ajoute l'évé=ènement de souris àla fenêtre
     #######################################################################
     def mousePressEvent(self, event):
         # ###############################################
-        # Get the current position of the mouse
+        # Prends la postion actuelle de la souris
         self.clickPosition = event.globalPos()
-        # We will use this value to move the window
+        # On va utiliser cette valeur pour déplacer la fenêtre
     #######################################################################
     #######################################################################
 
