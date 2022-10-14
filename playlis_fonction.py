@@ -17,17 +17,21 @@ def research(artist,music):
 
 def download_video(link):
     # Aller chercher la vidéo
-    info = youtube_dl.YoutubeDL().extract_info(url=link, download=False)
-    file_name = '{}.mp3'.format(info["title"])
-    options = {
-        'format' : 'bestaudio/best' ,
-        'keepvideo' : False ,
-        'outtmpl' : file_name
-    }
-    with youtube_dl.YoutubeDL(options) as ydl:
-        ydl.download([info['webpage_url']])
-        print('completed')
+    yt = YouTube(link)
 
+    # extract only audio
+    video = yt.streams.filter(only_audio=True).first()
+
+    # check for destination to save file
+    destination = "Song"
+
+    # download the file
+    out_file = video.download(output_path=destination)
+
+    # save the file
+    base, ext = os.path.splitext(out_file)
+    new_file = base + '.mp3'
+    os.rename(out_file, new_file)
 def add_video(artist,music):
     download_video(research(artist,music))
 
