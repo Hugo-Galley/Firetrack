@@ -32,6 +32,7 @@ def download_video(link):
     base, ext = os.path.splitext(out_file)
     new_file = base + '.mp3'
     os.rename(out_file, new_file)
+    
 def add_video(artist,music):
     download_video(research(artist,music))
 
