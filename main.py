@@ -1,5 +1,5 @@
 import pygame
-import  playlis_fonction
+import playlis_fonction
 
 pygame.init()
 pygame.mixer.init()
@@ -46,7 +46,6 @@ add_button_rect.x = 20
 add_button_rect.y = 10
 
 
-
 running = True
 action = False
 start = False
@@ -56,21 +55,20 @@ for i in playlis_fonction.recup():
 
 while running:
 
-    screen.blit(background,(0,0))
-    screen.blit(precedent_button,precedent_button_rect)
-    screen.blit(play_button,play_button_rect)
-    screen.blit(pause_button,pause_button_rect)
-    screen.blit(next_button,next_button_rect)
-    screen.blit(like_button,like_button_rect)
-    screen.blit(dislike_button,dislike_button_rect)
-    screen.blit(add_button,add_button_rect)
+    screen.blit(background, (0, 0))
+    screen.blit(precedent_button, precedent_button_rect)
+    screen.blit(play_button, play_button_rect)
+    screen.blit(pause_button, pause_button_rect)
+    screen.blit(next_button, next_button_rect)
+    screen.blit(like_button, like_button_rect)
+    screen.blit(dislike_button, dislike_button_rect)
+    screen.blit(add_button, add_button_rect)
     pygame.display.flip()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
-
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
@@ -83,9 +81,9 @@ while running:
                 pygame.mixer.music.pause()
                 action = True
                 print("pause")
-            elif next_button_rect.collidepoint(event.pos) :
-                if i < len(playlist)-1 :
-                    i+=1
+            elif next_button_rect.collidepoint(event.pos):
+                if i < len(playlist)-1:
+                    i += 1
                 else:
                     i = 0
                 pygame.mixer.music.load(playlist[i])
@@ -94,32 +92,29 @@ while running:
 
             elif precedent_button_rect.collidepoint(event.pos):
                 if i > 0:
-                    i-=1
-                else :
+                    i -= 1
+                else:
                     i = len(playlist)-1
 
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
                 print(playlist[i])
             elif like_button_rect.collidepoint(event.pos):
-                like+=1
+                like += 1
                 print(like)
 
             elif dislike_button_rect.collidepoint(event.pos):
-                dislike+=1
+                dislike += 1
                 print(dislike)
 
             elif add_button_rect.collidepoint(event.pos):
                 playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
 
-
-
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
                 print(playlist[i])
 
-
-        else :
+        else:
 
             if not action and not start:
                 for song in range(len(playlist)):

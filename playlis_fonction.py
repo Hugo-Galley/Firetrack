@@ -4,16 +4,17 @@ from pytube import YouTube
 import urllib.request
 import re
 import tkinter as tk
-import youtube_dl
 
-def research(artist,music):
-    artist =artist
+
+def research(artist, music):
+    artist = artist
     music = music
     html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + artist + music)
     video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
     link = ("https://www.youtube.com/watch?v=" + video_ids[0])
 
     return link
+
 
 def download_video(link):
     # Aller chercher la vidéo
@@ -33,8 +34,10 @@ def download_video(link):
     new_file = base + '.mp3'
     os.rename(out_file, new_file)
     
-def add_video(artist,music):
-    download_video(research(artist,music))
+
+def add_video(artist, music):
+    download_video(research(artist, music))
+
 
 def choix_artiste():
     def show_entry_fields():
@@ -45,9 +48,7 @@ def choix_artiste():
     master = tk.Tk()
     tk.Label(master, text="Artist ").grid(row=0)
 
-
     e1 = tk.Entry(master)
-
 
     e1.grid(row=0, column=1)
 
@@ -57,13 +58,11 @@ def choix_artiste():
                                         column=0,
                                         sticky=tk.W,
                                         pady=4)
-    tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
-                                                                   column=1,
-                                                                   sticky=tk.W,
-                                                                   pady=4)
+    tk.Button(master, text='Add', command=show_entry_fields).grid(row=3, column=1, sticky=tk.W, pady=4)
 
     master.mainloop()
     return show_entry_fields()
+
 
 def choix_music():
     def show_entry_fields():
@@ -76,7 +75,6 @@ def choix_music():
 
     e2 = tk.Entry(master)
 
-
     e2.grid(row=1, column=1)
 
     tk.Button(master,
@@ -85,13 +83,11 @@ def choix_music():
                                         column=0,
                                         sticky=tk.W,
                                         pady=4)
-    tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
-                                                                   column=1,
-                                                                   sticky=tk.W,
-                                                                   pady=4)
+    tk.Button(master, text='Add', command=show_entry_fields).grid(row=3, column=1, sticky=tk.W, pady=4)
 
     master.mainloop()
     return show_entry_fields()
+
 
 def recup():
     file_list = os.listdir("Song")
@@ -126,8 +122,3 @@ def recup():
 
     connexion.close()
     return playlist
-
-
-
-
-
