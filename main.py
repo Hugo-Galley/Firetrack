@@ -1,6 +1,6 @@
 import pygame
 import  playlis_fonction
-from tkinter import messagebox
+import tkinter as tk
 
 pygame.init()
 pygame.mixer.init()
@@ -103,14 +103,21 @@ while running:
                 pygame.mixer.music.play()
                 print(playlist[i])
             elif like_button_rect.collidepoint(event.pos):
-                playlis_fonction.add_vote(playlist[i])
+                playlis_fonction.add_vote(playlist[i],True)
 
 
             elif dislike_button_rect.collidepoint(event.pos):
-                playlis_fonction.remove_vote(playlist[i])
+                playlis_fonction.add_vote(playlist[i],False)
 
 
             elif add_button_rect.collidepoint(event.pos):
+                win = tk.Tk()
+                TEXTE = "Attention cette fonction étant en béta le risque de bug est très élevé"
+                label = tk.Label(win, text=TEXTE,
+                                 wraplength=(160),
+                                 justify=tk.CENTER)
+                label.pack()
+                win.mainloop()
                 playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
 
 

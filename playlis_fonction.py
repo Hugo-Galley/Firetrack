@@ -1,5 +1,4 @@
 import os
-import sqlite3
 from pytube import YouTube
 import urllib.request
 import re
@@ -50,12 +49,6 @@ def choix_artiste():
 
     e1.grid(row=0, column=1)
 
-    tk.Button(master,
-              text='Quit',
-              command=master.quit).grid(row=3,
-                                        column=0,
-                                        sticky=tk.W,
-                                        pady=4)
     tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
                                                                    column=1,
                                                                    sticky=tk.W,
@@ -78,12 +71,6 @@ def choix_music():
 
     e2.grid(row=1, column=1)
 
-    tk.Button(master,
-              text='Quit',
-              command=master.quit).grid(row=3,
-                                        column=0,
-                                        sticky=tk.W,
-                                        pady=4)
     tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
                                                                    column=1,
                                                                    sticky=tk.W,
@@ -97,7 +84,7 @@ def recup():
     f = len(file_list)
     print(f, "fichiers trouvés dans le dossier")
 
-    connexion = sqlite3.connect("Data Base/Songs.db")
+    connexion = sqltor.connect("Data Base/Songs.db")
 
     curseur = connexion.cursor()
     curseur.execute(""" DELETE FROM 'playlist' """)
@@ -128,12 +115,15 @@ def recup():
 
     connexion.close()
     return playlist
-def add_vote(name):
+def add_vote(name,like):
     ### SQL
     conn = sqltor.connect('Data Base/Songs.db')
     cursor = conn.cursor()
     pd =sqltor.connect("Data Base/Songs.db")
-    command = 'update playlist set vote=vote+1 where titre=?'
+    if like:
+        command = 'update playlist set vote=vote+1 where titre=?'
+    else :
+        command = 'update playlist set vote=vote-1 where titre=?'
     pd.execute(command,(name,))
     pd.commit()
     win = tk.Tk()
@@ -143,24 +133,6 @@ def add_vote(name):
                      justify=tk.CENTER)
     label.pack()
     win.mainloop()
-
-def remove_vote(name):
-    ### SQL
-    conn = sqltor.connect('Data Base/Songs.db')
-    cursor = conn.cursor()
-    pd =sqltor.connect("Data Base/Songs.db")
-    command = 'update playlist set vote=vote-1 where titre=?'
-    pd.execute(command,(name,))
-    pd.commit()
-    conn.close()
-    win = tk.Tk()
-    TEXTE = "Merci d'avoir votée"
-    label = tk.Label(win, text=TEXTE,
-                     wraplength=(50),
-                     justify=tk.CENTER)
-    label.pack()
-    win.mainloop()
-recup()
 
 
 
