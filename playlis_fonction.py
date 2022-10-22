@@ -4,7 +4,8 @@ from pytube import YouTube
 import urllib.request
 import re
 import tkinter as tk
-import youtube_dl
+import sqlite3 as sqltor
+
 
 def research(artist,music):
     artist =artist
@@ -16,17 +17,20 @@ def research(artist,music):
     return link
 
 def download_video(link):
-    # Aller chercher la vidéo
-    info = youtube_dl.YoutubeDL().extract_info(url=link, download=False)
-    file_name = '{}.mp3'.format(info["title"])
-    options = {
-        'format' : 'bestaudio/best' ,
-        'keepvideo' : False ,
-        'outtmpl' : file_name
-    }
-    with youtube_dl.YoutubeDL(options) as ydl:
-        ydl.download([info['webpage_url']])
-        print('completed')
+    # extract only audio
+    video = yt.streams.filter(only_audio=True).first()
+
+    # check for destination to save file
+    destination = "Song"
+
+    # download the file
+    out_file = video.download(output_path=destination)
+
+    # save the file
+    base, ext = os.path.splitext(out_file)
+    new_file = base + '.mp3'
+    os.rename(out_file, new_file)
+
 
 def add_video(artist,music):
     download_video(research(artist,music))
@@ -110,8 +114,10 @@ def recup():
     playlist = []
     for fichier in range(len(file_list)):
         i = i + 1
+        j = 0
         file_list[fichier] = 'Song/' + file_list[fichier]
         playlist.append(file_list[fichier])
+        donnees_liste.append((file_list[fichier], j))
 
     print(i, "fichiers préparés pour la base")
 
@@ -121,7 +127,30 @@ def recup():
 
     connexion.close()
     return playlist
+def add_vote(name):
+    ### SQL
+    conn = sqltor.connect('Data Base/donné_musique.db')
+    cursor = conn.cursor()
+    pd =sqltor.connect("Data Base/Songs.db")
+    command = 'update playlist set vote=vote+1 where titre=?'
+    pd.execute(command,(name,))
+    pd.commit()
+    win = tk.Toplevel
+    root = tk.Tk()
+    root.geometry('100x50')
 
+    btn = tk.Button(root, text="Merci d'avoir voté")
+    btn.pack(pady=10)
+
+def remove_vote(name):
+    ### SQL
+    conn = sqltor.connect('Data Base/donné_musique.db')
+    cursor = conn.cursor()
+    pd =sqltor.connect("Data Base/Songs.db")
+    command = 'update playlist set vote=vote-1 where titre=?'
+    pd.execute(command,(name,))
+    pd.commit()
+    conn.close()
 
 
 
