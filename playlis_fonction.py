@@ -134,6 +134,12 @@ def add_vote(name,like):
     label.pack()
     win.mainloop()
 
+def recup_vote_and_song():
+    conn = sqltor.connect('Data Base/Songs.db')
+    cur = conn.cursor()
+    cur.execute("""SELECT titre,vote FROM playlist""")
+    result = cur.fetchall()
+    print(result)
 
-
+recup_vote_and_song()
 

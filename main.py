@@ -112,13 +112,14 @@ while running:
 
             elif add_button_rect.collidepoint(event.pos):
                 win = tk.Tk()
-                TEXTE = "Attention cette fonction étant en béta le risque de bug est très élevé"
+                TEXTE = "Fonction en phase de test, bientôt disponible"
                 label = tk.Label(win, text=TEXTE,
-                                 wraplength=(160),
+                                 wraplength=(100),
                                  justify=tk.CENTER)
                 label.pack()
                 win.mainloop()
-                playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
+
+                ###playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
 
 
 
