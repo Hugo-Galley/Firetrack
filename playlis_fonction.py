@@ -97,9 +97,10 @@ def recup():
     f = len(file_list)
     print(f, "fichiers trouvés dans le dossier")
 
-    connexion = sqlite3.connect("Data Base/donné_musique.db")
+    connexion = sqlite3.connect("Data Base/Songs.db")
 
     curseur = connexion.cursor()
+    curseur.execute(""" DELETE FROM 'playlist' """)
 
     curseur.executescript("""
 
@@ -129,28 +130,38 @@ def recup():
     return playlist
 def add_vote(name):
     ### SQL
-    conn = sqltor.connect('Data Base/donné_musique.db')
+    conn = sqltor.connect('Data Base/Songs.db')
     cursor = conn.cursor()
     pd =sqltor.connect("Data Base/Songs.db")
     command = 'update playlist set vote=vote+1 where titre=?'
     pd.execute(command,(name,))
     pd.commit()
-    win = tk.Toplevel
-    root = tk.Tk()
-    root.geometry('100x50')
-
-    btn = tk.Button(root, text="Merci d'avoir voté")
-    btn.pack(pady=10)
+    win = tk.Tk()
+    TEXTE = "Merci d'avoir votée"
+    label = tk.Label(win, text=TEXTE,
+                     wraplength=(50),
+                     justify=tk.CENTER)
+    label.pack()
+    win.mainloop()
 
 def remove_vote(name):
     ### SQL
-    conn = sqltor.connect('Data Base/donné_musique.db')
+    conn = sqltor.connect('Data Base/Songs.db')
     cursor = conn.cursor()
     pd =sqltor.connect("Data Base/Songs.db")
     command = 'update playlist set vote=vote-1 where titre=?'
     pd.execute(command,(name,))
     pd.commit()
     conn.close()
+    win = tk.Tk()
+    TEXTE = "Merci d'avoir votée"
+    label = tk.Label(win, text=TEXTE,
+                     wraplength=(50),
+                     justify=tk.CENTER)
+    label.pack()
+    win.mainloop()
+
+recup()
 
 
 

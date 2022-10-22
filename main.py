@@ -102,11 +102,12 @@ while running:
                 pygame.mixer.music.play()
                 print(playlist[i])
             elif like_button_rect.collidepoint(event.pos):
-                playlis_fonction.add_vote(playlist[song])
+                playlis_fonction.add_vote(playlist[i])
+
 
             elif dislike_button_rect.collidepoint(event.pos):
-                playlis_fonction.remove_vote(playlist[song])
-                print(dislike)
+                playlis_fonction.remove_vote(playlist[i])
+
 
             elif add_button_rect.collidepoint(event.pos):
                 playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
@@ -127,6 +128,5 @@ while running:
                     pygame.mixer.music.play()
                     print("Loading song ...")
                     start = True
-                    like = 0
-                    dislike = 0
+
                 print("Votre playlist contient : ", len(playlist), " morceaux")
