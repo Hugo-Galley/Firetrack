@@ -141,5 +141,4 @@ def recup_vote_and_song():
     result = cur.fetchall()
     print(result)
 
-recup_vote_and_song()
 
