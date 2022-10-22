@@ -160,7 +160,6 @@ def remove_vote(name):
                      justify=tk.CENTER)
     label.pack()
     win.mainloop()
-
 recup()
 
 

@@ -54,6 +54,7 @@ playlist = list()
 for i in playlis_fonction.recup():
     playlist.append(i)
 
+
 while running:
 
     screen.blit(background,(0,0))
