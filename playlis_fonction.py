@@ -4,7 +4,7 @@ from pytube import YouTube
 import urllib.request
 import re
 import tkinter as tk
-import  sqlite3 as sqltor
+import youtube_dl
 
 def research(artist,music):
     artist =artist
@@ -17,22 +17,17 @@ def research(artist,music):
 
 def download_video(link):
     # Aller chercher la vidéo
-    yt = YouTube(link)
+    info = youtube_dl.YoutubeDL().extract_info(url=link, download=False)
+    file_name = '{}.mp3'.format(info["title"])
+    options = {
+        'format' : 'bestaudio/best' ,
+        'keepvideo' : False ,
+        'outtmpl' : file_name
+    }
+    with youtube_dl.YoutubeDL(options) as ydl:
+        ydl.download([info['webpage_url']])
+        print('completed')
 
-    # extract only audio
-    video = yt.streams.filter(only_audio=True).first()
-
-    # check for destination to save file
-    destination = "Song"
-
-    # download the file
-    out_file = video.download(output_path=destination)
-
-    # save the file
-    base, ext = os.path.splitext(out_file)
-    new_file = base + '.mp3'
-    os.rename(out_file, new_file)
-    
 def add_video(artist,music):
     download_video(research(artist,music))
 
@@ -97,50 +92,36 @@ def recup():
     file_list = os.listdir("Song")
     f = len(file_list)
     print(f, "fichiers trouvés dans le dossier")
-    connexion = sqlite3.connect("Data Base/Songs.db")
+
+    connexion = sqlite3.connect("Data Base/donné_musique.db")
+
     curseur = connexion.cursor()
-    curseur.execute("""DELETE FROM 'playlist'""")
+
     curseur.executescript("""
+
         CREATE TABLE IF NOT EXISTS playlist(
         id_titre INTEGER PRIMARY KEY,
         titre TEXT,
-        vote integer);
+        integer vote);
 
        """)
     i = 0
     donnees_liste = []
-    playlist=[]
-    # Préparation des données
+    playlist = []
     for fichier in range(len(file_list)):
         i = i + 1
-        j = 0
         file_list[fichier] = 'Song/' + file_list[fichier]
         playlist.append(file_list[fichier])
-        donnees_liste.append((file_list[fichier], j))
 
     print(i, "fichiers préparés pour la base")
-    curseur.executemany("INSERT INTO playlist (titre, vote) VALUES (?, ?)", donnees_liste)
+
+    curseur.executemany("INSERT INTO playlist (titre,vote) VALUES (?, ?)", donnees_liste)
+
     connexion.commit()
+
     connexion.close()
-
     return playlist
-def add_vote(name):
-    ### SQL
-    conn = sqltor.connect('Data Base/donné_musique.db')
-    cursor = conn.cursor()
-    pd =sqltor.connect("Data Base/Songs.db")
-    command = 'update playlist set vote=vote+1 where titre=?'
-    pd.execute(command,(name,))
-    pd.commit()
 
-def remove_vote(name):
-    ### SQL
-    conn = sqltor.connect('Data Base/donné_musique.db')
-    cursor = conn.cursor()
-    pd =sqltor.connect("Data Base/Songs.db")
-    command = 'update playlist set vote=vote-1 where titre=?'
-    pd.execute(command,(name,))
-    pd.commit()
 
 
 

@@ -1,11 +1,11 @@
 import pygame
 import  playlis_fonction
-from tkinter import messagebox
 
 pygame.init()
 pygame.mixer.init()
+clock = pygame.time.Clock
 
-pygame.display.set_caption("Firetrack")
+pygame.display.set_caption("Firetracker")
 screen = pygame.display.set_mode((500, 300))
 
 background = pygame.image.load("assets/background.jpg")
@@ -47,14 +47,12 @@ add_button_rect.y = 10
 
 
 
-
 running = True
 action = False
 start = False
 playlist = list()
 for i in playlis_fonction.recup():
     playlist.append(i)
-    print(playlist)
 
 while running:
 
@@ -104,25 +102,21 @@ while running:
                 pygame.mixer.music.play()
                 print(playlist[i])
             elif like_button_rect.collidepoint(event.pos):
-                playlis_fonction.add_vote(playlist[song])
-                messagebox.showinfo('Tu a liker ', playlist[song])
-
+                like+=1
+                print(like)
 
             elif dislike_button_rect.collidepoint(event.pos):
-                playlis_fonction.remove_vote(playlist[song])
-                messagebox.showinfo('Tu a disliker ',playlist[song])
+                dislike+=1
                 print(dislike)
-
 
             elif add_button_rect.collidepoint(event.pos):
                 playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
-                playlist=list()
-                for i in playlis_fonction.recup():
-                    playlist.append(i)
 
 
+
+                pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
-
+                print(playlist[i])
 
 
         else :
@@ -137,3 +131,4 @@ while running:
                     like = 0
                     dislike = 0
                 print("Votre playlist contient : ", len(playlist), " morceaux")
+clock.tick(60)
