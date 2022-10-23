@@ -45,11 +45,17 @@ add_button_rect = add_button.get_rect()
 add_button_rect.x = 20
 add_button_rect.y = 10
 
+premium_button = pygame.image.load('assets/premium_icon.png')
+premium_button_rect = premium_button.get_rect()
+premium_button_rect.x = 430
+premium_button_rect.y = 10
+
 
 
 running = True
 action = False
 start = False
+premium = False
 playlist = list()
 for i in playlis_fonction.recup():
     playlist.append(i)
@@ -65,6 +71,7 @@ while running:
     screen.blit(like_button,like_button_rect)
     screen.blit(dislike_button,dislike_button_rect)
     screen.blit(add_button,add_button_rect)
+    screen.blit(premium_button,premium_button_rect)
     pygame.display.flip()
 
     for event in pygame.event.get():
@@ -85,23 +92,49 @@ while running:
                 action = True
                 print("pause")
             elif next_button_rect.collidepoint(event.pos) :
-                if i < len(playlist)-1 :
+                if i == 5 and not premium:
+                    win = tk.Tk()
+                    win.geometry('200x100')
+                    TEXTE = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
+                    label = tk.Label(win, text=TEXTE,
+                                     wraplength=(100),
+                                     justify=tk.CENTER)
+                    label.pack()
+                    win.mainloop()
+                elif i < len(playlist)-1 :
                     i+=1
+                    pygame.mixer.music.load(playlist[i])
+                    pygame.mixer.music.play()
+                    print(playlist[i])
+
                 else:
                     i = 0
-                pygame.mixer.music.load(playlist[i])
-                pygame.mixer.music.play()
-                print(playlist[i])
+                    pygame.mixer.music.load(playlist[i])
+                    pygame.mixer.music.play()
+                    print(playlist[i])
+
 
             elif precedent_button_rect.collidepoint(event.pos):
-                if i > 0:
+                if i == 5 and not premium:
+                    win = tk.Tk()
+                    win.geometry('200x100')
+                    TEXTE = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
+                    label = tk.Label(win, text=TEXTE,
+                                     wraplength=(100),
+                                     justify=tk.CENTER)
+                    label.pack()
+                    win.mainloop()
+                elif i > 0:
                     i-=1
+                    pygame.mixer.music.load(playlist[i])
+                    pygame.mixer.music.play()
+                    print(playlist[i])
                 else :
                     i = len(playlist[i])-1
+                    pygame.mixer.music.load(playlist[i])
+                    pygame.mixer.music.play()
+                    print(playlist[i])
 
-                pygame.mixer.music.load(playlist[i])
-                pygame.mixer.music.play()
-                print(playlist)
             elif like_button_rect.collidepoint(event.pos):
                 playlis_fonction.add_vote(playlist[i],True)
                 playlist = playlis_fonction.recup_vote_and_song()
@@ -128,6 +161,17 @@ while running:
 
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
+
+            elif premium_button_rect.collidepoint(event.pos):
+                premium = True
+                win = tk.Tk()
+                win.geometry('200x100')
+                TEXTE = "Merci d'avoir souscris à notre offre premium"
+                label = tk.Label(win, text=TEXTE,
+                                 wraplength=(100),
+                                 justify=tk.CENTER)
+                label.pack()
+                win.mainloop()
 
 
 
