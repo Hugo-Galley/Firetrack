@@ -5,7 +5,6 @@ import re
 import tkinter as tk
 import sqlite3 as sqltor
 import operator
-
 def research(artist,music):
     artist =artist
     music = music
@@ -17,6 +16,7 @@ def research(artist,music):
 
 def download_video(link):
     # extract only audio
+    yt = YouTube(link)
     video = yt.streams.filter(only_audio=True).first()
 
     # check for destination to save file

@@ -1,5 +1,5 @@
 import pygame
-import  playlis_fonction
+import  playlist_fonction
 import tkinter as tk
 
 pygame.init()
@@ -57,7 +57,7 @@ action = False
 start = False
 premium = False
 playlist = list()
-for i in playlis_fonction.recup():
+for i in playlist_fonction.recup():
     playlist.append(i)
 
 
@@ -136,14 +136,14 @@ while running:
                     print(playlist[i])
 
             elif like_button_rect.collidepoint(event.pos):
-                playlis_fonction.add_vote(playlist[i],True)
-                playlist = playlis_fonction.recup_vote_and_song()
+                playlist_fonction.add_vote(playlist[i],True)
+                playlist = playlist_fonction.recup_vote_and_song()
 
 
 
             elif dislike_button_rect.collidepoint(event.pos):
-                playlis_fonction.add_vote(playlist[i],False)
-                playlist = playlis_fonction.recup_vote_and_song()
+                playlist_fonction.add_vote(playlist[i],False)
+                playlist = playlist_fonction.recup_vote_and_song()
 
 
             elif add_button_rect.collidepoint(event.pos):
@@ -155,7 +155,7 @@ while running:
                 label.pack()
                 win.mainloop()
 
-                ###playlis_fonction.add_video(playlis_fonction.choix_artiste(), playlis_fonction.choix_music())
+                playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
 
 
 
