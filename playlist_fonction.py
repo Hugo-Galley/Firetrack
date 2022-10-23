@@ -143,3 +143,21 @@ def recup_vote_and_song():
         song_playlist_trié.append(playlist_triée[i][0])
     return song_playlist_trié
 
+
+def menu_deroulant():
+    player = tk.Tk()
+    player.title("Playlist")
+    player.geometry("205x400")
+    os.chdir("Song")
+
+    songlist = os.listdir()
+    playlist = tk.Listbox(player, highlightcolor="blue", selectmode=tk.SINGLE)
+    for item in songlist:
+        pos = 0
+        playlist.insert(pos, item)
+        pos = pos + 1
+    playlist.pack(fill="both", expand="yes")
+    var = tk.StringVar()
+    songtitle = tk.Label(player, textvariable=var)
+    player.mainloop()
+

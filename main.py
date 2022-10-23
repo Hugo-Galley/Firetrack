@@ -160,20 +160,24 @@ while running:
 
 
             elif add_button_rect.collidepoint(event.pos):
-                win = tk.Tk()
-                TEXTE = "Fonction en phase de test, bientôt disponible"
-                label = tk.Label(win, text=TEXTE,
-                                 wraplength=(100),
-                                 justify=tk.CENTER)
-                label.pack()
-                win.mainloop()
+                playlist_fonction.menu_deroulant()
 
-                playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
+                #win = tk.Tk()
+                #TEXTE = "Fonction en phase de test, bientôt disponible"
+                #label = tk.Label(win, text=TEXTE,
+                                 #wraplength=(100),
+                                 #justify=tk.CENTER)
+                #label.pack()
+                #win.mainloop()
+
+                #playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
 
 
 
-                pygame.mixer.music.load(playlist[i])
-                pygame.mixer.music.play()
+                #pygame.mixer.music.load(playlist[i])
+                #pygame.mixer.music.play()
+
+
 
             elif premium_button_rect.collidepoint(event.pos):
                 premium = True
