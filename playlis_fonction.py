@@ -82,7 +82,6 @@ def choix_music():
 def recup():
     file_list = os.listdir("Song")
     f = len(file_list)
-    print(f, "fichiers trouvés dans le dossier")
 
     connexion = sqltor.connect("Data Base/Songs.db")
 
@@ -107,7 +106,6 @@ def recup():
         playlist.append(file_list[fichier])
         donnees_liste.append((file_list[fichier], j))
 
-    print(i, "fichiers préparés pour la base")
 
     curseur.executemany("INSERT INTO playlist (titre,vote) VALUES (?, ?)", donnees_liste)
 

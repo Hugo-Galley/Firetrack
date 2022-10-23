@@ -168,7 +168,7 @@ while running:
                 win.geometry('200x100')
                 TEXTE = "Merci d'avoir souscris à notre offre premium"
                 label = tk.Label(win, text=TEXTE,
-                                 wraplength=(100),
+                                 wraplength=(70),
                                  justify=tk.CENTER)
                 label.pack()
                 win.mainloop()
