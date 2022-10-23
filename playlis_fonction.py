@@ -4,7 +4,7 @@ import urllib.request
 import re
 import tkinter as tk
 import sqlite3 as sqltor
-
+import operator
 
 def research(artist,music):
     artist =artist
@@ -139,6 +139,8 @@ def recup_vote_and_song():
     cur = conn.cursor()
     cur.execute("""SELECT titre,vote FROM playlist""")
     result = cur.fetchall()
-    print(result)
+    playlist_triée = sorted(result, key=operator.itemgetter(1),reverse=True)
+    return playlist_triée
 
 
+recup_vote_and_song()
