@@ -105,13 +105,20 @@ while running:
                     i+=1
                     pygame.mixer.music.load(playlist[i])
                     pygame.mixer.music.play()
-                    print(playlist[i])
+                    pygame.mixer.music.queue(playlist[i + 1])
+
+
+
+
 
                 else:
                     i = 0
                     pygame.mixer.music.load(playlist[i])
                     pygame.mixer.music.play()
-                    print(playlist[i])
+                    pygame.mixer.music.queue(playlist[i + 1])
+                    
+
+
 
 
             elif precedent_button_rect.collidepoint(event.pos):
@@ -128,12 +135,18 @@ while running:
                     i-=1
                     pygame.mixer.music.load(playlist[i])
                     pygame.mixer.music.play()
-                    print(playlist[i])
+                    pygame.mixer.music.queue(playlist[i - 1])
+
+
+
                 else :
                     i = len(playlist[i])-1
                     pygame.mixer.music.load(playlist[i])
                     pygame.mixer.music.play()
-                    print(playlist[i])
+                    pygame.mixer.music.queue(playlist[i - 1])
+
+
+
 
             elif like_button_rect.collidepoint(event.pos):
                 playlist_fonction.add_vote(playlist[i],True)
@@ -173,7 +186,7 @@ while running:
                 label.pack()
                 win.mainloop()
 
-
+            print(playlist[i])
 
         else :
 
