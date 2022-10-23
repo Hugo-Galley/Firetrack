@@ -135,12 +135,14 @@ def add_vote(name,like):
     win.mainloop()
 
 def recup_vote_and_song():
+    son_laylist_trié=[]
     conn = sqltor.connect('Data Base/Songs.db')
     cur = conn.cursor()
     cur.execute("""SELECT titre,vote FROM playlist""")
     result = cur.fetchall()
     playlist_triée = sorted(result, key=operator.itemgetter(1),reverse=True)
-    return playlist_triée
+    for i in range(len(playlist_triée)):
+        son_laylist_trié.append(playlist_triée[i][0])
+    return son_laylist_trié
+print(recup_vote_and_song())
 
-
-recup_vote_and_song()
