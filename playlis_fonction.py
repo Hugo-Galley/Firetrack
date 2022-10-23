@@ -144,5 +144,4 @@ def recup_vote_and_song():
     for i in range(len(playlist_triée)):
         son_laylist_trié.append(playlist_triée[i][0])
     return son_laylist_trié
-print(recup_vote_and_song())
 

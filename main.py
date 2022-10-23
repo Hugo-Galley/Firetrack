@@ -91,13 +91,13 @@ while running:
                     i = 0
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
-                print(playlist)
+                print(playlist[i])
 
             elif precedent_button_rect.collidepoint(event.pos):
                 if i > 0:
                     i-=1
                 else :
-                    i = len(playlist)-1
+                    i = len(playlist[i])-1
 
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
@@ -128,7 +128,7 @@ while running:
 
                 pygame.mixer.music.load(playlist[i])
                 pygame.mixer.music.play()
-                print(playlist)
+
 
 
         else :
