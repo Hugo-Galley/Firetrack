@@ -102,24 +102,17 @@ def lecteur_musique():
                                          justify=tk.CENTER)
                         label.pack()
                         win.mainloop()
-                    elif i < len(playlist)-1 :
+                    elif i < len(playlist)- 2 :
                         i+=1
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
                         pygame.mixer.music.queue(playlist[i + 1])
 
-
-
-
-
                     else:
                         i = 0
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
-                        pygame.mixer.music.queue(playlist[i + 1])
-
-
-
+                        pygame.mixer.music.queue(playlist[0])
 
 
                 elif precedent_button_rect.collidepoint(event.pos):
@@ -144,7 +137,8 @@ def lecteur_musique():
                         i = len(playlist[i])-1
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
-                        pygame.mixer.music.queue(playlist[i - 1])
+                        pygame.mixer.music.queue(playlist[i])
+
 
 
 
