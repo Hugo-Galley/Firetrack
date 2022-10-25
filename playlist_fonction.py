@@ -93,7 +93,7 @@ def recup():
         CREATE TABLE IF NOT EXISTS playlist(
         id_titre INTEGER PRIMARY KEY,
         titre TEXT,
-        integer vote );
+        integer vote);
 
        """)
     i = 0
@@ -158,4 +158,28 @@ def menu_deroulant():
         pos = pos + 1
     playlist.pack(fill="both", expand="yes")
     player.mainloop()
-recup()
+
+def create_table():
+    conn = sqltor.connect("Data Base/user.db")
+    cur = conn.cursor()
+    cur.execute("""DELETE FROM user_men """)
+
+    cur.executescript("""
+    CREATE TABLE IF NOT EXISTS user_men (
+	user TEXT,
+	nbr_vote INTEGER
+	nom TEXT);
+	
+	
+    """)
+    conn.commit()
+    conn.close()
+
+def add_user(nom):
+    conn = sqltor.connect("Data Base/user.db")
+    cur = conn.cursor()
+    donné = (nom,0)
+    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)",donné)
+    conn.commit()
+    conn.close()
+create_table()
