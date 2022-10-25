@@ -160,15 +160,15 @@ while running:
 
 
             elif add_button_rect.collidepoint(event.pos):
-                playlist_fonction.menu_deroulant()
+                #playlist_fonction.menu_deroulant()
 
-                #win = tk.Tk()
-                #TEXTE = "Fonction en phase de test, bientôt disponible"
-                #label = tk.Label(win, text=TEXTE,
-                                 #wraplength=(100),
-                                 #justify=tk.CENTER)
-                #label.pack()
-                #win.mainloop()
+                win = tk.Tk()
+                TEXTE = "Fonction en phase de test, bientôt disponible"
+                label = tk.Label(win, text=TEXTE,
+                                 wraplength=(80),
+                                 justify=tk.CENTER)
+                label.pack()
+                win.mainloop()
 
                 #playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
 

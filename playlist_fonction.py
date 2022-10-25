@@ -93,7 +93,7 @@ def recup():
         CREATE TABLE IF NOT EXISTS playlist(
         id_titre INTEGER PRIMARY KEY,
         titre TEXT,
-        integer vote);
+        integer vote );
 
        """)
     i = 0
@@ -151,13 +151,11 @@ def menu_deroulant():
     os.chdir("Song")
 
     songlist = os.listdir()
-    playlist = tk.Listbox(player, highlightcolor="blue", selectmode=tk.SINGLE)
+    playlist = tk.Listbox(player)
     for item in songlist:
         pos = 0
         playlist.insert(pos, item)
         pos = pos + 1
     playlist.pack(fill="both", expand="yes")
-    var = tk.StringVar()
-    songtitle = tk.Label(player, textvariable=var)
     player.mainloop()
-
+recup()
