@@ -37,7 +37,7 @@ def add_video(artist,music):
 def choix_artiste():
     def show_entry_fields():
         artist = e1.get()
-        master.quit()
+        master.destroy()
         return artist
 
     master = tk.Tk()
@@ -60,7 +60,7 @@ def choix_artiste():
 def choix_music():
     def show_entry_fields():
         music = e2.get()
-        master.quit()
+        master.destroy()
         return music
 
     master = tk.Tk()
@@ -182,4 +182,5 @@ def add_user(nom):
     conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)",donné)
     conn.commit()
     conn.close()
+    
 create_table()

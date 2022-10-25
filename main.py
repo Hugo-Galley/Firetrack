@@ -4,12 +4,9 @@ import pygame
 import lecteur_musique
 import playlist_fonction
 
-playlist_fonction
-
-
 def show_entry_fields():
     playlist_fonction.add_user(e1.get())
-    master.quit()
+    master.destroy()
     lecteur_musique.lecteur_musique()
     return 1
 
