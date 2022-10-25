@@ -5,6 +5,7 @@ import re
 import tkinter as tk
 import sqlite3 as sqltor
 import operator
+import pygame
 def research(artist,music):
     artist =artist
     music = music
@@ -78,6 +79,8 @@ def choix_music():
 
     master.mainloop()
     return show_entry_fields()
+
+
 
 def recup():
     file_list = os.listdir("Song")
@@ -176,11 +179,28 @@ def create_table():
     conn.close()
 
 def add_user(nom):
+    def show_entry_fields():
+        user = e
+        return 1
+
+    master = tk.Tk()
+    tk.Label(master, text="Nom d'utilisateurs ").grid(row=0)
+
+    e1 = tk.Entry(master)
+
+    e1.grid(row=0, column=1)
+
+    tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
+                                                                  column=1,
+                                                                  sticky=tk.W,
+                                                                  pady=4)
+
+    master.mainloop()
     conn = sqltor.connect("Data Base/user.db")
     cur = conn.cursor()
-    donné = (nom,0)
+    donné = (show_entry_fields(),0)
     conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)",donné)
     conn.commit()
     conn.close()
-    
+
 create_table()
