@@ -178,6 +178,7 @@ def create_table():
     conn.commit()
     conn.close()
 
+create_table()
 def add_user(nom):
 
     conn = sqltor.connect("Data Base/user.db")
@@ -187,11 +188,7 @@ def add_user(nom):
     conn.commit()
     conn.close()
 
-create_table()
 def lecteur_musqiue():
-    import pygame
-    import playlist_fonction
-    import tkinter as tk
 
     pygame.init()
     pygame.mixer.init()
@@ -246,7 +243,7 @@ def lecteur_musqiue():
     start = False
     premium = False
     playlist = list()
-    for i in playlist_fonction.recup():
+    for i in recup():
         playlist.append(i)
 
     while running:
@@ -335,14 +332,14 @@ def lecteur_musqiue():
                     print(playlist[i])
 
                 elif like_button_rect.collidepoint(event.pos):
-                    playlist_fonction.add_vote(playlist[i], True)
-                    playlist = playlist_fonction.recup_vote_and_song()
+                    add_vote(playlist[i], True)
+                    playlist = recup_vote_and_song()
 
 
 
                 elif dislike_button_rect.collidepoint(event.pos):
-                    playlist_fonction.add_vote(playlist[i], False)
-                    playlist = playlist_fonction.recup_vote_and_song()
+                    add_vote(playlist[i], False)
+                    playlist = recup_vote_and_song()
 
 
                 elif add_button_rect.collidepoint(event.pos):

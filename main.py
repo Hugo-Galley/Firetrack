@@ -1,25 +1,30 @@
-import tkinter as tk
-
+from tkinter import *
 import playlist_fonction
+def ouverture_process():
+     playlist_fonction.add_user(enter.get())
+     windows.destroy()
+     playlist_fonction.lecteur_musqiue()
 
 
-def show_entry_fields():
-    playlist_fonction.add_user(e1.get())
-    master.destroy()
-    playlist_fonction.lecteur_musqiue()
-    return 1
+windows = Tk()
+
+windows.title("Test enter room")
+windows.geometry("480x360")
+windows.minsize(480,360)
+windows.config(background='#24A7A7')
+
+frame = Frame(windows,bg='#24A7A7')
+
+En_tete = Label(frame, text="Bienvenue sur FireTrack",bg='#24A7A7',fg='white',font=("Courrier",25)).pack()
+nom = Label(frame, text="Username",bg='#24A7A7',fg='white',font=("Courier",13)).pack()
+enter = Entry(frame)
+enter.pack()
+add_user_button = Button(frame,text="Add",font=("Courier",17),bg='#24A7A7',fg='white',command=ouverture_process).pack()
 
 
-master = tk.Tk()
-tk.Label(master, text="Nom d'utilisateurs ").grid(row=0)
+frame.pack()
 
-e1 = tk.Entry(master)
 
-e1.grid(row=0, column=1)
 
-tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
-                                                              column=1,
-                                                              sticky=tk.W,
-                                                              pady=4)
 
-master.mainloop()
+windows.mainloop()
