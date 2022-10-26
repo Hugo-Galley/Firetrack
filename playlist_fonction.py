@@ -1,19 +1,21 @@
 import os
-from pytube import YouTube
 import urllib.request
 import re
 import tkinter as tk
 import sqlite3 as sqltor
 import operator
 import pygame
-def research(artist,music):
-    artist =artist
+
+
+def research(artist, music):
+    artist = artist
     music = music
     html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + artist + music)
     video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
     link = ("https://www.youtube.com/watch?v=" + video_ids[0])
 
     return link
+
 
 def download_video(link):
     # extract only audio
@@ -32,8 +34,9 @@ def download_video(link):
     os.rename(out_file, new_file)
 
 
-def add_video(artist,music):
-    download_video(research(artist,music))
+def add_video(artist, music):
+    download_video(research(artist, music))
+
 
 def choix_artiste():
     def show_entry_fields():
@@ -44,19 +47,18 @@ def choix_artiste():
     master = tk.Tk()
     tk.Label(master, text="Artist ").grid(row=0)
 
-
     e1 = tk.Entry(master)
-
 
     e1.grid(row=0, column=1)
 
     tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
-                                                                   column=1,
-                                                                   sticky=tk.W,
-                                                                   pady=4)
+                                                                  column=1,
+                                                                  sticky=tk.W,
+                                                                  pady=4)
 
     master.mainloop()
     return show_entry_fields()
+
 
 def choix_music():
     def show_entry_fields():
@@ -69,17 +71,15 @@ def choix_music():
 
     e2 = tk.Entry(master)
 
-
     e2.grid(row=1, column=1)
 
     tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
-                                                                   column=1,
-                                                                   sticky=tk.W,
-                                                                   pady=4)
+                                                                  column=1,
+                                                                  sticky=tk.W,
+                                                                  pady=4)
 
     master.mainloop()
     return show_entry_fields()
-
 
 
 def recup():
@@ -109,23 +109,24 @@ def recup():
         playlist.append(file_list[fichier])
         donnees_liste.append((file_list[fichier], j))
 
-
     curseur.executemany("INSERT INTO playlist (titre,vote) VALUES (?, ?)", donnees_liste)
 
     connexion.commit()
 
     connexion.close()
     return playlist
-def add_vote(name,like):
+
+
+def add_vote(name, like):
     ### SQL
     conn = sqltor.connect('Data Base/Songs.db')
     cursor = conn.cursor()
-    pd =sqltor.connect("Data Base/Songs.db")
+    pd = sqltor.connect("Data Base/Songs.db")
     if like:
         command = 'update playlist set vote=vote+1 where titre=?'
-    else :
+    else:
         command = 'update playlist set vote=vote-1 where titre=?'
-    pd.execute(command,(name,))
+    pd.execute(command, (name,))
     pd.commit()
     win = tk.Tk()
     TEXTE = "Merci d'avoir votée"
@@ -135,13 +136,14 @@ def add_vote(name,like):
     label.pack()
     win.mainloop()
 
+
 def recup_vote_and_song():
-    song_playlist_trié=[]
+    song_playlist_trié = []
     conn = sqltor.connect('Data Base/Songs.db')
     cur = conn.cursor()
     cur.execute("""SELECT titre,vote FROM playlist""")
     result = cur.fetchall()
-    playlist_triée = sorted(result, key=operator.itemgetter(1),reverse=True)
+    playlist_triée = sorted(result, key=operator.itemgetter(1), reverse=True)
     for i in range(len(playlist_triée)):
         song_playlist_trié.append(playlist_triée[i][0])
     return song_playlist_trié
@@ -162,6 +164,7 @@ def menu_deroulant():
     playlist.pack(fill="both", expand="yes")
     player.mainloop()
 
+
 def create_table():
     conn = sqltor.connect("Data Base/user.db")
     cur = conn.cursor()
@@ -169,42 +172,44 @@ def create_table():
 
     cur.executescript("""
     CREATE TABLE IF NOT EXISTS user_men (
-	user TEXT,
-	nbr_vote INTEGER
-	nom TEXT);
-	
-	
+	user TEXT PRIMARY KEY,
+	nbr_vote INTEGER);
+
+
     """)
     conn.commit()
     conn.close()
-create_table()
-def add_user(nom):
 
+
+create_table()
+
+
+def add_user(nom):
     conn = sqltor.connect("Data Base/user.db")
     cur = conn.cursor()
-    donné = (nom,0)
-    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)",donné)
+    donné = (nom, 0)
+    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)", donné)
     conn.commit()
     conn.close()
 
-def add_user_vote(name,like):
+
+def add_user_vote(name, like):
     ### SQL
     conn = sqltor.connect('Data Base/user.db')
     cursor = conn.cursor()
-    pd =sqltor.connect("Data Base/user.db")
+    pd = sqltor.connect("Data Base/user.db")
     if like:
         command = 'update user_men set nbr_vote=nbr_vote+1 where user=?'
-    else :
+    else:
         command = 'update user_men set nbr_vote=nbr_vote-1 where user=?'
-    pd.execute(command,(name,))
+    pd.execute(command, (name,))
     pd.commit()
     win = tk.Tk()
     TEXTE = "Merci d'avoir votée"
-    label = tk.Label(win, text=TEXTE,
-                     wraplength=(50),
-                     justify=tk.CENTER)
+    label = tk.Label(win, text=TEXTE, wraplength=(50), justify=tk.CENTER)
     label.pack()
     win.mainloop()
+
 
 def recup_vote_and_user():
     conn = sqltor.connect('Data Base/user.db')
@@ -213,34 +218,16 @@ def recup_vote_and_user():
     result = cur.fetchall()
 
     return result
-print(recup_vote_and_user())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def lecteur_musqiue():
-
     pygame.init()
     pygame.mixer.init()
+    icon = pygame.image.load('assets/logo.png')
 
-    pygame.display.set_caption("Firetracker")
+    pygame.display.set_caption("Firetracke", "Spotify")
     screen = pygame.display.set_mode((500, 300))
+    pygame.display.set_icon(icon)
 
     background = pygame.image.load("assets/background.jpg")
 
@@ -327,9 +314,7 @@ def lecteur_musqiue():
                         win = tk.Tk()
                         win.geometry('200x100')
                         TEXTE = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
-                        label = tk.Label(win, text=TEXTE,
-                                         wraplength=(100),
-                                         justify=tk.CENTER)
+                        label = tk.Label(win, text=TEXTE, wraplength=(100), justify=tk.CENTER)
                         label.pack()
                         win.mainloop()
                     elif i < len(playlist) - 2:
@@ -355,9 +340,7 @@ def lecteur_musqiue():
                         win = tk.Tk()
                         win.geometry('200x100')
                         TEXTE = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
-                        label = tk.Label(win, text=TEXTE,
-                                         wraplength=(100),
-                                         justify=tk.CENTER)
+                        label = tk.Label(win, text=TEXTE, wraplength=(100), justify=tk.CENTER)
                         label.pack()
                         win.mainloop()
                     elif i > 0:
@@ -393,9 +376,7 @@ def lecteur_musqiue():
 
                     win = tk.Tk()
                     TEXTE = "Fonction en phase de test, bientôt disponible"
-                    label = tk.Label(win, text=TEXTE,
-                                     wraplength=(80),
-                                     justify=tk.CENTER)
+                    label = tk.Label(win, text=TEXTE, wraplength=(80), justify=tk.CENTER)
                     label.pack()
                     win.mainloop()
 
@@ -405,9 +386,7 @@ def lecteur_musqiue():
                     win = tk.Tk()
                     win.geometry('200x100')
                     TEXTE = "Merci d'avoir souscris à notre offre premium"
-                    label = tk.Label(win, text=TEXTE,
-                                     wraplength=(70),
-                                     justify=tk.CENTER)
+                    label = tk.Label(win, text=TEXTE, wraplength=(70), justify=tk.CENTER)
                     label.pack()
                     win.mainloop()
 
