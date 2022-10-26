@@ -177,7 +177,6 @@ def create_table():
     """)
     conn.commit()
     conn.close()
-
 create_table()
 def add_user(nom):
 
@@ -187,6 +186,53 @@ def add_user(nom):
     conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)",donné)
     conn.commit()
     conn.close()
+
+def add_user_vote(name,like):
+    ### SQL
+    conn = sqltor.connect('Data Base/user.db')
+    cursor = conn.cursor()
+    pd =sqltor.connect("Data Base/user.db")
+    if like:
+        command = 'update user_men set nbr_vote=nbr_vote+1 where user=?'
+    else :
+        command = 'update user_men set nbr_vote=nbr_vote-1 where user=?'
+    pd.execute(command,(name,))
+    pd.commit()
+    win = tk.Tk()
+    TEXTE = "Merci d'avoir votée"
+    label = tk.Label(win, text=TEXTE,
+                     wraplength=(50),
+                     justify=tk.CENTER)
+    label.pack()
+    win.mainloop()
+
+def recup_vote_and_user():
+    conn = sqltor.connect('Data Base/user.db')
+    cur = conn.cursor()
+    cur.execute("""SELECT user FROM user_men """)
+    result = cur.fetchall()
+
+    return result
+print(recup_vote_and_user())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def lecteur_musqiue():
 
@@ -291,6 +337,7 @@ def lecteur_musqiue():
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
                         pygame.mixer.music.queue(playlist[i + 1])
+                        print(playlist[i])
 
 
 
@@ -301,8 +348,9 @@ def lecteur_musqiue():
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
                         pygame.mixer.music.queue(playlist[i + 1])
+                        print(playlist[i])
 
-                    print(playlist[i])
+
 
 
                 elif precedent_button_rect.collidepoint(event.pos):
@@ -320,7 +368,7 @@ def lecteur_musqiue():
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
                         pygame.mixer.music.queue(playlist[i - 1])
-
+                        print(playlist[i])
 
 
                     else:
@@ -328,8 +376,9 @@ def lecteur_musqiue():
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
                         pygame.mixer.music.queue(playlist[i - 1])
+                        print(playlist[i])
 
-                    print(playlist[i])
+                
 
                 elif like_button_rect.collidepoint(event.pos):
                     add_vote(playlist[i], True)
