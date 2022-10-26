@@ -341,15 +341,12 @@ def lecteur_musqiue():
 
 
 
-
-
                     else:
                         i = 0
                         pygame.mixer.music.load(playlist[i])
                         pygame.mixer.music.play()
                         pygame.mixer.music.queue(playlist[i + 1])
                         print(playlist[i])
-
 
 
 
@@ -378,7 +375,7 @@ def lecteur_musqiue():
                         pygame.mixer.music.queue(playlist[i - 1])
                         print(playlist[i])
 
-                
+
 
                 elif like_button_rect.collidepoint(event.pos):
                     add_vote(playlist[i], True)
