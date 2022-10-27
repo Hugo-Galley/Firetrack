@@ -261,10 +261,10 @@ def lecteur_musqiue():
     dislike_button_rect.x = 450
     dislike_button_rect.y = 200
 
-    add_button = pygame.image.load('assets/add.png')
-    add_button_rect = add_button.get_rect()
-    add_button_rect.x = 20
-    add_button_rect.y = 10
+    menu_button = pygame.image.load('assets/menu.png')
+    menu_button_rect = add_button.get_rect()
+    menu_button_rect.x = 20
+    menu_button_rect.y = 10
 
     premium_button = pygame.image.load('assets/premium_icon.png')
     premium_button_rect = premium_button.get_rect()
@@ -371,7 +371,7 @@ def lecteur_musqiue():
                     playlist = recup_vote_and_song()
 
 
-                elif add_button_rect.collidepoint(event.pos):
+                elif menu_button_rect.collidepoint(event.pos):
                     # playlist_fonction.menu_deroulant()
 
                     win = tk.Tk()

@@ -23,8 +23,7 @@ a_prpos = Frame(windows,bg='#24A7A7')
 
 En_tete = Label(principal, text="Bienvenue sur FireTrack",bg='#24A7A7',fg='white',font=("Courrier",25)).pack()
 nom = Label(principal, text="Username",bg='#24A7A7',fg='white',font=("Courier",13)).pack()
-enter_user = Entry(principal)
-enter_user.pack()
+enter_user = Entry(principal).pack()
 add_user = Button(principal, text='Add', bg='#24A7A7',fg='white',font=("Courier",15),command=ouverture_process).pack()
 page_github = Button(a_prpos, text="Page Github",bg='#24A7A7',fg='white',font=("Courrier",14),command=open_github_page).pack()
 
