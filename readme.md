@@ -13,7 +13,7 @@ Playlist dynamique vis à vis des votes
   * Os
   * Operator
   * re
-  * webbrowser
+  * Webbrowser
   
 
 ## Premium Mode
