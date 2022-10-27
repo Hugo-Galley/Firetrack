@@ -1,12 +1,21 @@
 # Playlist Partagé
 Playliste collective avec mise en place d'un système de votes
 ---
-Playlist dynamique par rapport au votes
+Playlist dynamique vis à vis des votes
 ## Outils
-* lecteur(pygame.mixer)
-* liste de musique (mp3) 
-* sqlite
-* python  
+* Liste de musique (mp3) 
+
+* Languages : Python, SQL
+* ### Librairie utilisée 
+  * Pygame
+  * Tkinter
+  * Urllib
+  * Os
+  * Operator
+  * re
+  * webbrowser
+  
+
 ## Premium Mode
 Contre la modique somme de 5$ l'utilisateur aura le droit au vote ilimitée ainsi qu'une petite certification
 
