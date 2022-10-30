@@ -5,6 +5,7 @@ import tkinter as tk
 import sqlite3 as sqltor
 import operator
 import pygame
+import main
 
 
 def research(artist, music):
@@ -180,9 +181,7 @@ def create_table():
     conn.commit()
     conn.close()
 
-
 create_table()
-
 
 def add_user(nom):
     conn = sqltor.connect("Data Base/user.db")
@@ -193,22 +192,17 @@ def add_user(nom):
     conn.close()
 
 
-def add_user_vote(name, like):
+def add_user_vote(name,like):
     ### SQL
     conn = sqltor.connect('Data Base/user.db')
     cursor = conn.cursor()
     pd = sqltor.connect("Data Base/user.db")
     if like:
-        command = 'update user_men set nbr_vote=nbr_vote+1 where user=?'
+        command = 'update user_men set nbr_vote=nbr_vote+1 where user=(?)'
     else:
-        command = 'update user_men set nbr_vote=nbr_vote-1 where user=?'
+        command = 'update user_men set nbr_vote=nbr_vote-1 where user=(?)'
     pd.execute(command, (name,))
     pd.commit()
-    win = tk.Tk()
-    TEXTE = "Merci d'avoir votée"
-    label = tk.Label(win, text=TEXTE, wraplength=(50), justify=tk.CENTER)
-    label.pack()
-    win.mainloop()
 
 
 def recup_vote_and_user():
@@ -262,7 +256,7 @@ def lecteur_musqiue():
     dislike_button_rect.y = 200
 
     menu_button = pygame.image.load('assets/menu.png')
-    menu_button_rect = add_button.get_rect()
+    menu_button_rect = menu_button.get_rect()
     menu_button_rect.x = 20
     menu_button_rect.y = 10
 
@@ -288,7 +282,7 @@ def lecteur_musqiue():
         screen.blit(next_button, next_button_rect)
         screen.blit(like_button, like_button_rect)
         screen.blit(dislike_button, dislike_button_rect)
-        screen.blit(add_button, add_button_rect)
+        screen.blit(menu_button, menu_button_rect)
         screen.blit(premium_button, premium_button_rect)
         pygame.display.flip()
 

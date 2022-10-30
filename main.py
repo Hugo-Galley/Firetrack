@@ -3,7 +3,7 @@ import playlist_fonction
 import webbrowser
 
 def ouverture_process():
-     playlist_fonction.add_user(enter_user.get())
+     playlist_fonction.add_user(entre.get())
      windows.destroy()
      playlist_fonction.lecteur_musqiue()
 
@@ -18,18 +18,21 @@ windows.geometry("480x360")
 windows.minsize(480,360)
 windows.config(background='#24A7A7')
 
-principal = Frame(windows,bg='#24A7A7')
+frame = Frame(windows,bg='#24A7A7')
 a_prpos = Frame(windows,bg='#24A7A7')
 
-En_tete = Label(principal, text="Bienvenue sur FireTrack",bg='#24A7A7',fg='white',font=("Courrier",25)).pack()
-nom = Label(principal, text="Username",bg='#24A7A7',fg='white',font=("Courier",13)).pack()
-enter_user = Entry(principal).pack()
-add_user = Button(principal, text='Add', bg='#24A7A7',fg='white',font=("Courier",15),command=ouverture_process).pack()
+En_tete = Label(frame, text="Bienvenue sur FireTrack",bg='#24A7A7',fg='white',font=("Courrier",25)).pack()
+nom = Label(frame, text="Username",bg='#24A7A7',fg='white',font=("Courier",13)).pack()
+
+entre = Entry(frame)
+entre.pack()
+
+add_user = Button(frame, text='Add', bg='#24A7A7',fg='white',font=("Courier",15),command=ouverture_process).pack()
 page_github = Button(a_prpos, text="Page Github",bg='#24A7A7',fg='white',font=("Courrier",14),command=open_github_page).pack()
 
 
 
-principal.pack()
+frame.pack()
 a_prpos.pack(side=BOTTOM)
 
 
