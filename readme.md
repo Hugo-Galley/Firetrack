@@ -6,7 +6,7 @@ Playlist dynamique vis à vis des votes
 * Liste de musiques (mp3) 
 
 * Languages : Python, SQL
-* ### Librairies utilisées
+ ### Librairies utilisées
   * Pygame
   * Tkinter
   * Urllib
