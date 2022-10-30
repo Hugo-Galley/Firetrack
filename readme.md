@@ -15,10 +15,8 @@ Playlist dynamique vis à vis des votes
   * re
   * Webbrowser
   
-
-## Premium Mode
-Contre la modique somme de 5$ l'utilisateur aura le droit au vote ilimitée ainsi qu'une petite certification
-
+## Histoire du projet
+Ce projet est issue d'un travail à réaliser pour un cours de NSI
 ## Team du Projet
 
 * Développeurs : [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) 
