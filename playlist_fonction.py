@@ -5,7 +5,6 @@ import tkinter as tk
 import sqlite3 as sqltor
 import operator
 import pygame
-import main
 
 
 def research(artist, music):
