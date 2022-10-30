@@ -14,9 +14,7 @@ Playlist dynamique vis à vis des votes
   * Operator
   * re
   * Webbrowser
-  
-## Histoire du projet
-Ce projet est issue d'un travail à réaliser pour un cours de NSI
+ 
 ## Team du Projet
 
 * Développeurs : [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) 
