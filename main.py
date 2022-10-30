@@ -34,6 +34,7 @@ windows.config(background='#24A7A7')
 
 frame = Frame(windows,bg='#24A7A7')
 a_prpos = Frame(windows,bg='#24A7A7')
+a_prpos_2 = Frame(windows,bg='#24A7A7')
 
 En_tete = Label(frame, text="Bienvenue sur FireTrack",bg='#24A7A7',fg='white',font=("Courrier",25)).pack()
 nom = Label(frame, text="Username",bg='#24A7A7',fg='white',font=("Courier",13)).pack()
@@ -42,17 +43,12 @@ entre = Entry(frame)
 entre.pack()
 
 add_user = Button(frame, text='Add', bg='#24A7A7',fg='white',font=("Courier",15),command=ouverture_process).pack()
-page_github = Button(a_prpos, text="Page Github",bg='#24A7A7',fg='white',font=("Courrier",14),command=open_github_page).pack()
-nom_dev = Button(a_prpos, text="Crédits", bg='#24A7A7',fg='white',font=('Courier',14),command=open_dev).pack()
+page_github = Button(a_prpos, text="Page Github",bg='#24A7A7',fg='white',font=("Courier",14),command=open_github_page).pack()
+nom_dev = Button(a_prpos_2, text="Crédits", bg='#24A7A7',fg='white',font=('Courier',14),command=open_dev).pack()
 
 
-frame.pack()
-a_prpos.pack(side=BOTTOM)
-
-### Seconde Fenetre
-
-
-
-
+frame.pack(expand=YES)
+a_prpos.pack(side= LEFT)
+a_prpos_2.pack(side=RIGHT)
 
 windows.mainloop()
