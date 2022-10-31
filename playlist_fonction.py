@@ -7,6 +7,7 @@ import operator
 import pygame
 
 
+
 def research(artist, music):
     artist = artist
     music = music
@@ -180,7 +181,6 @@ def create_table():
     conn.commit()
     conn.close()
 
-create_table()
 
 def add_user(nom):
     conn = sqltor.connect("Data Base/user.db")
@@ -212,6 +212,7 @@ def recup_vote_and_user():
 
     return result
 
+print(recup_vote_and_user())
 
 def lecteur_musqiue():
     pygame.init()
@@ -391,3 +392,4 @@ def lecteur_musqiue():
                     print("Loading song ...")
                     start = True
                 print("Votre playlist contient : ", len(playlist), " morceaux")
+

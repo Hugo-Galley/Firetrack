@@ -3,6 +3,7 @@ import playlist_fonction
 import webbrowser
 
 def ouverture_process():
+
      playlist_fonction.add_user(entre.get())
      windows.destroy()
      playlist_fonction.lecteur_musqiue()
