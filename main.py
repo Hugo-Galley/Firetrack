@@ -1,6 +1,7 @@
 from tkinter import *
 import playlist_fonction
 import webbrowser
+import Class
 
 
 def startup_window():
@@ -50,7 +51,6 @@ def ouverture_process(windows, entre):
     windows.destroy()
     playlist_fonction.lecteur_musique()
 
-
 def open_github_page():
     webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
@@ -76,8 +76,27 @@ def admin_windows():
     admin_win.minsize(480,360)
     admin_win.config(background='#24A7A7')
 
-    Label(admin_win,text="Ceci est la page admin",bg='#24A7A7',fg='white',font=('Courier',14)).pack(expand=YES)
+    secret =  Frame(admin_win)
+    frame = Frame(admin_win)
+    Label(secret,text="Ceci est la page admin",bg='#24A7A7',fg='white',font=('Courier',14)).pack(expand=YES)
+    Label(frame,text="Mot de passe",bg='#24A7A7',fg='white',font=('Courier',15)).pack(expand=YES)
 
+    saisi_username = Entry(frame)
+    saisi_username.pack(expand=YES)
+    frame.pack()
+
+    def test():
+        if saisi_username.get() == "Motdepasse":
+            secret.pack()
+        else :
+            messagebox = Tk()
+            messagebox.geometry("50x50")
+            Label(messagebox,text="Mot de passe incorect",wraplength=70,justify=CENTER).pack()
+            messagebox.mainloop()
+
+
+    add_user = Button(admin_win, text='Add', bg='#24A7A7', fg='white', font=("Courier", 15),
+                      command=test).pack()
     admin_win.mainloop()
 
 

@@ -5,7 +5,7 @@ import tkinter as tk
 import sqlite3 as sqltor
 import operator
 import pygame
-
+import Class
 from pytube import YouTube
 
 
@@ -173,7 +173,7 @@ def create_table():
     cur.execute("""DELETE FROM user_men """)
 
     cur.executescript("""
-    CREATE TABLE IF NOT EXISTS user_men (user TEXT PRIMARY KEY, nbr_vote INTEGER,Premium INTEGER);
+    CREATE TABLE IF NOT EXISTS user_men (user TEXT PRIMARY KEY, nbr_vote INTEGER);
     """)
     conn.commit()
     conn.close()
@@ -183,7 +183,7 @@ def add_user(nom):
     conn = sqltor.connect("Data Base/user.db")
     cur = conn.cursor()
     donne = (nom, 0)
-    conn.execute("INSERT INTO user_men (user,nbr_vote,Premium) VALUES (?, ?)", donne)
+    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)", donne)
     conn.commit()
     conn.close()
 
