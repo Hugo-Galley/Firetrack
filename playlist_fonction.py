@@ -159,8 +159,8 @@ def menu_deroulant():
 
     songlist = os.listdir()
     playlist = tk.Listbox(player)
+    pos=0
     for item in songlist:
-        pos = 0
         playlist.insert(pos, item)
         pos = pos + 1
     playlist.pack(fill="both", expand="yes")
@@ -348,7 +348,7 @@ def lecteur_musique():
                     playlist = recup_vote_and_song()
 
                 elif menu_button_rect.collidepoint(event.pos):
-                    # playlist_fonction.menu_deroulant()
+                    #menu_deroulant()
 
                     win = tk.Tk()
                     texte = "Fonction en phase de test, bientôt disponible"
