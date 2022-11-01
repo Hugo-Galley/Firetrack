@@ -32,6 +32,7 @@ def startup_window():
     page_github.pack()
     nom_dev = Button(a_prpos_2, text="Crédits", bg=color, fg='white', font=('Courier', 14),
                      command=lambda: open_dev(windows))
+
     nom_dev.pack()
 
     frame.pack(expand=YES)
@@ -42,6 +43,9 @@ def startup_window():
 
 
 def ouverture_process(windows, entre):
+    if entre.get() == "admin":
+        admin_windows()
+
     playlist_fonction.add_user(entre.get())
     windows.destroy()
     playlist_fonction.lecteur_musique()
@@ -65,6 +69,16 @@ def open_dev(windows):
     noms_des_devs.pack()
     frame_nom.pack(expand=YES)
     dev_win.mainloop()
+
+def admin_windows():
+    admin_win = Tk()
+    admin_win.geometry("480x360")
+    admin_win.minsize(480,360)
+    admin_win.config(background='#24A7A7')
+
+    Label(admin_win,text="Ceci est la page admin",bg='#24A7A7',fg='white',font=('Courier',14)).pack(expand=YES)
+
+    admin_win.mainloop()
 
 
 startup_window()
