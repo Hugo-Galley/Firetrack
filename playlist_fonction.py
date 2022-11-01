@@ -6,6 +6,7 @@ import sqlite3 as sqltor
 import operator
 import pygame
 
+from pytube import YouTube
 
 
 def research(artist, music):
@@ -119,7 +120,7 @@ def recup():
 
 
 def add_vote(name, like):
-    ### SQL
+    # SQL
     conn = sqltor.connect('Data Base/Songs.db')
     cursor = conn.cursor()
     pd = sqltor.connect("Data Base/Songs.db")
@@ -130,24 +131,24 @@ def add_vote(name, like):
     pd.execute(command, (name,))
     pd.commit()
     win = tk.Tk()
-    TEXTE = "Merci d'avoir votée"
-    label = tk.Label(win, text=TEXTE,
-                     wraplength=(50),
+    texte = "Merci d'avoir votée"
+    label = tk.Label(win, text=texte,
+                     wraplength=50,
                      justify=tk.CENTER)
     label.pack()
     win.mainloop()
 
 
 def recup_vote_and_song():
-    song_playlist_trié = []
+    song_playlist_trie = []
     conn = sqltor.connect('Data Base/Songs.db')
     cur = conn.cursor()
     cur.execute("""SELECT titre,vote FROM playlist""")
     result = cur.fetchall()
-    playlist_triée = sorted(result, key=operator.itemgetter(1), reverse=True)
-    for i in range(len(playlist_triée)):
-        song_playlist_trié.append(playlist_triée[i][0])
-    return song_playlist_trié
+    playlist_triee = sorted(result, key=operator.itemgetter(1), reverse=True)
+    for i in range(len(playlist_triee)):
+        song_playlist_trie.append(playlist_triee[i][0])
+    return song_playlist_trie
 
 
 def menu_deroulant():
@@ -172,11 +173,7 @@ def create_table():
     cur.execute("""DELETE FROM user_men """)
 
     cur.executescript("""
-    CREATE TABLE IF NOT EXISTS user_men (
-	user TEXT PRIMARY KEY,
-	nbr_vote INTEGER);
-
-
+    CREATE TABLE IF NOT EXISTS user_men (user TEXT PRIMARY KEY, nbr_vote INTEGER);
     """)
     conn.commit()
     conn.close()
@@ -185,14 +182,14 @@ def create_table():
 def add_user(nom):
     conn = sqltor.connect("Data Base/user.db")
     cur = conn.cursor()
-    donné = (nom, 0)
-    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)", donné)
+    donne = (nom, 0)
+    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)", donne)
     conn.commit()
     conn.close()
 
 
-def add_user_vote(name,like):
-    ### SQL
+def add_user_vote(name, like):
+    # SQL
     conn = sqltor.connect('Data Base/user.db')
     cursor = conn.cursor()
     pd = sqltor.connect("Data Base/user.db")
@@ -212,9 +209,11 @@ def recup_vote_and_user():
 
     return result
 
+
 print(recup_vote_and_user())
 
-def lecteur_musqiue():
+
+def lecteur_musique():
     pygame.init()
     pygame.mixer.init()
     icon = pygame.image.load('assets/logo.png')
@@ -291,7 +290,6 @@ def lecteur_musqiue():
                 running = False
                 pygame.quit()
 
-
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 if play_button_rect.collidepoint(event.pos):
@@ -307,8 +305,8 @@ def lecteur_musqiue():
                     if i == 5 and not premium:
                         win = tk.Tk()
                         win.geometry('200x100')
-                        TEXTE = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
-                        label = tk.Label(win, text=TEXTE, wraplength=(100), justify=tk.CENTER)
+                        texte = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
+                        label = tk.Label(win, text=texte, wraplength=100, justify=tk.CENTER)
                         label.pack()
                         win.mainloop()
                     elif i < len(playlist) - 2:
@@ -318,8 +316,6 @@ def lecteur_musqiue():
                         pygame.mixer.music.queue(playlist[i + 1])
                         print(playlist[i])
 
-
-
                     else:
                         i = 0
                         pygame.mixer.music.load(playlist[i])
@@ -327,14 +323,12 @@ def lecteur_musqiue():
                         pygame.mixer.music.queue(playlist[i + 1])
                         print(playlist[i])
 
-
-
                 elif precedent_button_rect.collidepoint(event.pos):
                     if i == 5 and not premium:
                         win = tk.Tk()
                         win.geometry('200x100')
-                        TEXTE = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
-                        label = tk.Label(win, text=TEXTE, wraplength=(100), justify=tk.CENTER)
+                        texte = "Nombre de swipe épuisé veuillez souscire à l'abonnement premium"
+                        label = tk.Label(win, text=texte, wraplength=100, justify=tk.CENTER)
                         label.pack()
                         win.mainloop()
                     elif i > 0:
@@ -344,7 +338,6 @@ def lecteur_musqiue():
                         pygame.mixer.music.queue(playlist[i - 1])
                         print(playlist[i])
 
-
                     else:
                         i = len(playlist[i]) - 1
                         pygame.mixer.music.load(playlist[i])
@@ -352,25 +345,20 @@ def lecteur_musqiue():
                         pygame.mixer.music.queue(playlist[i - 1])
                         print(playlist[i])
 
-
-
                 elif like_button_rect.collidepoint(event.pos):
                     add_vote(playlist[i], True)
                     playlist = recup_vote_and_song()
-
-
 
                 elif dislike_button_rect.collidepoint(event.pos):
                     add_vote(playlist[i], False)
                     playlist = recup_vote_and_song()
 
-
                 elif menu_button_rect.collidepoint(event.pos):
                     # playlist_fonction.menu_deroulant()
 
                     win = tk.Tk()
-                    TEXTE = "Fonction en phase de test, bientôt disponible"
-                    label = tk.Label(win, text=TEXTE, wraplength=(80), justify=tk.CENTER)
+                    texte = "Fonction en phase de test, bientôt disponible"
+                    label = tk.Label(win, text=texte, wraplength=80, justify=tk.CENTER)
                     label.pack()
                     win.mainloop()
 
@@ -379,8 +367,8 @@ def lecteur_musqiue():
                     premium = True
                     win = tk.Tk()
                     win.geometry('200x100')
-                    TEXTE = "Merci d'avoir souscris à notre offre premium"
-                    label = tk.Label(win, text=TEXTE, wraplength=(70), justify=tk.CENTER)
+                    texte = "Merci d'avoir souscris à notre offre premium"
+                    label = tk.Label(win, text=texte, wraplength=70, justify=tk.CENTER)
                     label.pack()
                     win.mainloop()
 
@@ -392,4 +380,3 @@ def lecteur_musqiue():
                     print("Loading song ...")
                     start = True
                 print("Votre playlist contient : ", len(playlist), " morceaux")
-

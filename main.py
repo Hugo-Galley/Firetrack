@@ -2,55 +2,69 @@ from tkinter import *
 import playlist_fonction
 import webbrowser
 
-def ouverture_process():
 
-     playlist_fonction.add_user(entre.get())
-     windows.destroy()
-     playlist_fonction.lecteur_musqiue()
+def startup_window():
+    windows = Tk()
+    color = '#24A7A7'
+
+    windows.title("Firetrack")
+    windows.geometry("480x360")
+    windows.minsize(480, 360)
+    windows.config(background=color)
+
+    frame = Frame(windows, bg=color)
+    a_prpos = Frame(windows, bg=color)
+    a_prpos_2 = Frame(windows, bg=color)
+
+    en_tete = Label(frame, text="Bienvenue sur FireTrack", bg=color, fg='white', font=("Courrier", 25))
+    en_tete.pack()
+    nom = Label(frame, text="Username", bg=color, fg='white', font=("Courier", 13))
+    nom.pack()
+
+    entre = Entry(frame)
+    entre.pack()
+
+    add_user = Button(frame, text='Add', bg=color, fg='white', font=("Courier", 15),
+                      command=lambda: ouverture_process(windows, entre))
+    add_user.pack()
+    page_github = Button(a_prpos, text="Page Github", bg=color, fg='white', font=("Courier", 14),
+                         command=open_github_page)
+    page_github.pack()
+    nom_dev = Button(a_prpos_2, text="Crédits", bg=color, fg='white', font=('Courier', 14),
+                     command=lambda: open_dev(windows))
+    nom_dev.pack()
+
+    frame.pack(expand=YES)
+    a_prpos.pack(side=LEFT)
+    a_prpos_2.pack(side=RIGHT)
+
+    windows.mainloop()
+
+
+def ouverture_process(windows, entre):
+    playlist_fonction.add_user(entre.get())
+    windows.destroy()
+    playlist_fonction.lecteur_musique()
+
 
 def open_github_page():
-     webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
-
-def open_dev():
-     windows.destroy()
-     dev_win = Tk()
-     dev_win.geometry('480x360')
-     dev_win.minsize(480, 360)
-     dev_win.config(background='#24A7A7')
-
-     frame_nom = Frame(dev_win)
-
-     noms_des_devs = Label(frame_nom, text="Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
-                           bg='#24A7A7', fg='white', font=('Courier', 14)).pack()
-     frame_nom.pack(expand=YES)
-     dev_win.mainloop()
+    webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
 
-windows = Tk()
-color = '#24A7A7'
+def open_dev(windows):
+    windows.destroy()
+    dev_win = Tk()
+    dev_win.geometry('480x360')
+    dev_win.minsize(480, 360)
+    dev_win.config(background='#24A7A7')
 
-windows.title("Firetrack")
-windows.geometry("480x360")
-windows.minsize(480,360)
-windows.config(background= color)
+    frame_nom = Frame(dev_win)
 
-frame = Frame(windows,bg= color)
-a_prpos = Frame(windows,bg= color)
-a_prpos_2 = Frame(windows,bg= color)
-
-En_tete = Label(frame, text="Bienvenue sur FireTrack",bg= color,fg='white',font=("Courrier",25)).pack()
-nom = Label(frame, text="Username",bg= color,fg='white',font=("Courier",13)).pack()
-
-entre = Entry(frame)
-entre.pack()
-
-add_user = Button(frame, text='Add', bg= color,fg='white',font=("Courier",15),command=ouverture_process).pack()
-page_github = Button(a_prpos, text="Page Github",bg= color,fg='white',font=("Courier",14),command=open_github_page).pack()
-nom_dev = Button(a_prpos_2, text="Crédits", bg= color,fg='white',font=('Courier',14),command=open_dev).pack()
+    noms_des_devs = Label(frame_nom, text="Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
+                          bg='#24A7A7', fg='white', font=('Courier', 14))
+    noms_des_devs.pack()
+    frame_nom.pack(expand=YES)
+    dev_win.mainloop()
 
 
-frame.pack(expand=YES)
-a_prpos.pack(side= LEFT)
-a_prpos_2.pack(side=RIGHT)
-
-windows.mainloop()
+startup_window()
