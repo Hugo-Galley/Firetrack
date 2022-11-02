@@ -8,7 +8,7 @@ import pygame
 import Class
 from pytube import YouTube
 
-
+## Choix artiste
 def research(artist, music):
     artist = artist
     music = music
@@ -83,7 +83,7 @@ def choix_music():
     master.mainloop()
     return show_entry_fields()
 
-
+### recuperation contenue SQL
 def recup():
     file_list = os.listdir("Song")
     f = len(file_list)
@@ -150,23 +150,6 @@ def recup_vote_and_song():
         song_playlist_trie.append(playlist_triee[i][0])
     return song_playlist_trie
 
-
-def menu_deroulant():
-    player = tk.Tk()
-    player.title("Playlist")
-    player.geometry("205x400")
-    os.chdir("Song")
-
-    songlist = os.listdir()
-    playlist = tk.Listbox(player)
-    pos=0
-    for item in songlist:
-        playlist.insert(pos, item)
-        pos = pos + 1
-    playlist.pack(fill="both", expand="yes")
-    player.mainloop()
-
-
 def create_table():
     conn = sqltor.connect("Data Base/user.db")
     cur = conn.cursor()
@@ -206,6 +189,23 @@ def recup_vote_and_user():
     result = cur.fetchall()
 
     return result
+
+## Fonction pour lecteure
+
+def menu_deroulant():
+    player = tk.Tk()
+    player.title("Playlist")
+    player.geometry("205x400")
+    os.chdir("Song")
+
+    songlist = os.listdir()
+    playlist = tk.Listbox(player)
+    pos=0
+    for item in songlist:
+        playlist.insert(pos, item)
+        pos = pos + 1
+    playlist.pack(fill="both", expand="yes")
+    player.mainloop()
 
 def lecteur_musique():
     pygame.init()
