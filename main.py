@@ -91,9 +91,9 @@ def admin_windows():
     Mdp = Entry(frame)
     Mdp.pack()
     add_button = Button(secret, text='Add', bg='#24A7A7', fg='white', font=('Courier', 15),
-                        command=lambda: open_info(nom_user.get() )).pack(side=LEFT)
-    reset_button = Button(secret, text='Reset', bg='#24A7A7', fg='white', font=('Courier',15),
-                          command= reset).pack(side=RIGHT)
+                        command=lambda: open_info(nom_user.get() )).pack()
+    #reset_button = Button(secret, text='Reset', bg='#24A7A7', fg='white', font=('Courier',15),
+                          #command= reset).pack(side=RIGHT)
     frame.pack()
 
     def test():
@@ -111,6 +111,12 @@ def admin_windows():
                       command=test).pack()
     def open_info(nom):
         info = playlist_fonction.recup_info_user(nom)
+        if info == []:
+            messagebox = Tk()
+            messagebox.geometry("80x80")
+            Label(messagebox, text="Aucuns utilisateur n'éxiste à se nom dans la base de données", wraplength=110, justify=CENTER).pack()
+            messagebox.mainloop()
+
         print(info)
         Label(retour,text=info,bg='#24A7A7',fg='white', font=('Courier',15)).pack(expand=YES)
         retour.pack()
@@ -118,4 +124,4 @@ def admin_windows():
 
     admin_win.mainloop()
 
-startup_window()
+admin_windows()
