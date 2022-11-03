@@ -118,4 +118,4 @@ def admin_windows():
 
     admin_win.mainloop()
 
-admin_windows()
+startup_window()
