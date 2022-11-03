@@ -12,7 +12,6 @@ def startup_window():
     windows.geometry("480x360")
     windows.minsize(480, 360)
     windows.config(background=color)
-
     frame = Frame(windows, bg=color)
     a_prpos = Frame(windows, bg=color)
     a_prpos_2 = Frame(windows, bg=color)
@@ -71,6 +70,11 @@ def open_credits(windows):
     dev_win.mainloop()
 
 def admin_windows():
+
+    def reset():
+        retour.destroy()
+
+
     admin_win = Tk()
     admin_win.geometry("480x360")
     admin_win.minsize(480,360)
@@ -87,7 +91,9 @@ def admin_windows():
     Mdp = Entry(frame)
     Mdp.pack()
     add_button = Button(secret, text='Add', bg='#24A7A7', fg='white', font=('Courier', 15),
-                        command=lambda: open_info(nom_user.get() )).pack(expand=YES)
+                        command=lambda: open_info(nom_user.get() )).pack(side=LEFT)
+    reset_button = Button(secret, text='Reset', bg='#24A7A7', fg='white', font=('Courier',15),
+                          command= reset).pack(side=RIGHT)
     frame.pack()
 
     def test():
@@ -104,7 +110,6 @@ def admin_windows():
     add_user = Button(frame, text='Add', bg='#24A7A7', fg='white', font=("Courier", 15),
                       command=test).pack()
     def open_info(nom):
-        retour = Frame(admin_win)
         info = playlist_fonction.recup_info_user(nom)
         print(info)
         Label(retour,text=info,bg='#24A7A7',fg='white', font=('Courier',15)).pack(expand=YES)
