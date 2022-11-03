@@ -32,7 +32,7 @@ def startup_window():
                          command=open_github_page)
     page_github.pack()
     nom_dev = Button(a_prpos_2, text="Crédits", bg=color, fg='white', font=('Courier', 14),
-                     command=lambda: open_dev(windows))
+                     command=lambda: open_credits(windows))
 
     nom_dev.pack()
 
@@ -55,7 +55,7 @@ def open_github_page():
     webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
 
-def open_dev(windows):
+def open_credits(windows):
     windows.destroy()
     dev_win = Tk()
     dev_win.geometry('480x360')
@@ -78,15 +78,21 @@ def admin_windows():
 
     secret =  Frame(admin_win)
     frame = Frame(admin_win)
-    Label(secret,text="Ceci est la page admin",bg='#24A7A7',fg='white',font=('Courier',14)).pack(expand=YES)
-    Label(frame,text="Mot de passe",bg='#24A7A7',fg='white',font=('Courier',15)).pack(expand=YES)
+    retour = Frame(admin_win)
 
-    saisi_username = Entry(frame)
-    saisi_username.pack(expand=YES)
+    Label(frame, text="Mot de passe", bg='#24A7A7', fg='white', font=('Courier', 15)).pack(expand=YES)
+    Label(secret,text="Infos user ",bg='#24A7A7',fg='white',font=('Courier',15)).pack(expand=YES)
+    nom_user= Entry(secret)
+    nom_user.pack()
+    Mdp = Entry(frame)
+    Mdp.pack()
+    add_button = Button(secret, text='Add', bg='#24A7A7', fg='white', font=('Courier', 15),
+                        command=lambda: open_info(nom_user.get() )).pack(expand=YES)
     frame.pack()
 
     def test():
-        if saisi_username.get() == "Motdepasse":
+        if Mdp.get() == "Motdepasse":
+            frame.destroy()
             secret.pack()
         else :
             messagebox = Tk()
@@ -95,9 +101,16 @@ def admin_windows():
             messagebox.mainloop()
 
 
-    add_user = Button(admin_win, text='Add', bg='#24A7A7', fg='white', font=("Courier", 15),
+    add_user = Button(frame, text='Add', bg='#24A7A7', fg='white', font=("Courier", 15),
                       command=test).pack()
+    def open_info(nom):
+        retour = Frame(admin_win)
+        info = playlist_fonction.recup_info_user(nom)
+        print(info)
+        Label(retour,text=info,bg='#24A7A7',fg='white', font=('Courier',15)).pack(expand=YES)
+        retour.pack()
+
+
     admin_win.mainloop()
 
-
-startup_window()
+admin_windows()

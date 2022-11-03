@@ -182,10 +182,10 @@ def add_user_vote(name, like):
     pd.execute(command, (name,))
     pd.commit()
 
-def recup_vote_and_user():
+def recup_info_user(nom):
     conn = sqltor.connect('Data Base/user.db')
     cur = conn.cursor()
-    cur.execute("""SELECT user FROM user_men """)
+    cur.execute("""SELECT user,nbr_vote FROM user_men WHERE user = (?) """,[nom])
     result = cur.fetchall()
 
     return result
