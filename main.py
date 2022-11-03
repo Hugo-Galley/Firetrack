@@ -103,6 +103,7 @@ def admin_windows():
         else :
             messagebox = Tk()
             messagebox.geometry("50x50")
+            messagebox.maxsize(50,50)
             Label(messagebox,text="Mot de passe incorect",wraplength=70,justify=CENTER).pack()
             messagebox.mainloop()
 
@@ -114,10 +115,10 @@ def admin_windows():
         if info == []:
             messagebox = Tk()
             messagebox.geometry("80x80")
+            messagebox.maxsize(80,80)
             Label(messagebox, text="Aucuns utilisateur n'éxiste à se nom dans la base de données", wraplength=110, justify=CENTER).pack()
             messagebox.mainloop()
 
-        print(info)
         Label(retour,text=info,bg='#24A7A7',fg='white', font=('Courier',15)).pack(expand=YES)
         retour.pack()
 
