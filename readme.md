@@ -18,5 +18,5 @@ Playlist dynamique vis à vis des votes
 ## Team du Projet
 
 * Développeurs : [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) 
-* Supports Morale : [@Densi12](https://github.com/Densi2) [@ACC](https://github.com/Accel-O)
-
+* Support Morale : [@ACC](https://github.com/Accel-O)
+* Stagiaire :  [@Densi12](https://github.com/Densi2)
