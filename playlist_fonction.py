@@ -170,12 +170,10 @@ def add_user(nom):
     conn.execute("INSERT INTO user_men (user,nbr_vote,premium) VALUES (?, ?,?)", donne)
     conn.commit()
     conn.close()
-add_user('Denis')
+
 
 def add_user_vote(name, like):
     # SQL
-    conn = sqltor.connect('Data Base/user.db')
-    cursor = conn.cursor()
     pd = sqltor.connect("Data Base/user.db")
     if like:
         command = 'update user_men set nbr_vote=nbr_vote+1 where user=(?)'
@@ -183,12 +181,28 @@ def add_user_vote(name, like):
         command = 'update user_men set nbr_vote=nbr_vote-1 where user=(?)'
     pd.execute(command, (name,))
     pd.commit()
+    pd.close()
 
+def add_premium(name):
+    conn = sqltor.connect('Data Base/user.db')
+    command = 'update user_men set premium=premium+1 where user=(?)'
+    conn.execute(command, (name,))
+    conn.commit()
+    conn.close()
+
+def info_premium(nom):
+    conn = sqltor.connect('Data Base/user.db')
+    cur = conn.cursor()
+    cur.execute("""SELECT premium FROM user_men WHERE user = (?)""",[nom])
+    result = cur.fetchall()
+    conn.close()
+    return result
 def recup_info_user(nom):
     conn = sqltor.connect('Data Base/user.db')
     cur = conn.cursor()
     cur.execute("""SELECT user,nbr_vote FROM user_men WHERE user = (?) """,[nom])
     result = cur.fetchall()
+    conn.close()
 
     return result
 
@@ -360,10 +374,24 @@ def lecteur_musique():
 
                     # playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
                 elif premium_button_rect.collidepoint(event.pos):
+                    if not premium :
+                        def return_entry():
+                            add_premium(enter.get())
+                            win.destroy()
+                            return
+                        win = tk.Tk()
+                        win.geometry('200x100')
+                        label = tk.Label(win, text="Nom d'user", wraplength=100, justify=tk.CENTER).pack()
+                        enter = tk.Entry(win)
+                        enter.pack()
+                        tk.Button(win, text='Add', font=("Courier", 8), command=return_entry).pack()
+                        texte = "Merci d'avoir souscris à notre offre premium"
+                        win.mainloop()
+                    else :
+                        texte = "Vous possedez deja l'offre premium"
                     premium = True
                     win = tk.Tk()
                     win.geometry('200x100')
-                    texte = "Merci d'avoir souscris à notre offre premium"
                     label = tk.Label(win, text=texte, wraplength=70, justify=tk.CENTER)
                     label.pack()
                     win.mainloop()
