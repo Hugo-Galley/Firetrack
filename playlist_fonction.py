@@ -6,9 +6,9 @@ import sqlite3 as sqltor
 import operator
 import pygame
 import Class
-from pytube import YouTube
 
 
+## Choix artiste
 def research(artist, music):
     artist = artist
     music = music
@@ -83,7 +83,7 @@ def choix_music():
     master.mainloop()
     return show_entry_fields()
 
-
+### recuperation contenue SQL
 def recup():
     file_list = os.listdir("Song")
     f = len(file_list)
@@ -150,6 +150,63 @@ def recup_vote_and_song():
         song_playlist_trie.append(playlist_triee[i][0])
     return song_playlist_trie
 
+def create_table():
+    conn = sqltor.connect("Data Base/user.db")
+    cur = conn.cursor()
+    cur.execute("""DELETE FROM user_men """)
+
+    cur.executescript("""
+    CREATE TABLE IF NOT EXISTS user_men (user TEXT PRIMARY KEY, nbr_vote INTEGER,premium INTEGER);
+    """)
+    conn.commit()
+    conn.close()
+
+
+
+def add_user(nom):
+    conn = sqltor.connect("Data Base/user.db")
+    cur = conn.cursor()
+    donne = (nom, 0,0)
+    conn.execute("INSERT INTO user_men (user,nbr_vote,premium) VALUES (?, ?,?)", donne)
+    conn.commit()
+    conn.close()
+
+
+def add_user_vote(name, like):
+    # SQL
+    pd = sqltor.connect("Data Base/user.db")
+    if like:
+        command = 'update user_men set nbr_vote=nbr_vote+1 where user=(?)'
+    else:
+        command = 'update user_men set nbr_vote=nbr_vote-1 where user=(?)'
+    pd.execute(command, (name,))
+    pd.commit()
+    pd.close()
+
+def add_premium(name):
+    conn = sqltor.connect('Data Base/user.db')
+    command = 'update user_men set premium=premium+1 where user=(?)'
+    conn.execute(command, (name,))
+    conn.commit()
+    conn.close()
+
+def info_premium(nom):
+    conn = sqltor.connect('Data Base/user.db')
+    cur = conn.cursor()
+    cur.execute("""SELECT premium FROM user_men WHERE user = (?)""",[nom])
+    result = cur.fetchall()
+    conn.close()
+    return result
+def recup_info_user(nom):
+    conn = sqltor.connect('Data Base/user.db')
+    cur = conn.cursor()
+    cur.execute("""SELECT user,nbr_vote FROM user_men WHERE user = (?) """,[nom])
+    result = cur.fetchall()
+    conn.close()
+
+    return result
+
+## Fonction pour lecteure
 
 def menu_deroulant():
     player = tk.Tk()
@@ -165,47 +222,6 @@ def menu_deroulant():
         pos = pos + 1
     playlist.pack(fill="both", expand="yes")
     player.mainloop()
-
-
-def create_table():
-    conn = sqltor.connect("Data Base/user.db")
-    cur = conn.cursor()
-    cur.execute("""DELETE FROM user_men """)
-
-    cur.executescript("""
-    CREATE TABLE IF NOT EXISTS user_men (user TEXT PRIMARY KEY, nbr_vote INTEGER);
-    """)
-    conn.commit()
-    conn.close()
-
-
-def add_user(nom):
-    conn = sqltor.connect("Data Base/user.db")
-    cur = conn.cursor()
-    donne = (nom, 0)
-    conn.execute("INSERT INTO user_men (user,nbr_vote) VALUES (?, ?)", donne)
-    conn.commit()
-    conn.close()
-
-def add_user_vote(name, like):
-    # SQL
-    conn = sqltor.connect('Data Base/user.db')
-    cursor = conn.cursor()
-    pd = sqltor.connect("Data Base/user.db")
-    if like:
-        command = 'update user_men set nbr_vote=nbr_vote+1 where user=(?)'
-    else:
-        command = 'update user_men set nbr_vote=nbr_vote-1 where user=(?)'
-    pd.execute(command, (name,))
-    pd.commit()
-
-def recup_vote_and_user():
-    conn = sqltor.connect('Data Base/user.db')
-    cur = conn.cursor()
-    cur.execute("""SELECT user FROM user_men """)
-    result = cur.fetchall()
-
-    return result
 
 def lecteur_musique():
     pygame.init()
@@ -358,10 +374,24 @@ def lecteur_musique():
 
                     # playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
                 elif premium_button_rect.collidepoint(event.pos):
+                    if not premium :
+                        def return_entry():
+                            add_premium(enter.get())
+                            win.destroy()
+                            return
+                        win = tk.Tk()
+                        win.geometry('200x100')
+                        label = tk.Label(win, text="Nom d'user", wraplength=100, justify=tk.CENTER).pack()
+                        enter = tk.Entry(win)
+                        enter.pack()
+                        tk.Button(win, text='Add', font=("Courier", 8), command=return_entry).pack()
+                        texte = "Merci d'avoir souscris à notre offre premium"
+                        win.mainloop()
+                    else :
+                        texte = "Vous possedez deja l'offre premium"
                     premium = True
                     win = tk.Tk()
                     win.geometry('200x100')
-                    texte = "Merci d'avoir souscris à notre offre premium"
                     label = tk.Label(win, text=texte, wraplength=70, justify=tk.CENTER)
                     label.pack()
                     win.mainloop()
