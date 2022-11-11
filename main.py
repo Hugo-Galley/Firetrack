@@ -4,100 +4,96 @@ import webbrowser
 import Class
 
 
-def startup_window():
-    windows = Tk()
-    color = '#24A7A7'
-
-    windows.title("Firetrack")
-    windows.geometry("480x360")
-    windows.minsize(480, 360)
-    windows.config(background=color)
-
-    frame = Frame(windows, bg=color)
-    a_prpos = Frame(windows, bg=color)
-    a_prpos_2 = Frame(windows, bg=color)
-
-    en_tete = Label(frame, text="Bienvenue sur FireTrack", bg=color, fg='white', font=("Courrier", 25))
-    en_tete.pack()
-    nom = Label(frame, text="Username", bg=color, fg='white', font=("Courier", 13))
-    nom.pack()
-
-    entre = Entry(frame)
-    entre.pack()
-
-    add_user = Button(frame, text='Add', bg=color, fg='white', font=("Courier", 15),
-                      command=lambda: ouverture_process(windows, entre))
-    add_user.pack()
-    page_github = Button(a_prpos, text="Page Github", bg=color, fg='white', font=("Courier", 14),
-                         command=open_github_page)
-    page_github.pack()
-    nom_dev = Button(a_prpos_2, text="Crédits", bg=color, fg='white', font=('Courier', 14),
-                     command=lambda: open_dev(windows))
-
-    nom_dev.pack()
-
-    frame.pack(expand=YES)
-    a_prpos.pack(side=LEFT)
-    a_prpos_2.pack(side=RIGHT)
-
-    windows.mainloop()
+NAME = "Firetrack"
+COLOR = ('#24A7A7', "white")
+SIZE = "480x360"
+MIN_SIZE = (480, 360)
+FONT_NAME = "Courrier"
 
 
-def ouverture_process(windows, entre):
+def setup_window():
+    window = Class.Window(NAME, COLOR, SIZE, MIN_SIZE)
+
+    set_username_window(window)
+
+    window.window.mainloop()
+
+
+def set_username_window(window):
+    window.window_reset()
+
+    frame = window.create_frame(window.window, expand=TRUE)
+    a_prpos = window.create_frame(window.window, side=LEFT)
+    a_prpos2 = window.create_frame(window.window, side=RIGHT)
+
+    en_tete = window.create_label(frame, text=f"Bienvenue sur {NAME}", font=(FONT_NAME, 25))
+    name = window.create_label(frame, text="Username", font=(FONT_NAME, 13))
+
+    entry = window.create_entry(frame)
+
+    add_user = window.create_button(frame, text='Add', font=(FONT_NAME, 15),
+                                    command=lambda: ouverture_process(window, entry))
+    page_github = window.create_button(a_prpos, text="Page Github", font=(FONT_NAME, 14),
+                                       command=open_github_page)
+    nom_dev = window.create_button(a_prpos2, text="Crédits", font=(FONT_NAME, 14),
+                                   command=lambda: open_dev(window))
+
+
+def ouverture_process(window, entre):
     if entre.get() == "admin":
         admin_windows()
 
     playlist_fonction.add_user(entre.get())
-    windows.destroy()
+    window.window.destroy()
     playlist_fonction.lecteur_musique()
+
 
 def open_github_page():
     webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
 
-def open_dev(windows):
-    windows.destroy()
-    dev_win = Tk()
-    dev_win.geometry('480x360')
-    dev_win.minsize(480, 360)
-    dev_win.config(background='#24A7A7')
+def open_dev(window):
+    window.window_reset()
 
-    frame_nom = Frame(dev_win)
+    frame_nom = window.create_frame(window.window, expand=TRUE)
+    frame2 = window.create_frame(window.window, side=LEFT)
 
-    noms_des_devs = Label(frame_nom, text="Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
-                          bg='#24A7A7', fg='white', font=('Courier', 14))
-    noms_des_devs.pack()
-    frame_nom.pack(expand=YES)
-    dev_win.mainloop()
+    noms_des_devs = window.create_label(frame_nom, text="Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
+                                        font=(FONT_NAME, 14))
+
+    return_button = window.create_button(frame2, text="Retour", font=(FONT_NAME, 15),
+                                         command=lambda: set_username_window(window))
+
 
 def admin_windows():
-    admin_win = Tk()
-    admin_win.geometry("480x360")
-    admin_win.minsize(480,360)
-    admin_win.config(background='#24A7A7')
+    admin_win = Class.Window("Admin", COLOR, SIZE, MIN_SIZE)
 
-    secret =  Frame(admin_win)
-    frame = Frame(admin_win)
-    Label(secret,text="Ceci est la page admin",bg='#24A7A7',fg='white',font=('Courier',14)).pack(expand=YES)
-    Label(frame,text="Mot de passe",bg='#24A7A7',fg='white',font=('Courier',15)).pack(expand=YES)
+    frame = admin_win.create_frame(admin_win.window)
 
-    saisi_username = Entry(frame)
-    saisi_username.pack(expand=YES)
-    frame.pack()
+    secret_frame = admin_win.create_frame(admin_win.window)
+    secret_frame.pack_forget()
+
+    error_frame = admin_win.create_frame(admin_win.window)
+    error_frame.pack_forget()
+
+    label = admin_win.create_label(frame, text="Mot de passe", font=(FONT_NAME, 15))
+    secret_label = admin_win.create_label(secret_frame, text="Ceci est la page admin", font=(FONT_NAME, 14))
+    error_label = admin_win.create_label(error_frame, text="Mot de passe incorrecte", font=(FONT_NAME, 14))
+
+    username = admin_win.create_entry(frame, expand=TRUE)
 
     def test():
-        if saisi_username.get() == "Motdepasse":
-            secret.pack()
-        else :
-            messagebox = Tk()
-            messagebox.geometry("50x50")
-            Label(messagebox,text="Mot de passe incorect",wraplength=70,justify=CENTER).pack()
-            messagebox.mainloop()
+        if username.get() == "Motdepasse":
+            error_frame.pack_forget()
+            secret_frame.pack()
+        else:
+            secret_frame.pack_forget()
+            error_frame.pack()
+
+    add_user = admin_win.create_button(admin_win.window, text="Add", font=(FONT_NAME, 15), command=test)
+
+    admin_win.window.mainloop()
 
 
-    add_user = Button(admin_win, text='Add', bg='#24A7A7', fg='white', font=("Courier", 15),
-                      command=test).pack()
-    admin_win.mainloop()
-
-
-startup_window()
+if __name__ == "__main__":
+    setup_window()
