@@ -1,8 +1,6 @@
+import random
 from tkinter import *
-import playlist_fonction
-import webbrowser
-import Class
-
+import playlist_fonction, webbrowser
 
 def startup_window():
     windows = Tk()
@@ -26,18 +24,24 @@ def startup_window():
 
     add_user = Button(frame, text='Add', bg=color, fg='white', font=("Courier", 15),
                       command=lambda: ouverture_process(windows, entre))
+
+
+
     add_user.pack()
     page_github = Button(a_prpos, text="Page Github", bg=color, fg='white', font=("Courier", 14),
                          command=open_github_page)
     page_github.pack()
     nom_dev = Button(a_prpos_2, text="Crédits", bg=color, fg='white', font=('Courier', 14),
                      command=lambda: open_credits(windows))
+    Button(frame, text='Create Room', bg='#24A7A7', fg='white', font=('Courier', 10), command=lambda:create_room(windows=windows)).pack()
 
     nom_dev.pack()
 
     frame.pack(expand=YES)
     a_prpos.pack(side=LEFT)
     a_prpos_2.pack(side=RIGHT)
+
+
 
     windows.mainloop()
 
@@ -54,8 +58,8 @@ def open_github_page():
     webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
 
+
 def open_credits(windows):
-    windows.destroy()
     dev_win = Tk()
     dev_win.geometry('480x360')
     dev_win.minsize(480, 360)
@@ -80,9 +84,9 @@ def admin_windows():
     admin_win.minsize(480,360)
     admin_win.config(background='#24A7A7')
 
-    secret =  Frame(admin_win)
-    frame = Frame(admin_win)
-    retour = Frame(admin_win)
+    secret =  Frame(admin_win,bg='#24A7A7')
+    frame = Frame(admin_win,bg='#24A7A7')
+    retour = Frame(admin_win,bg='#24A7A7')
 
     Label(frame, text="Mot de passe", bg='#24A7A7', fg='white', font=('Courier', 15)).pack(expand=YES)
     Label(secret,text="Infos user ",bg='#24A7A7',fg='white',font=('Courier',15)).pack(expand=YES)
@@ -125,4 +129,33 @@ def admin_windows():
 
     admin_win.mainloop()
 
+def create_room(windows):
+
+    def add_room():
+        playlist_fonction.add_room(username=enter_user_room.get(),num=random.randint(0,346))
+        win_room.destroy()
+        windows.destroy()
+        playlist_fonction.lecteur_musique()
+
+    win_room = Tk()
+    win_room.geometry("480x360")
+    win_room.minsize(480,360)
+    win_room.config(background='#24A7A7')
+
+
+    Label(win_room,text='Crée une Room',bg='#24A7A7', fg='white',font=('Courrier',25)).pack()
+    Label(win_room, text='Username', bg='#24A7A7', fg='white', font=('Courrier', 15)).pack()
+    enter_user_room = Entry(win_room)
+    enter_user_room.pack()
+
+    Button(win_room,text='Add',bg='#24A7A7',fg='white',font=('Courier',13),command=add_room).pack()
+
+
+
+    win_room.mainloop()
+
+
+
 startup_window()
+
+
