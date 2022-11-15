@@ -1,11 +1,7 @@
-import os
-import urllib.request
-import re
+import os, re, urllib.request, operator, pygame
 import tkinter as tk
 import sqlite3 as sqltor
-import operator
-import pygame
-import Class
+
 
 
 ## Choix artiste
@@ -174,14 +170,14 @@ def add_user(nom):
 
 def add_user_vote(name, like):
     # SQL
-    pd = sqltor.connect("Data Base/user.db")
+    conn = sqltor.connect("Data Base/user.db")
     if like:
         command = 'update user_men set nbr_vote=nbr_vote+1 where user=(?)'
     else:
         command = 'update user_men set nbr_vote=nbr_vote-1 where user=(?)'
-    pd.execute(command, (name,))
-    pd.commit()
-    pd.close()
+    conn.execute(command, (name,))
+    conn.commit()
+    conn.close()
 
 def add_premium(name):
     conn = sqltor.connect('Data Base/user.db')
@@ -200,11 +196,26 @@ def info_premium(nom):
 def recup_info_user(nom):
     conn = sqltor.connect('Data Base/user.db')
     cur = conn.cursor()
-    cur.execute("""SELECT user,nbr_vote FROM user_men WHERE user = (?) """,[nom])
+    cur.execute("""SELECT * FROM user_men WHERE user = (?) """,[nom])
     result = cur.fetchall()
     conn.close()
 
     return result
+
+def add_room(num,username):
+    conn = sqltor.connect("Data Base/room.db")
+    cur = conn.cursor()
+    donne = (num,username)
+    conn.execute("INSERT INTO room (num_room, user) VALUES (?, ?)", donne)
+    conn.commit()
+    conn.close()
+
+
+
+
+
+
+
 
 ## Fonction pour lecteure
 
