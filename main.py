@@ -37,6 +37,7 @@ def startup_window():
 
     nom_dev.pack()
 
+    
     frame.pack(expand=YES)
     a_prpos.pack(side=LEFT)
     a_prpos_2.pack(side=RIGHT)
