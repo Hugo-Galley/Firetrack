@@ -5,24 +5,24 @@ import re
 import sqlite3 as sqltor
 import tkinter as tk
 import urllib.request
-
 from pytube import YouTube
+import time
+
 
 
 # Choix artiste
-def research(artist, music):
-    artist = artist
-    music = music
-    html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + artist + music)
-    video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-    link = ("https://www.youtube.com/watch?v=" + video_ids[0])
+#def research(music):
+    #artist = ''
+    #html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + music + artist)
+    #video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+    #link = ("https://www.youtube.com/watch?v=" + video_ids[0])
 
-    return link
+    #return link
 
 
-def download_video(link):
+def download_video():
     # extract only audio
-    yt = YouTube(link)
+    yt = YouTube('https://www.youtube.com/watch?v=wVkVuGrJFjo')
     video = yt.streams.filter(only_audio=True).first()
 
     # check for destination to save file
@@ -35,39 +35,19 @@ def download_video(link):
     base, ext = os.path.splitext(out_file)
     new_file = base + '.mp3'
     os.rename(out_file, new_file)
+download_video()
 
-
-def add_video(artist, music):
-    download_video(research(artist, music))
-
-
-def choix_artiste():
-    def show_entry_fields():
-        artist = e1.get()
-        master.destroy()
-        return artist
-
-    master = tk.Tk()
-    tk.Label(master, text="Artist ").grid(row=0)
-
-    e1 = tk.Entry(master)
-
-    e1.grid(row=0, column=1)
-
-    tk.Button(master, text='Add', command=show_entry_fields).grid(row=3,
-                                                                  column=1,
-                                                                  sticky=tk.W,
-                                                                  pady=4)
-
-    master.mainloop()
-    return show_entry_fields()
+def add_video(music):
+    download_video(str(music))
 
 
 def choix_music():
+    music = ''
     def show_entry_fields():
         music = e2.get()
+        print(music)
         master.destroy()
-        return music
+
 
     master = tk.Tk()
     tk.Label(master, text="Music ").grid(row=1)
@@ -82,7 +62,7 @@ def choix_music():
                                                                   pady=4)
 
     master.mainloop()
-    return show_entry_fields()
+    return music
 
 
 # recuperation contenue SQL
@@ -222,15 +202,14 @@ def add_room(num, username):
     conn.close()
 
 
-# Fonction pour lecteure
+
 
 def menu_deroulant():
     player = tk.Tk()
     player.title("Playlist")
     player.geometry("205x400")
-    os.chdir("Song")
 
-    songlist = os.listdir()
+    songlist = os.listdir("Song")
     playlist = tk.Listbox(player)
     pos = 0
     for item in songlist:
@@ -383,13 +362,14 @@ def lecteur_musique():
                 elif menu_button_rect.collidepoint(event.pos):
                     # menu_deroulant()
 
-                    win = tk.Tk()
-                    texte = "Fonction en phase de test, bientôt disponible"
-                    label = tk.Label(win, text=texte, wraplength=80, justify=tk.CENTER)
-                    label.pack()
-                    win.mainloop()
+                    # win = tk.Tk()
+                    # texte = "Fonction en phase de test, bientôt disponible"
+                    # label = tk.Label(win, text=texte, wraplength=80, justify=tk.CENTER)
+                    # label.pack()
+                    # win.mainloop()
 
-                    # playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
+
+                    add_video(choix_music())
                 elif premium_button_rect.collidepoint(event.pos):
                     if not premium:
                         def return_entry():
@@ -424,3 +404,4 @@ def lecteur_musique():
                     print("Loading song ...")
                     start = True
                 print("Votre playlist contient : ", len(playlist), " morceaux")
+lecteur_musique()
