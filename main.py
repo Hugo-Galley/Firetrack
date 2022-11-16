@@ -16,19 +16,19 @@ def startup_window():
     a_prpos = Frame(windows, bg=color)
     a_prpos_2 = Frame(windows, bg=color)
 
-    en_tete = Label(frame, text="Bienvenue sur FireTrack", bg=color, fg='white', font=("Courrier", 25))
-    en_tete.pack()
+    en_tete = Label(frame, text="Bienvenue sur FireTrack", bg=color, fg='white', font=("Courrier", 25)).pack()
     nom = Label(frame, text="Username", bg=color, fg='white', font=("Courier", 13))
     nom.pack()
 
     entre = Entry(frame)
     entre.pack()
-
     add_user = Button(frame, text='Add', bg=color, fg='white', font=("Courier", 15),
                       command=lambda: ouverture_process(windows, entre))
     add_user.pack()
     page_github = Button(a_prpos, text="Page Github", bg=color, fg='white', font=("Courier", 14),
                          command=open_github_page)
+
+
     page_github.pack()
     nom_dev = Button(a_prpos_2, text="Crédits", bg=color, fg='white', font=('Courier', 14),
                      command=lambda: open_credits(windows))
