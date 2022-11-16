@@ -29,6 +29,7 @@ def download_video(link):
     destination = "Song"
 
     # download the file
+    print(f"Downloading the vidéo {yt.title}")
     out_file = video.download(output_path=destination)
 
     # save the file

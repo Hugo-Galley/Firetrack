@@ -1,19 +1,24 @@
 from tkinter import *
 
 
+# class Window pour simplifier la creation de fenêtre tkinter
 class Window:
 
     def __init__(self, name, color, size, minsize):
+        # attribution de tous les paramètres de la fenêtre
         self.name = name
         self.size = size
         self.min_width, self.min_height = minsize
         self.bg_color, self.fg_color = color
 
+        # creation de l'instance de la fenêtre tkinter
         self.window = self.creat_window()
 
+        # liste de tous les widgets enfants de la fenêtre
         self.widget_list = list()
 
     def creat_window(self):
+        # crée l'instance de la fenêtre tkinter avec les paramètres de la class Window
         window = Tk()
         window.title(self.name)
         window.geometry(self.size)
@@ -24,10 +29,13 @@ class Window:
 
     def create_frame(self, master, expand=FALSE, side=None):
         frame = Frame(master, bg=self.bg_color)
+
         if side is not None:
             frame.pack(expand=expand, side=side)
         else:
             frame.pack(expand=expand)
+
+        # ajoute la frame créée à la liste de widgets
         self.widget_list.append(frame)
 
         return frame
@@ -46,6 +54,7 @@ class Window:
         else:
             label.pack(expand=expand)
 
+        # ajoute le label créée à la liste de widgets
         self.widget_list.append(label)
 
         return label
@@ -64,6 +73,7 @@ class Window:
         else:
             button.pack(expand=expand)
 
+        # ajoute le bouton créée à la liste de widgets
         self.widget_list.append(button)
 
         return button
@@ -76,14 +86,17 @@ class Window:
         else:
             entry.pack(expand=expand)
 
+        # ajoute le champ d'entré créée à la liste de widgets
         self.widget_list.append(entry)
 
         return entry
 
     def window_reset(self):
+        # reset les widgets présent dans la fenêtre
         for widget in self.widget_list:
             widget.pack_forget()
 
+        # reset la liste des widgets enfants de la fenêtre
         self.widget_list = list()
 
 
