@@ -1,3 +1,5 @@
+from typing import Any
+
 import random
 from tkinter import *
 
@@ -11,12 +13,22 @@ MIN_SIZE = (480, 360)
 FONT_NAME = "Courrier"
 
 
-def startup_window():
+def open_window():
     # attribut une instance de la class Window à la variable 'obj_window'
     obj_window = Class.Window(TITLE, COLORS, SIZE, MIN_SIZE)
 
     # attribution l'instance de la fenêtre tkinter à la variable window
     window = obj_window.window
+
+    startup_window(obj_window, window)
+
+    # loop de la fenêtre
+    window.mainloop()
+
+
+
+def startup_window(obj_window, window):
+    obj_window.window_reset()
 
     # creation des frames
     frame = obj_window.create_frame(window, expand=TRUE)
@@ -41,18 +53,15 @@ def startup_window():
                                            command=open_github_page)
 
     nom_dev = obj_window.create_button(a_prpos_2, "Crédits", (FONT_NAME, 14),
-                                       command=lambda: open_credits(window))
-
-    # loop de la fenêtre
-    window.mainloop()
+                                       command=lambda: open_credits(obj_window, window))
 
 
-def ouverture_process(windows, entre):
-    if entre.get() == "admin":
-        admin_windows()
+def ouverture_process(window, entry):
+    if entry.get() == "admin":
+        return admin_windows()
 
-    playlist_fonction.add_user(entre.get())
-    windows.destroy()
+    playlist_fonction.add_user(entry.get())
+    window.destroy()
     playlist_fonction.lecteur_musique()
 
 
@@ -60,19 +69,17 @@ def open_github_page():
     webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
 
-def open_credits(windows):
-    dev_win = Tk()
-    dev_win.geometry('480x360')
-    dev_win.minsize(480, 360)
-    dev_win.config(background='#24A7A7')
+def open_credits(obj_window, window):
+    obj_window.window_reset()
 
-    frame_nom = Frame(dev_win)
+    frame_nom = obj_window.create_frame(window, expand=TRUE)
+    frame2 = obj_window.create_frame(window, side=LEFT)
 
-    noms_des_devs = Label(frame_nom, text="Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
-                          bg='#24A7A7', fg='white', font=('Courier', 14))
-    noms_des_devs.pack()
-    frame_nom.pack(expand=YES)
-    dev_win.mainloop()
+    devs_name = obj_window.create_label(frame_nom, "Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
+                                        (FONT_NAME, 15))
+
+    back_button = obj_window.create_button(frame2, "Retour", (FONT_NAME, 20),
+                                           command=lambda: startup_window(obj_window, window))
 
 
 def admin_windows():
@@ -152,4 +159,4 @@ def create_room(windows):
     win_room.mainloop()
 
 
-startup_window()
+open_window()
