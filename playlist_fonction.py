@@ -228,9 +228,8 @@ def menu_deroulant():
     player = tk.Tk()
     player.title("Playlist")
     player.geometry("205x400")
-    os.chdir("Song")
 
-    songlist = os.listdir()
+    songlist = os.listdir("Song")
     playlist = tk.Listbox(player)
     pos = 0
     for item in songlist:
@@ -381,13 +380,13 @@ def lecteur_musique():
                     playlist = recup_vote_and_song()
 
                 elif menu_button_rect.collidepoint(event.pos):
-                    # menu_deroulant()
+                    menu_deroulant()
 
-                    win = tk.Tk()
-                    texte = "Fonction en phase de test, bientôt disponible"
-                    label = tk.Label(win, text=texte, wraplength=80, justify=tk.CENTER)
-                    label.pack()
-                    win.mainloop()
+                    # win = tk.Tk()
+                    # texte = "Fonction en phase de test, bientôt disponible"
+                    # label = tk.Label(win, text=texte, wraplength=80, justify=tk.CENTER)
+                    # label.pack()
+                    # win.mainloop()
 
                     # playlist_fonction.add_video(playlist_fonction.choix_artiste(), playlist_fonction.choix_music())
                 elif premium_button_rect.collidepoint(event.pos):

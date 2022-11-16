@@ -85,7 +85,7 @@ def admin_windows():
     admin_win.minsize(480,360)
     admin_win.config(background='#24A7A7')
 
-    secret =  Frame(admin_win,bg='#24A7A7')
+    secret = Frame(admin_win,bg='#24A7A7')
     frame = Frame(admin_win,bg='#24A7A7')
     retour = Frame(admin_win,bg='#24A7A7')
 
