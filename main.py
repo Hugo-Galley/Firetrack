@@ -1,5 +1,3 @@
-from typing import Any
-
 import random
 from tkinter import *
 
