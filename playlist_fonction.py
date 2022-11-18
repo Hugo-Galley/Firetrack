@@ -20,9 +20,9 @@ import time
     #return link
 
 
-def download_video():
+def download_video(link):
     # extract only audio
-    yt = YouTube('https://www.youtube.com/watch?v=wVkVuGrJFjo')
+    yt = YouTube(link)
     video = yt.streams.filter(only_audio=True).first()
 
     # check for destination to save file
@@ -35,7 +35,6 @@ def download_video():
     base, ext = os.path.splitext(out_file)
     new_file = base + '.mp3'
     os.rename(out_file, new_file)
-download_video()
 
 def add_video(music):
     download_video(str(music))
@@ -209,14 +208,22 @@ def menu_deroulant():
     player.title("Playlist")
     player.geometry("205x400")
 
-    songlist = os.listdir("Song")
-    playlist = tk.Listbox(player)
+    song = os.listdir("Song")
+    songlist = []
+    for i in song:
+        i = "Song/" + i
+        songlist.append(i)
+
+    playlist = tk.Listbox(player,highlightcolor="blue",selectmode = tk.SINGLE)
     pos = 0
     for item in songlist:
         playlist.insert(pos, item)
         pos = pos + 1
     playlist.pack(fill="both", expand="yes")
+    var = playlist.get(tk.ACTIVE)
     player.mainloop()
+
+    return var
 
 
 def lecteur_musique():
@@ -360,7 +367,7 @@ def lecteur_musique():
                     playlist = recup_vote_and_song()
 
                 elif menu_button_rect.collidepoint(event.pos):
-                    # menu_deroulant()
+                    pygame.mixer.music.play(int(menu_deroulant()))
 
                     # win = tk.Tk()
                     # texte = "Fonction en phase de test, bientôt disponible"
@@ -369,7 +376,7 @@ def lecteur_musique():
                     # win.mainloop()
 
 
-                    add_video(choix_music())
+                    #add_video(choix_music())
                 elif premium_button_rect.collidepoint(event.pos):
                     if not premium:
                         def return_entry():
@@ -404,4 +411,6 @@ def lecteur_musique():
                     print("Loading song ...")
                     start = True
                 print("Votre playlist contient : ", len(playlist), " morceaux")
-lecteur_musique()
+
+
+print((menu_deroulant()))
