@@ -11,15 +11,14 @@ import time
 import moviepy.editor as mp
 
 
-
 # Choix artiste
-#def research(music):
-    #artist = ''
-    #html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + music + artist)
-    #video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-    #link = ("https://www.youtube.com/watch?v=" + video_ids[0])
+def research(music):
+    artist = ''
+    html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + music + artist)
+    video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+    link = ("https://www.youtube.com/watch?v=" + video_ids[0])
 
-    #return link
+    return link
 
 
 def download_video(link):
@@ -223,7 +222,7 @@ def menu_deroulant():
         i = "Song/" + i
         songlist.append(i)
 
-    playlist = tk.Listbox(player,highlightcolor="blue",selectmode = tk.SINGLE)
+    playlist = tk.Listbox(player, highlightcolor="blue", selectmode=tk.SINGLE)
     pos = 0
     for item in songlist:
         playlist.insert(pos, item)
@@ -376,7 +375,7 @@ def lecteur_musique():
                     playlist = recup_vote_and_song()
 
                 elif menu_button_rect.collidepoint(event.pos):
-                    pygame.mixer.music.play(int(menu_deroulant()))
+                    pygame.mixer.music.play(menu_deroulant())
 
                     # win = tk.Tk()
                     # texte = "Fonction en phase de test, bientôt disponible"
@@ -420,6 +419,3 @@ def lecteur_musique():
                     print("Loading song ...")
                     start = True
                 print("Votre playlist contient : ", len(playlist), " morceaux")
-
-
-print((menu_deroulant()))

@@ -1,6 +1,60 @@
 from tkinter import *
 
 
+class Playlist:
+
+    playlist = list()
+    is_empty = True
+    cursor = 0
+    max_cursor = 0
+
+    def add_song(self, song):
+        if song is list:
+            self.playlist.extend(song)
+        else:
+            self.playlist.append(song)
+
+        self.max_cursor = len(self.playlist)
+        self.is_empty = False
+
+    def delete_song(self, song):
+        if self.is_empty:
+            return print("Oppération impossible, votre playliste est vide")
+
+        if song is list:
+            for element in song:
+                self.playlist.remove(element)
+        else:
+            self.playlist.remove(song)
+
+        self.max_cursor = len(self.playlist)
+
+        if len(self.playlist) == 0:
+            self.is_empty = True
+
+    def get_song(self):
+        return self.playlist
+
+    def reset_playlist(self):
+        self.playlist = list()
+        self.max_cursor = 0
+
+    def current(self):
+        return self.playlist[self.cursor]
+
+    def next(self):
+        if self.cursor < self.max_cursor:
+            self.cursor += 1
+        else:
+            self.cursor = 0
+
+    def previous(self):
+        if self.cursor > 0:
+            self.cursor -= 1
+        else:
+            self.cursor = self.max_cursor
+
+
 # class Window pour simplifier la creation de fenêtre tkinter
 class Window:
 
