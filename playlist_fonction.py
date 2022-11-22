@@ -8,6 +8,8 @@ import urllib.request
 from pytube import YouTube
 import time
 
+import moviepy.editor as mp
+
 
 
 # Choix artiste
@@ -31,10 +33,17 @@ def download_video(link):
     # download the file
     out_file = video.download(output_path=destination)
 
+    my_clip = mp.VideoFileClip(os.path.abspath(out_file))
+
     # save the file
     base, ext = os.path.splitext(out_file)
     new_file = base + '.mp3'
-    os.rename(out_file, new_file)
+
+    my_clip.audio.write_audiofile(new_file)
+    my_clip.close()
+
+    os.remove(out_file)
+
 
 def add_video(music):
     download_video(str(music))
