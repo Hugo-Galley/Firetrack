@@ -39,7 +39,7 @@ class Playlist:
         self.playlist = list()
         self.max_cursor = 0
 
-    def current(self):
+    def current_song(self):
         return self.playlist[self.cursor]
 
     def next(self):
