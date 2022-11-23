@@ -8,52 +8,69 @@ class Playlist:
     cursor = 0
     max_cursor = 0
 
+    # ajoute une ou plusieurs musiques à la playliste
     def add_song(self, song):
+        # regarde si c'est une liste de musique ou juste une à ajouter
+        # ajoute la ou les musiques avec la méthode approprié
         if song is list:
             self.playlist.extend(song)
         else:
             self.playlist.append(song)
 
+        # réadapte la position max
         self.max_cursor = len(self.playlist)
+        # change le statu de la playliste à non-vide
         self.is_empty = False
 
+    # supprime une ou plusieurs musiques de la playliste
     def delete_song(self, song):
+        # vérifi si la playliste est vide
         if self.is_empty:
             return print("Oppération impossible, votre playliste est vide")
 
+        # regarde si c'est une liste de musique ou juste une à supprimer
+        # supprime la ou les musiques avec la méthode approprié
         if song is list:
             for element in song:
                 self.playlist.remove(element)
         else:
             self.playlist.remove(song)
 
+        # réadapte la position max
         self.max_cursor = len(self.playlist)
 
+        # vérifi si la playliste est devenu vide après la supprétion des element
         if len(self.playlist) == 0:
             self.is_empty = True
 
+    # renvoie les musiques contenues dans la playliste
     def get_song(self):
         return self.playlist
 
+    # réinitialise la playliste et la position max
     def reset_playlist(self):
         self.playlist = list()
         self.max_cursor = 0
 
+    # renvoie la musique actuelle
     def current_song(self):
         return self.playlist[self.cursor]
 
+    # passe à la musique suivante
     def next(self):
         if self.cursor < self.max_cursor:
             self.cursor += 1
         else:
             self.cursor = 0
 
+    # reviens à la musique précédente
     def previous(self):
         if self.cursor > 0:
             self.cursor -= 1
         else:
             self.cursor = self.max_cursor
 
+    # change la musique et adapte le cursor à la position de la musique
     def change_song(self, song):
         if song in self.playlist:
             self.cursor = self.playlist.index(song)
