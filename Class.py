@@ -54,6 +54,12 @@ class Playlist:
         else:
             self.cursor = self.max_cursor
 
+    def change_song(self, song):
+        if song in self.playlist:
+            self.cursor = self.playlist.index(song)
+        else:
+            print("Cette chanson n'est pas dans la playliste")
+
 
 # class Window pour simplifier la creation de fenêtre tkinter
 class Window:
