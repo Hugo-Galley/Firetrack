@@ -1,11 +1,13 @@
 import random
 from tkinter import *
+from customtkinter import *
 
 import Class
 import playlist_fonction, webbrowser
 
-COLORS = ("#24A7A7", "white")
+COLORS = ("#24A7A7", '#24A7A7')
 TITLE = "Firetrack"
+TEXT_COLOR = 'white'
 SIZE = "480x360"
 MIN_SIZE = (480, 360)
 FONT_NAME = "Courrier"
@@ -84,22 +86,22 @@ def admin_windows():
     def reset():
         retour.destroy()
 
-    admin_win = Tk()
+    admin_win = CTk()
     admin_win.geometry("480x360")
     admin_win.minsize(480, 360)
     admin_win.config(background='#24A7A7')
 
-    secret = Frame(admin_win, bg='#24A7A7')
-    frame = Frame(admin_win, bg='#24A7A7')
-    retour = Frame(admin_win, bg='#24A7A7')
+    secret = CTkFrame(admin_win, bg_color='#24A7A7')
+    frame = CTkFrame(admin_win, bg_color='#24A7A7')
+    retour = CTkFrame(admin_win, bg_color='#24A7A7')
 
-    Label(frame, text="Mot de passe", bg='#24A7A7', fg='white', font=('Courier', 15)).pack(expand=YES)
-    Label(secret, text="Infos user ", bg='#24A7A7', fg='white', font=('Courier', 15)).pack(expand=YES)
-    nom_user = Entry(secret)
+    CTkLabel(frame, text="Mot de passe", bg_color='#24A7A7', fg_color='#24A7A7', font=('Courier', 15)).pack(expand=YES)
+    CTkLabel(secret, text="Infos user ", bg_color='#24A7A7', fg_color='#24A7A7', font=('Courier', 15)).pack(expand=YES)
+    nom_user = CTkEntry(secret)
     nom_user.pack()
-    Mdp = Entry(frame)
+    Mdp = CTkEntry(frame)
     Mdp.pack()
-    add_button = Button(secret, text='Add', bg='#24A7A7', fg='white', font=('Courier', 15),
+    add_button = CTkButton(secret, text='Add',text_color='#24A7A7', bg_color='#24A7A7', fg_color='#24A7A7', font=('Courier', 15),
                         command=lambda: open_info(nom_user.get())).pack()
     # reset_button = Button(secret, text='Reset', bg='#24A7A7', fg='white', font=('Courier',15),
     # command= reset).pack(side=RIGHT)
@@ -116,20 +118,20 @@ def admin_windows():
             Label(messagebox, text="Mot de passe incorect", wraplength=70, justify=CENTER).pack()
             messagebox.mainloop()
 
-    add_user = Button(frame, text='Add', bg='#24A7A7', fg='white', font=("Courier", 15),
+    add_user = CTkButton(frame, text='Add', bg_color='#24A7A7', fg_color='white', font=("Courier", 15),
                       command=test).pack()
 
     def open_info(nom):
         info = playlist_fonction.recup_info_user(nom)
         if info == []:
-            messagebox = Tk()
+            messagebox = CTk()
             messagebox.geometry("80x80")
             messagebox.maxsize(80, 80)
-            Label(messagebox, text="Aucuns utilisateur n'éxiste à se nom dans la base de données", wraplength=110,
+            CTkLabel(messagebox, text="Aucuns utilisateur n'éxiste à se nom dans la base de données", wraplength=110,
                   justify=CENTER).pack()
             messagebox.mainloop()
 
-        Label(retour, text=info, bg='#24A7A7', fg='white', font=('Courier', 15)).pack(expand=YES)
+        CTkLabel(retour, text=info, bg_color='#24A7A7', fg_color='#24A7A7', font=('Courier', 15)).pack(expand=YES)
         retour.pack()
 
     admin_win.mainloop()
@@ -142,17 +144,17 @@ def create_room(windows):
         windows.destroy()
         playlist_fonction.lecteur_musique()
 
-    win_room = Tk()
+    win_room = CTk()
     win_room.geometry("480x360")
     win_room.minsize(480, 360)
     win_room.config(background='#24A7A7')
 
-    Label(win_room, text='Crée une Room', bg='#24A7A7', fg='white', font=('Courrier', 25)).pack()
-    Label(win_room, text='Username', bg='#24A7A7', fg='white', font=('Courrier', 15)).pack()
-    enter_user_room = Entry(win_room)
+    CTkLabel(win_room, text='Crée une Room', bg_color='#24A7A7', fg_color='#24A7A7', font=('Courrier', 25)).pack()
+    CTkLabel(win_room, text='Username', bg_color='#24A7A7', fg_color='#24A7A7', font=('Courrier', 15)).pack()
+    enter_user_room = CTkEntry(win_room)
     enter_user_room.pack()
 
-    Button(win_room, text='Add', bg='#24A7A7', fg='white', font=('Courier', 13), command=add_room).pack()
+    CTkButton(win_room, text='Add', bg_color='#24A7A7', fg_color='#24A7A7', font=('Courier', 13), command=add_room).pack()
 
     win_room.mainloop()
 

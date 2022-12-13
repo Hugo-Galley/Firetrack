@@ -7,8 +7,9 @@ import tkinter as tk
 import urllib.request
 from pytube import YouTube
 import time
+import tkinter.filedialog
 
-import moviepy.editor as mp
+
 
 
 # Choix artiste
@@ -375,7 +376,14 @@ def lecteur_musique():
                     playlist = recup_vote_and_song()
 
                 elif menu_button_rect.collidepoint(event.pos):
-                    pygame.mixer.music.play(menu_deroulant())
+
+                    ouvrir_fichier = tkinter.filedialog.askopenfilename(title="Ouvrir un fichier",defaultextension=".mp3",filetypes=[("txt fichier", ".mp3")])
+                    playlist.append(ouvrir_fichier)
+                    pygame.mixer.music.load(ouvrir_fichier)
+                    pygame.mixer.music.queue(ouvrir_fichier)
+                    pygame.mixer.music.play()
+
+                    #pygame.mixer.music.queue(menu_deroulant())
 
                     # win = tk.Tk()
                     # texte = "Fonction en phase de test, bientôt disponible"

@@ -1,4 +1,5 @@
 from tkinter import *
+import customtkinter as tkc
 
 
 class Playlist:
@@ -96,7 +97,7 @@ class Window:
 
     def creat_window(self):
         # crée l'instance de la fenêtre tkinter avec les paramètres de la class Window
-        window = Tk()
+        window = tkc.CTk()
         window.title(self.name)
         window.geometry(self.size)
         window.minsize(self.min_width, self.min_height)
@@ -105,7 +106,7 @@ class Window:
         return window
 
     def create_frame(self, master, expand=FALSE, side=None):
-        frame = Frame(master, bg=self.bg_color)
+        frame = tkc.CTkFrame(master, bg_color=self.bg_color)
 
         if side is not None:
             frame.pack(expand=expand, side=side)
@@ -124,7 +125,7 @@ class Window:
         if fg is None:
             fg = self.fg_color
 
-        label = Label(master, text=text, font=font, bg=bg, fg=fg)
+        label = tkc.CTkLabel(master, text=text, font=font, bg_color=bg, fg_color=fg)
 
         if side is not None:
             label.pack(expand=expand, side=side)
@@ -143,7 +144,7 @@ class Window:
         if fg is None:
             fg = self.fg_color
 
-        button = Button(master, text=text, font=font, bg=bg, fg=fg, command=command)
+        button = tkc.CTkButton(master, text=text, font=font, bg_color=bg, fg_color=fg, command=command)
 
         if side is not None:
             button.pack(expand=expand, side=side)
@@ -156,7 +157,7 @@ class Window:
         return button
 
     def create_entry(self, master, expand=FALSE, side=None):
-        entry = Entry(master)
+        entry = tkc.CTkEntry(master)
 
         if side is not None:
             entry.pack(expand=expand, side=side)
