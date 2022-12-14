@@ -7,10 +7,10 @@ import room
 import user
 
 
-class MainWindow(window.Window):
+class AdminMainWindow(window.Window):
 
     def __init__(self, room_name, room_password, username, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+        super(AdminMainWindow, self).__init__(*args, **kwargs)
 
         self.user = user.User(username)
         self.room = room.Room(name=room_name, password=room_password, creator=self.user)
