@@ -28,7 +28,7 @@ class App(customtkinter.CTk):
 
     def set_current_window(self, elt: object):
         self.current_window = elt
-        self.current_window.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        self.current_window.grid(row=0, column=0, sticky="nsew")
 
 
 if __name__ == "__main__":

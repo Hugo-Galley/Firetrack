@@ -27,4 +27,4 @@ class NameFrame(customtkinter.CTkFrame):
         self.devs_name = customtkinter.CTkLabel(master=self,
                                                 text="Hugo Galley\n\n Hugo Magnier\n\n Denis Sas\n\n Lusine Matis",
                                                 font=("Courrier", 32))
-        self.devs_name.pack()
+        self.devs_name.pack(expand=True)

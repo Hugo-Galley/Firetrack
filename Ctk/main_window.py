@@ -41,16 +41,17 @@ class MainFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
-        self.song_label = customtkinter.CTkLabel(master=self, text="Current song name", font=("Courrier", 20))
-        self.song_label.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
+        self.song_label = customtkinter.CTkLabel(master=self, text="Current song name", font=("Courrier", 30))
+        self.song_label.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
 
         self.menu_button_image = customtkinter.CTkImage(light_image=Image.open("../assets/menu.png"),
                                                         dark_image=Image.open("../assets/menu-modified.png"),
                                                         size=(50, 50))
 
-        self.menu_button = customtkinter.CTkButton(master=self, image=self.menu_button_image, text="",
+        self.menu_button = customtkinter.CTkButton(master=self, image=self.menu_button_image, text="", width=50,
+                                                   height=50, fg_color="transparent",
                                                    command=self.master.open_menu)
-        self.menu_button.grid(row=0, column=0, padx=20, pady=20, sticky="nw")
+        self.menu_button.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
 
         self.music_params = MusicParams(master=self)
 
