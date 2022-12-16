@@ -115,18 +115,16 @@ class MusicParams(customtkinter.CTkFrame):
         self.play_button = customtkinter.CTkButton(master=self, image=self.play_button_image, text="", width=40,
                                                    fg_color="transparent", command=self.play_button_callback)
 
-        self.slider = customtkinter.CTkSlider(master=self, to=95, number_of_steps=95, command=self.slider_event)
+        self.slider = customtkinter.CTkSlider(master=self, command=self.slider_event)
         self.slider.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
 
     def pause_button_callback(self):
         self.pause_button.grid_forget()
         self.play_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
-        self.slider.set(2)
 
     def play_button_callback(self):
         self.play_button.grid_forget()
         self.pause_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
-        self.slider.set(1.5)
 
     def back_button_callback(self):
         pass

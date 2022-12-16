@@ -1,4 +1,5 @@
 import customtkinter
+from tkinter import PhotoImage
 
 import database
 import opening_window
@@ -16,6 +17,9 @@ class App(customtkinter.CTk):
         self.geometry("720x480")
         self.title("Firetrack")
         self.minsize(660, 240)
+
+        self.photo = PhotoImage(file="../assets/logo.png")
+        self.wm_iconphoto(False, self.photo)
 
         # configure grid
         self.grid_rowconfigure(0, weight=1)
