@@ -238,7 +238,7 @@ def menu_deroulant():
 def lecteur_musique():
     pygame.init()
     pygame.mixer.init()
-    icon = pygame.image.load('assets/logo.png')
+    icon = pygame.image.load('assets/logo_light_mode.png')
 
     pygame.display.set_caption("Firetracke", "Spotify")
     screen = pygame.display.set_mode((500, 300))
