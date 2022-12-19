@@ -1,5 +1,7 @@
+import os
 from string import ascii_letters, digits
 from random import choice
+from mutagen.mp3 import MP3
 
 import sqlite3
 
@@ -59,6 +61,46 @@ class DataBase:
         id = "".join(choice(CHARACTERS) for _ in range(8))
         return id
 
+    def recup_song():
+
+        def set_duartion(song):
+            def audio_duration(length):
+                mins = length // 60
+                length %= 60
+                seconds = length
+
+                return mins, seconds
+
+            audio = MP3("../Song/" + song + '')
+            audio_info = audio.info
+            length = int(audio_info.length)
+            mins, seconds = audio_duration(length)
+            tuple = (mins, seconds)
+            time = ":".join(map(str, tuple))
+            return time
+
+        file_list = os.listdir("../Song")
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+
+        i = 0
+        donnees_liste = []
+        playlist = []
+        for fichier in range(len(file_list)):
+            i += 1
+            j = 0
+            id = "".join(choice(CHARACTERS) for _ in range(8))
+            duration = set_duartion(file_list[fichier])
+            file_list[fichier] = '../Song/' + file_list[fichier]
+            playlist.append(file_list[fichier])
+            donnees_liste.append((file_list[fichier], j, duration, id))
+
+        cursor.executemany('INSERT INTO Song (title,vote,duration,idSong) VALUES (?, ?, ?, ?)', donnees_liste)
+        conn.commit()
+        conn.close()
+        return playlist
+
+
     def add_room(self, room: object):
         cursor = self.conn.cursor()
         cursor.execute(
@@ -86,3 +128,5 @@ class DataBase:
             password = element
         cursor.close()
         return password
+
+DataBase.recup_song()

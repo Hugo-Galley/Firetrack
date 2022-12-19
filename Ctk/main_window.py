@@ -122,6 +122,7 @@ class MusicParams(customtkinter.CTkFrame):
         self.pause_button.grid_forget()
         self.play_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
 
+
     def play_button_callback(self):
         self.play_button.grid_forget()
         self.pause_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
