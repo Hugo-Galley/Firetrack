@@ -1,10 +1,10 @@
 import customtkinter
 import webbrowser
 
-import creation_window
 import join_window
 import window
-import credit
+import function_windows
+
 
 
 class OpeningWindow(window.Window):
@@ -23,7 +23,7 @@ class OpeningWindow(window.Window):
         self.dev_frame.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
 
     def create_button_callback(self):
-        creation_window.CreationWindow(master=self.master)
+        function_windows.CreationWindow(master=self.master)
 
     def join_button_callback(self):
         join_window.JoinWindow(master=self.master)
@@ -33,7 +33,7 @@ class OpeningWindow(window.Window):
         webbrowser.open_new('https://github.com/Hugo-Galley/Firetrack')
 
     def open_credit(self):
-        credit.DevCredit(master=self.master)
+        window.DevCredit(master=self.master)
 
 
 class ButtonFrame(customtkinter.CTkFrame):

@@ -1,14 +1,3 @@
-import main
-import creation_window
-import credit
-import database
-import join_window
-import main_window
-import opening_window
-import room
-import user
-import window
-import error_window
 
 import customtkinter
 

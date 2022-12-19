@@ -1,12 +1,15 @@
 import customtkinter
 from tkinter import PhotoImage
 
+import pygame
+
 import database
 import opening_window
 
 # configure theme
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
+pygame.mixer.init()
 
 
 class App(customtkinter.CTk):
