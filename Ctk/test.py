@@ -5,7 +5,7 @@ def import_files():
     import credit
     import database
     import join_window
-    import main_window
+    import admin_main_window
     import opening_window
     import room
     import user

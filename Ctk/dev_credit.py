@@ -2,7 +2,7 @@ import customtkinter
 import window
 
 
-class DevCredit(Window):
+class DevCredit(window.Window):
 
     def __init__(self, *args, **kwargs):
         super(DevCredit, self).__init__(*args, **kwargs)

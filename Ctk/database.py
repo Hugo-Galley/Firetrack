@@ -129,7 +129,7 @@ class DataBase:
             cursor.close()
             return password
 
-    def addvote(name, like):
+    def addvote(self, name, like):
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
         if like:

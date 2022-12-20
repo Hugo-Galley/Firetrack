@@ -8,9 +8,6 @@ import database
 import room
 import user
 
-global i
-i = 0
-
 
 class AdminMainWindow(window.Window):
 
@@ -53,7 +50,8 @@ class MainFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
-        self.song_label = customtkinter.CTkLabel(master=self, text=playlist[i].lstrip('../Song/ '), font=("Courrier", 30))
+        self.song_label = customtkinter.CTkLabel(master=self, text=playlist[i].lstrip('../Song/ '),
+                                                 font=("Courrier", 30))
         self.song_label.grid(row=0, rowspan=2, column=0, columnspan=2, padx=20, pady=20, sticky="nsew")
 
         self.menu_button_image = customtkinter.CTkImage(light_image=Image.open("../assets/menu_dark_mode.png"),
@@ -80,11 +78,45 @@ class MenuFrame(customtkinter.CTkFrame):
                                                                   command=self.appearance_mode_button_callback)
         self.appearance_mode_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
+        # slider à changer de place (mon opinion)
+        self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
+        self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+
+        self.slider = customtkinter.CTkSlider(master=self, command= self.slider_event_volume,progress_color='red')
+        self.slider.grid(row=2, column=0, padx=10, pady=20, sticky="nsew")
+
+        # bouton like et dislike (à débattre)
+        self.upvote_image_button = customtkinter.CTkImage(light_image=Image.open('../assets/like_light_mode.png'),
+                                                          dark_image=Image.open('../assets/like_dark_mode.png'),
+                                                          size= (50,50))
+
+        self.upvote_button = customtkinter.CTkButton(master=self, image=self.upvote_image_button,width=10,height=10,
+                                                     fg_color='transparent',text='',command=self.upvote)
+        self.upvote_button.grid(row=3, column=0, padx=10, pady=20, sticky='nsew')
+
+        self.downvote_button_image = customtkinter.CTkImage(light_image=Image.open('../assets/dislike_light_mode.png'),
+                                                            dark_image=Image.open('../assets/dislike_dark_mode.png'),
+                                                            size=(30,30))
+        self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button, width=10, height=10,
+                                                       fg_color='transparent', text='', command=self.downvote)
+        self.downvote_button.grid(row=4, column=0, padx=10, pady=20, sticky='nsew')
+
         self.vote = ...
         self.add_music = ...
 
     def appearance_mode_button_callback(self, value):
         customtkinter.set_appearance_mode(value)
+
+    def slider_event_volume(self, value):
+        pygame.mixer.music.set_volume(value)
+
+    def upvote(self):
+        print(playlist[i])
+        database.DataBase.addvote(True, playlist[i])
+
+    def downvote(self):
+        print(playlist[i])
+        database.DataBase.addvote(False, playlist[i])
 
 
 class MusicParams(customtkinter.CTkFrame):
@@ -127,16 +159,55 @@ class MusicParams(customtkinter.CTkFrame):
     def pause_button_callback(self):
         self.pause_button.grid_forget()
         self.play_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
+        pygame.mixer.music.pause()
 
     def play_button_callback(self):
         self.play_button.grid_forget()
         self.pause_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
+        pygame.mixer.music.unpause()
 
     def back_button_callback(self):
-        pass
+        global i
+        if i > 0:
+            i -= 1
+        else:
+            i = len(playlist) - 1
+        pygame.mixer.music.load(playlist[i])
+        pygame.mixer.music.play()
+        pygame.mixer.music.queue(playlist[i - 1])
+        self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))
 
     def next_button_callback(self):
-        pass
+        global i
+        if i < len(playlist) - 2:
+            i += 1
+        else:
+            i = 0
+        pygame.mixer.music.load(playlist[i])
+        pygame.mixer.music.play()
+        pygame.mixer.music.queue(playlist[i + 1])
+        self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))
 
     def slider_event(self, value):
-        print(f"{value=}")
+        pygame.mixer.music.set_volume(value)
+
+    def set_duration(self, song):
+        def audio_duration(length):
+            mins = length // 60
+            length %= 60
+            seconds = length
+
+            return mins, seconds
+
+        audio = MP3("../Song/" + song + '')
+        audio_info = audio.info
+        length = int(audio_info.length)
+        mins, seconds = audio_duration(length)
+        tuple = (mins, seconds)
+        time = ".".join(map(str, tuple))
+        return time
+
+
+playlist = []
+i = 0
+
