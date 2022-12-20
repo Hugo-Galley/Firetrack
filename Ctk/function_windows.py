@@ -127,11 +127,40 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.appearance_mode_button = customtkinter.CTkOptionMenu(master=self, values=["dark", "light", "system"],
                                                                   command=self.appearance_mode_button_callback)
-        self.appearance_mode_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        self.appearance_mode_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew",)
+
+        self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
+        self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+
+        self.slider = customtkinter.CTkSlider(master=self, command= self.slider_event_volume,progress_color='red')
+        self.slider.grid(row=2, column=0, padx=10, pady=20, sticky="nsew")
+
+        self.upvote_image_button = customtkinter.CTkImage(light_image=Image.open('../assets/like_light_mode.png'),
+                                                          dark_image=Image.open('../assets/like_dark_mode.png'),
+                                                          size= (50,50))
+
+        self.upvote_button = customtkinter.CTkButton(master=self, image=self.upvote_image_button,width=10,height=10,
+                                                     fg_color='transparent',text='',command=self.upvote)
+        self.upvote_button.grid(row=3,column=0,padx=10, pady=20, sticky='nsew')
+
+        self.disvote_button_image = customtkinter.CTkImage(light_image=Image.open('../assets/dislike_light_mode.png'),
+                                                           dark_image=Image.open('../assets/dislike_dark_mode.png'),
+                                                           size=(30,30))
+        self.disvote_button = customtkinter.CTkButton(master=self, image=self.disvote_button_image, width=10, height=10,
+                                                      fg_color='transparent',text='',command=self.disvote)
+        self.disvote_button.grid(row=4,column=0,padx=10, pady=20, sticky='nsew')
 
     def appearance_mode_button_callback(self, value):
         customtkinter.set_appearance_mode(value)
 
+    def slider_event_volume(self, value):
+        pygame.mixer.music.set_volume(value)
+
+    def upvote(self):
+        pass
+
+    def disvote(self):
+        pass
 
 class MusicParams(customtkinter.CTkFrame):
 
@@ -206,7 +235,7 @@ class MusicParams(customtkinter.CTkFrame):
         self.song_label.grid(row=0, rowspan=2, column=0, columnspan=2, padx=20, pady=20, sticky="nsew")
 
     def slider_event(self, value):
-        print(value * float(MusicParams.set_duartion(playlist[i])))
+        pygame.mixer.music.set_volume(value)
 
     def set_duartion(song):
         def audio_duration(length):

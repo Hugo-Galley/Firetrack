@@ -128,5 +128,8 @@ class DataBase:
             password = element
         cursor.close()
         return password
-
-DataBase.recup_song()
+    def addvote(self,like):
+        cursor = self.conn.cursor()
+        cursor.execute()
+        if like:
+            command = 'update '
