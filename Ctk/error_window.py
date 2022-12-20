@@ -2,46 +2,6 @@ import database
 import customtkinter
 
 
-class Room:
-
-    def __init__(self, name: str, password: str, creator: object):
-
-        self.id = f"#{database.DataBase.create_id()}"
-
-        self.name = name
-        self.password = password
-
-        self.list_user = []
-        self.nbr_user = len(self.list_user)
-
-        self.creator = creator
-
-    def add_user(self, user: object):
-        self.list_user.append(user)
-
-
-class User:
-
-    def __init__(self, name):
-        self.name = name
-        self.id = f"#{database.DataBase.create_id()}"
-        self.admin = False
-        self.nbr_vote = 20
-        self.room = None
-
-    def change_room(self, room: object):
-        self.room = room
-
-
-class Admin(User):
-
-    def __init__(self, name):
-        super(Admin, self).__init__(name)
-
-        self.admin = True
-        self.nbr_vote = -1
-
-
 class ErrorWindow(customtkinter.CTkToplevel):
     """En cours de création (phase de test)"""
     """Pour l'instant c bine de la merde"""

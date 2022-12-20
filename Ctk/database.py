@@ -1,3 +1,4 @@
+import os
 from string import ascii_letters, digits
 from random import choice
 from mutagen.mp3 import MP3
@@ -101,7 +102,6 @@ class DataBase:
         conn.close()
         return playlist
 
-
     def add_room(self, room: object):
         cursor = self.conn.cursor()
         cursor.execute(
@@ -128,6 +128,16 @@ class DataBase:
         for password in cursor.fetchone():
             cursor.close()
             return password
+
+    def addvote(name, like):
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        if like:
+            command = 'update Song set vote=vote+1 where title=?'
+        else:
+            command = 'update Song set vote=vote-1 where title=?'
+        conn.execute(command, (name,))
+        conn.commit()
 
     def get_songs_id(self) -> list[str, ...]:
         cursor = self.conn.cursor()
@@ -165,5 +175,6 @@ class DataBase:
         for title in cursor.fetchone():
             cursor.close()
             return title
+
 
 DataBase.recup_song()

@@ -8,6 +8,9 @@ import database
 import room
 import user
 
+global i
+i = 0
+
 
 class AdminMainWindow(window.Window):
 
@@ -50,7 +53,7 @@ class MainFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
-        self.song_label = customtkinter.CTkLabel(master=self, text="Current song name", font=("Courrier", 30))
+        self.song_label = customtkinter.CTkLabel(master=self, text=playlist[i].lstrip('../Song/ '), font=("Courrier", 30))
         self.song_label.grid(row=0, rowspan=2, column=0, columnspan=2, padx=20, pady=20, sticky="nsew")
 
         self.menu_button_image = customtkinter.CTkImage(light_image=Image.open("../assets/menu_dark_mode.png"),
