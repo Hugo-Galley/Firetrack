@@ -157,10 +157,12 @@ class MenuFrame(customtkinter.CTkFrame):
         pygame.mixer.music.set_volume(value)
 
     def upvote(self):
-        pass
+        print(playlist[i])
+        database.DataBase.addvote(True,playlist[i])
 
     def disvote(self):
-        pass
+        print(playlist[i])
+        database.DataBase.addvote(False,playlist[i])
 
 class MusicParams(customtkinter.CTkFrame):
 

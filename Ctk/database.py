@@ -128,8 +128,14 @@ class DataBase:
             password = element
         cursor.close()
         return password
-    def addvote(self,like):
-        cursor = self.conn.cursor()
-        cursor.execute()
+    def addvote(name,like):
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
         if like:
-            command = 'update '
+            command = 'update Song set vote=vote+1 where title=?'
+        else:
+            command = 'update Song set vote=vote-1 where title=?'
+        conn.execute(command, (name,))
+        conn.commit()
+        conn.close()
+DataBase.addvote(True,)
