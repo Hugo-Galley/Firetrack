@@ -95,6 +95,7 @@ class DataBase:
             playlist.append(file_list[fichier])
             donnees_liste.append((file_list[fichier], j, duration, id))
 
+        cursor.execute(""" DELETE FROM 'Song' """)
         cursor.executemany('INSERT INTO Song (title,vote,duration,idSong) VALUES (?, ?, ?, ?)', donnees_liste)
         conn.commit()
         conn.close()
@@ -137,5 +138,3 @@ class DataBase:
             command = 'update Song set vote=vote-1 where title=?'
         conn.execute(command, (name,))
         conn.commit()
-        conn.close()
-DataBase.addvote(True,)
