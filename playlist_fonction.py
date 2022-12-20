@@ -10,8 +10,6 @@ import time
 import tkinter.filedialog
 
 
-
-
 # Choix artiste
 def research(music):
     artist = ''

@@ -1,16 +1,40 @@
-import main
-import creation_window
-import credit
-import database
-import join_window
-import main_window
-import opening_window
-import room
-import user
-import window
-import error_window
+def import_files():
+
+    import main
+    import creation_window
+    import credit
+    import database
+    import join_window
+    import main_window
+    import opening_window
+    import room
+    import user
+    import window
+    import error_window
+    import audio_player
+
 
 import customtkinter
+import sys
+
+from timeit import repeat
+from random import randint
+
+
+ARRAY_LENTH = 1_000_000
+
+sys.setrecursionlimit(10000)
+
+
+def run_sorting_algorithm(file, algorithm, array):
+    setup_code = f"from {file} import {algorithm}" \
+        if algorithm != "sorted" else ""
+
+    stmt = f"{algorithm}({array})"
+
+    times = repeat(setup=setup_code, stmt=stmt, repeat=3, number=10)
+
+    print(f"Algorithm: {algorithm}. Minimum execution: {min(times)}")
 
 
 class TestWindow(customtkinter.CTk):
@@ -26,20 +50,11 @@ class TestWindow(customtkinter.CTk):
 
         self.current_window = None
 
-        self.error = error_window.ErrorWindow("Bonjour")
-        self.error.mainloop()
-
     def set_current_window(self, elt: object):
         self.current_window = elt
         self.current_window.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
 
 
 if __name__ == "__main__":
-    """user1 = user.User("user")
-    room1 = room.Room("room", "", user1)
-    print(f"{room1.id=}")
-    database1 = database.DataBase()
-    database1.create_database()
-    database1.add_room_to_database(room1)"""
-    test = TestWindow()
-    test.mainloop()
+    array = [randint(0, 1_000) for i in range(ARRAY_LENTH)]
+    run_sorting_algorithm(file="audio_player", algorithm="quick_sort", array=array)

@@ -1,11 +1,9 @@
-import database
-
-
 class Room:
 
-    def __init__(self, name: str, password: str, creator: object):
+    def __init__(self, database, name: str, password: str, creator: object):
+        self.database = database
 
-        self.id = f"#{database.DataBase.create_id()}"
+        self.id = f"#{self.database.create_id()}"
 
         self.name = name
         self.password = password

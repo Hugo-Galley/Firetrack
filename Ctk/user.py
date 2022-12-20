@@ -1,11 +1,9 @@
-import database
-
-
 class User:
 
-    def __init__(self, name):
+    def __init__(self, database, name):
+        self.database = database
         self.name = name
-        self.id = f"#{database.DataBase.create_id()}"
+        self.id = f"#{self.database.create_id()}"
         self.admin = False
         self.nbr_vote = 20
         self.room = None

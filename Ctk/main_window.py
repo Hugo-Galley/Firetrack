@@ -77,6 +77,9 @@ class MenuFrame(customtkinter.CTkFrame):
                                                                   command=self.appearance_mode_button_callback)
         self.appearance_mode_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
+        self.vote = ...
+        self.add_music = ...
+
     def appearance_mode_button_callback(self, value):
         customtkinter.set_appearance_mode(value)
 
