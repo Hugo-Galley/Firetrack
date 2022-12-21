@@ -216,7 +216,7 @@ class MusicParams(customtkinter.CTkFrame):
     def slider_event(self, value):
         print('On est a ',value * float(self.set_duration(playlist[i])),' min')
 
-    def set_duration(self,song):
+    def set_duration(self, song):
         def audio_duration(length):
             mins = length // 60
             length %= 60
