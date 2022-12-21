@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Playlist_partage.iml" filepath="$PROJECT_DIR$/.idea/Playlist_partage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Ctk.iml" filepath="$PROJECT_DIR$/.idea/Ctk.iml" />
     </modules>
   </component>
 </project>
