@@ -123,8 +123,7 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def choix_musique_button(self, value):
         global i
-        i = int(playlist.index(value))
-        print(i)
+        i = playlist.index(value)
         pygame.mixer.music.load(playlist[i])
         pygame.mixer.music.play()
         if i == len(playlist) - 1:
