@@ -128,6 +128,7 @@ class MenuFrame(customtkinter.CTkFrame):
         pygame.mixer.music.load(playlist[i])
         pygame.mixer.music.play()
         while pygame.mixer.get_busy() is False:
+            None
         MusicParams.next_button_callback()
     def slider_event_volume(self, value):
         pygame.mixer.music.set_volume(value)
