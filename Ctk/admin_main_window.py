@@ -5,8 +5,6 @@ import pygame
 
 import window
 import database
-import room
-import user
 from mutagen.mp3 import MP3
 
 playlist = []
@@ -126,10 +124,10 @@ class MenuFrame(customtkinter.CTkFrame):
         i = playlist.index(value)
         pygame.mixer.music.load(playlist[i])
         pygame.mixer.music.play()
-        if i == len(playlist) - 1:
-            pygame.mixer.music.queue(playlist[0])
-        else:
+        if i == len(playlist) - 2:
             pygame.mixer.music.queue(playlist[i + 1])
+        else:
+            pygame.mixer.music.queue(playlist[0])
         self.master.main_frame.song_label.configure(text=playlist[i].lstrip('../Song/'))
     def slider_event_volume(self, value):
         pygame.mixer.music.set_volume(value)
@@ -203,7 +201,7 @@ class MusicParams(customtkinter.CTkFrame):
 
     def next_button_callback(self):
         global i
-        if i < len(playlist) - 1:
+        if i < len(playlist) - 2:
             i += 1
         else:
             i = 0
