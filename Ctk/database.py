@@ -2,6 +2,7 @@ import os
 from string import ascii_letters, digits
 from random import choice
 from mutagen.mp3 import MP3
+import operator
 
 import sqlite3
 
@@ -176,4 +177,16 @@ class DataBase:
         for title in cursor.fetchone():
             cursor.close()
             return title
+
+    def recup_vote_and_song():
+        song_playlist_trie = []
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        cur.execute("""SELECT title,vote FROM Song""")
+        result = cur.fetchall()
+        playlist_triee = sorted(result, key=operator.itemgetter(1), reverse=True)
+        for i in range(len(playlist_triee)):
+            song_playlist_trie.append(playlist_triee[i][0])
+        return song_playlist_trie
+
 

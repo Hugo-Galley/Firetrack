@@ -7,6 +7,7 @@ import window
 import database
 from mutagen.mp3 import MP3
 
+playlist_modif = []
 playlist = []
 global i
 i = 0
@@ -111,7 +112,7 @@ class MenuFrame(customtkinter.CTkFrame):
         self.vote = ...
         self.add_music = ...
 
-        self.menu_deroulant = customtkinter.CTkOptionMenu(master=self, values=playlist,
+        self.menu_deroulant = customtkinter.CTkComboBox(master=self, values=playlist,
                                                           command=self.choix_musique_button)
         self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
@@ -133,13 +134,19 @@ class MenuFrame(customtkinter.CTkFrame):
         pygame.mixer.music.set_volume(value)
 
     def upvote(self):
-        print(playlist[i])
+        print('add vote')
         database.DataBase.addvote(playlist[i], True)
+        self.Maj_playlist()
+
 
     def downvote(self):
-        print(playlist[i])
+        print('down vote')
         database.DataBase.addvote(playlist[i], False)
+        self.Maj_playlist()
 
+    def Maj_playlist(self):
+        playlist = database.DataBase.recup_vote_and_song()
+        self.menu_deroulant.configure(values=playlist)
 
 class MusicParams(customtkinter.CTkFrame):
 
@@ -194,10 +201,12 @@ class MusicParams(customtkinter.CTkFrame):
             i -= 1
         else:
             i = len(playlist) - 1
-        pygame.mixer.music.load(playlist[i])
+
+        playlist_modif = self.Maj_playlist()
+        pygame.mixer.music.load(playlist_modif[i])
         pygame.mixer.music.play()
-        pygame.mixer.music.queue(playlist[i - 1])
-        self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))
+        pygame.mixer.music.queue(playlist_modif[i - 1])
+        self.master.song_label.configure(text=playlist_modif[i].lstrip('../Song/'))
 
     def next_button_callback(self):
         global i
@@ -205,10 +214,11 @@ class MusicParams(customtkinter.CTkFrame):
             i += 1
         else:
             i = 0
-        pygame.mixer.music.load(playlist[i])
+        playlist_modif = self.Maj_playlist()
+        pygame.mixer.music.load(playlist_modif[i])
         pygame.mixer.music.play()
-        pygame.mixer.music.queue(playlist[i + 1])
-        self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))
+        pygame.mixer.music.queue(playlist_modif[i + 1])
+        self.master.song_label.configure(text=playlist_modif[i].lstrip('../Song/'))
 
     def slider_event(self, value):
         print('On est a ',value * float(self.set_duration(playlist[i])),' min')
@@ -229,3 +239,6 @@ class MusicParams(customtkinter.CTkFrame):
         time = ".".join(map(str, tuple))
         return time
 
+    def Maj_playlist(self):
+        playlist = database.DataBase.recup_vote_and_song()
+        return playlist
