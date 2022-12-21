@@ -113,7 +113,8 @@ class MenuFrame(customtkinter.CTkFrame):
         self.vote = ...
         self.add_music = ...
 
-        self.menu_deroulant = customtkinter.CTkOptionMenu(master=self,values=playlist,command=self.choix_musique_button)
+        self.menu_deroulant = customtkinter.CTkOptionMenu(master=self, values=playlist,
+                                                          command=self.choix_musique_button)
         self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
 
@@ -122,21 +123,25 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def choix_musique_button(self, value):
         global i
-        i= int(playlist.index(value))
+        i = int(playlist.index(value))
         print(i)
         pygame.mixer.music.load(playlist[i])
         pygame.mixer.music.play()
-        pygame.mixer.music.queue(playlist[i + 1])
+        if i == len(playlist) - 1:
+            pygame.mixer.music.queue(playlist[0])
+        else:
+            pygame.mixer.music.queue(playlist[i + 1])
+        self.master.main_frame.song_label.configure(text=playlist[i].lstrip('../Song/'))
     def slider_event_volume(self, value):
         pygame.mixer.music.set_volume(value)
 
     def upvote(self):
         print(playlist[i])
-        database.DataBase.addvote(playlist[i],True)
+        database.DataBase.addvote(playlist[i], True)
 
     def downvote(self):
         print(playlist[i])
-        database.DataBase.addvote(playlist[i],False)
+        database.DataBase.addvote(playlist[i], False)
 
 
 class MusicParams(customtkinter.CTkFrame):
@@ -199,7 +204,7 @@ class MusicParams(customtkinter.CTkFrame):
 
     def next_button_callback(self):
         global i
-        if i < len(playlist) - 2:
+        if i < len(playlist) - 1:
             i += 1
         else:
             i = 0
