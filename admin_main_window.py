@@ -240,7 +240,7 @@ class MusicParams(customtkinter.CTkFrame):
 
             return mins, seconds
 
-        audio = MP3("Song/" + song + '')
+        audio = MP3(song + '')
         audio_info = audio.info
         length = int(audio_info.length)
         mins, seconds = audio_duration(length)
