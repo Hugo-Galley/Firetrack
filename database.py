@@ -14,7 +14,7 @@ class DataBase:
     
     def __init__(self):
         self.name: str = "database"
-        self.conn = sqlite3.connect(f"{self.name}.db")
+        self.conn = sqlite3.connect('Data Base/database.db')
 
     def create_database(self):
         cursor = self.conn.cursor()
@@ -74,7 +74,7 @@ class DataBase:
 
                 return mins, seconds
 
-            audio = MP3("../Song/" + song + '')
+            audio = MP3("Song/" + song + '')
             audio_info = audio.info
             length = int(audio_info.length)
             mins, seconds = audio_duration(length)
@@ -82,8 +82,8 @@ class DataBase:
             time = ":".join(map(str, tuple))
             return time
 
-        file_list = os.listdir("../Song")
-        conn = sqlite3.connect('database.db')
+        file_list = os.listdir("Song")
+        conn = sqlite3.connect('Data Base/database.db')
         cursor = conn.cursor()
 
         i = 0
@@ -94,7 +94,7 @@ class DataBase:
             j = 0
             id = "".join(choice(CHARACTERS) for _ in range(8))
             duration = set_duartion(file_list[fichier])
-            file_list[fichier] = '../Song/' + file_list[fichier]
+            file_list[fichier] = 'Song/' + file_list[fichier]
             playlist.append(file_list[fichier])
             donnees_liste.append((file_list[fichier], j, duration, id))
 
@@ -132,7 +132,7 @@ class DataBase:
             return password
 
     def addvote(name, like):
-        conn = sqlite3.connect('database.db')
+        conn = sqlite3.connect('Data Base/database.db')
         cursor = conn.cursor()
         if like:
             command = 'update Song set vote=vote+1 where title=?'
@@ -180,7 +180,7 @@ class DataBase:
 
     def recup_vote_and_song():
         song_playlist_trie = []
-        conn = sqlite3.connect('database.db')
+        conn = sqlite3.connect('Data Base/database.db')
         cur = conn.cursor()
         cur.execute("""SELECT title,vote FROM Song""")
         result = cur.fetchall()
