@@ -117,7 +117,6 @@ class MenuFrame(customtkinter.CTkFrame):
                                                           command=self.choix_musique_button)
         self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
-
     def appearance_mode_button_callback(self, value):
         customtkinter.set_appearance_mode(value)
 
