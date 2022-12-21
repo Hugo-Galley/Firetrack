@@ -191,6 +191,11 @@ class MusicParams(customtkinter.CTkFrame):
         self.play_button = customtkinter.CTkButton(master=self, image=self.play_button_image, text="", width=40,
                                                    fg_color="transparent", command=self.play_button_callback)
 
+        #self.progress_bar = customtkinter.CTkProgressBar(master=self,mode='determinate',determinate_speed=float(self.set_duration(playlist[i]))/100.0)
+
+        #self.progress_bar.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
+        #self.progress_bar.start()
+        
         self.slider = customtkinter.CTkSlider(master=self, command=self.slider_event)
         self.slider.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
 
