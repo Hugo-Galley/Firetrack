@@ -122,11 +122,11 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def choix_musique_button(self, value):
         global i
-        i= int(playlist.index(value))
+        i= playlist.index(value)
         pygame.mixer.music.load(playlist[i])
         pygame.mixer.music.play()
         pygame.mixer.music.queue(playlist[i + 1])
-        self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))                                                                                                          
+        self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))
     def slider_event_volume(self, value):
         pygame.mixer.music.set_volume(value)
 
