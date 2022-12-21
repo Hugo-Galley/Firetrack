@@ -1,4 +1,5 @@
 import customtkinter
+import pygame
 
 import admin_main_window
 import database
@@ -20,10 +21,6 @@ class CreationWindow(window.Window):
         self.button_frame.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
 
     def create_room(self):
-        for i in database.DataBase.recup_song():
-            playlist.append(i)
-        pygame.mixer.music.load(playlist[0])
-        pygame.mixer.music.play()
         admin_main_window.AdminMainWindow(master=self.master,
                                           username=self.entry_frame.username_entry.get(),
                                           room_name=self.entry_frame.room_name_entry.get(),

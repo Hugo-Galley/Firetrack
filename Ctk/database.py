@@ -97,6 +97,7 @@ class DataBase:
             playlist.append(file_list[fichier])
             donnees_liste.append((file_list[fichier], j, duration, id))
 
+        cursor.execute(""" DELETE FROM 'Song' """)
         cursor.executemany('INSERT INTO Song (title,vote,duration,idSong) VALUES (?, ?, ?, ?)', donnees_liste)
         conn.commit()
         conn.close()
@@ -129,7 +130,7 @@ class DataBase:
             cursor.close()
             return password
 
-    def addvote(self, name, like):
+    def addvote(name, like):
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
         if like:
@@ -176,5 +177,3 @@ class DataBase:
             cursor.close()
             return title
 
-
-DataBase.recup_song()

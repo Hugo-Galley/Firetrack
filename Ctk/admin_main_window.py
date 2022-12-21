@@ -7,21 +7,25 @@ import window
 import database
 import room
 import user
+from mutagen.mp3 import MP3
 
+playlist = []
+global i
+i = 0
 
 class AdminMainWindow(window.Window):
 
     def __init__(self, room_name, room_password, username, *args, **kwargs):
         super(AdminMainWindow, self).__init__(*args, **kwargs)
 
-        self.user = user.User(username)
-        self.room = room.Room(name=room_name, password=room_password, creator=self.user)
-        self.database = database.DataBase()
+        #self.user = user.User(username)
+        #self.room = room.Room(name=room_name, password=room_password, creator=self.user)
+        #self.database = database.DataBase()
 
-        self.user.change_room(self.room)
-        self.room.add_user(user)
-        self.database.add_room(self.room)
-        self.database.add_user(self.user)
+        #self.user.change_room(self.room)
+        #self.room.add_user(user)
+        #self.database.add_room(self.room)
+        #self.database.add_user(self.user)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -46,6 +50,11 @@ class MainFrame(customtkinter.CTkFrame):
 
     def __init__(self, *args, **kwargs):
         super(MainFrame, self).__init__(*args, **kwargs)
+
+        for fichier in database.DataBase.recup_song():
+            playlist.append(fichier)
+        pygame.mixer.music.load(playlist[0])
+        pygame.mixer.music.play()
 
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -97,26 +106,39 @@ class MenuFrame(customtkinter.CTkFrame):
         self.downvote_button_image = customtkinter.CTkImage(light_image=Image.open('../assets/dislike_light_mode.png'),
                                                             dark_image=Image.open('../assets/dislike_dark_mode.png'),
                                                             size=(30,30))
-        self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button, width=10, height=10,
+        self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button_image, width=10, height=10,
                                                        fg_color='transparent', text='', command=self.downvote)
         self.downvote_button.grid(row=4, column=0, padx=10, pady=20, sticky='nsew')
 
         self.vote = ...
         self.add_music = ...
 
+        self.menu_deroulant = customtkinter.CTkOptionMenu(master=self,values=playlist,command=self.choix_musique_button)
+        self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
+
+
     def appearance_mode_button_callback(self, value):
         customtkinter.set_appearance_mode(value)
 
+    def choix_musique_button(self, value):
+        song = int(playlist.index(value))
+        print(song)
+        pygame.mixer.music.load(playlist[song])
+        pygame.mixer.music.play()
+        self.master.song_label.configure(text=playlist[song].lstrip('../Song/'))
+        while pygame.mixer.get_busy() is False:
+            None
+        MusicParams.next_button_callback(self)
     def slider_event_volume(self, value):
         pygame.mixer.music.set_volume(value)
 
     def upvote(self):
         print(playlist[i])
-        database.DataBase.addvote(True, playlist[i])
+        database.DataBase.addvote(playlist[i],True)
 
     def downvote(self):
         print(playlist[i])
-        database.DataBase.addvote(False, playlist[i])
+        database.DataBase.addvote(playlist[i],False)
 
 
 class MusicParams(customtkinter.CTkFrame):
@@ -189,9 +211,9 @@ class MusicParams(customtkinter.CTkFrame):
         self.master.song_label.configure(text=playlist[i].lstrip('../Song/'))
 
     def slider_event(self, value):
-        pygame.mixer.music.set_volume(value)
+        print('On est a ',value * float(self.set_duration(playlist[i])),' min')
 
-    def set_duration(self, song):
+    def set_duration(self,song):
         def audio_duration(length):
             mins = length // 60
             length %= 60
@@ -206,8 +228,4 @@ class MusicParams(customtkinter.CTkFrame):
         tuple = (mins, seconds)
         time = ".".join(map(str, tuple))
         return time
-
-
-playlist = []
-i = 0
 
