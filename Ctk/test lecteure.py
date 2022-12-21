@@ -1,7 +1,6 @@
-string = "../Song/Lemonade.mp3"
-new_string = string.lstrip("../Song/")
-print(new_string)
+import database
 
-string = "HHHHhello world"
-new_string = string.lstrip("H")
-print(new_string)
+playlist = database.DataBase.recup_song()
+
+for fichier in range(len(playlist)):
+    playlist[fichier].lstrip('../Song/')

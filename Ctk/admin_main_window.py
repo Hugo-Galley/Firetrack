@@ -9,6 +9,7 @@ from mutagen.mp3 import MP3
 
 playlist_modif = []
 playlist = []
+name_song = []
 global i
 i = 0
 
@@ -112,7 +113,11 @@ class MenuFrame(customtkinter.CTkFrame):
         self.vote = ...
         self.add_music = ...
 
-        self.menu_deroulant = customtkinter.CTkComboBox(master=self, values=playlist,
+        for fichier in range(len(playlist)):
+            name_song.append(playlist[fichier].lstrip('../Song/'))
+
+
+        self.menu_deroulant = customtkinter.CTkComboBox(master=self, values=name_song,
                                                           command=self.choix_musique_button)
         self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
@@ -122,14 +127,16 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def choix_musique_button(self, value):
         global i
-        i = playlist.index(value)
+        if value == "i j savais.mp3":
+            value = 'Si j savais.mp3'
+        i = playlist.index('../Song/' + value)
         pygame.mixer.music.load(playlist[i])
         pygame.mixer.music.play()
         if i == len(playlist) - 2:
             pygame.mixer.music.queue(playlist[i + 1])
         else:
             pygame.mixer.music.queue(playlist[0])
-        self.master.main_frame.song_label.configure(text=playlist[i].lstrip('../Song/'))
+        self.master.main_frame.song_label.configure(text=name_song[i].lstrip('../Song/'))
     def slider_event_volume(self, value):
         pygame.mixer.music.set_volume(value)
 
@@ -146,7 +153,10 @@ class MenuFrame(customtkinter.CTkFrame):
 
     def Maj_playlist(self):
         playlist = database.DataBase.recup_vote_and_song()
-        self.menu_deroulant.configure(values=playlist)
+        name_song = []
+        for fichier in range(len(playlist)):
+            name_song.append(playlist[fichier].lstrip('../Song/'))
+        self.menu_deroulant.configure(values=name_song)
 
 class MusicParams(customtkinter.CTkFrame):
 
