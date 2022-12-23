@@ -226,8 +226,8 @@ class MusicParams(customtkinter.CTkFrame):
             pygame.mixer.music.queue(playlist_modif[i - 1])
             print(playlist_modif[i - 1])
         else :
-            pygame.mixer.music.queue(playlist_modif[len(playlist_modif)])
-            print(playlist_modif[len(playlist_modif)])
+            pygame.mixer.music.queue(playlist_modif[len(playlist_modif)-1])
+            print(playlist_modif[len(playlist_modif)-1])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
     def next_button_callback(self):
