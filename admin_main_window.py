@@ -195,7 +195,7 @@ class MusicParams(customtkinter.CTkFrame):
 
         #self.progress_bar.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
         #self.progress_bar.start()
-        
+
         self.slider = customtkinter.CTkSlider(master=self, command=self.slider_event)
         self.slider.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
 
@@ -224,15 +224,19 @@ class MusicParams(customtkinter.CTkFrame):
 
     def next_button_callback(self):
         global i
-        if i < len(playlist) - 2:
+        if i < len(playlist) - 1:
             i += 1
         else:
             i = 0
         playlist_modif = self.Maj_playlist()
         pygame.mixer.music.load(playlist_modif[i])
         pygame.mixer.music.play()
-        pygame.mixer.music.queue(playlist_modif[i + 1])
+        if i < len(playlist) - 1:
+            pygame.mixer.music.queue(playlist_modif[i + 0])
+        else :
+            pygame.mixer.music.queue(playlist_modif[i + 0])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
+
 
     def slider_event(self, value):
         print('On est a ',value * float(self.set_duration(playlist[i])),' min')
