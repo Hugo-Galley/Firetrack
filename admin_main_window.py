@@ -1,15 +1,10 @@
-import time
-
 from PIL import Image
-
 import customtkinter
-import pygame
+from pygame import mixer
 import tkinter.filedialog
-
 import window
 import database
 from mutagen.mp3 import MP3
-
 playlist_modif = []
 playlist = []
 name_song = []
@@ -57,8 +52,8 @@ class MainFrame(customtkinter.CTkFrame):
 
         for fichier in database.DataBase.recup_song():
             playlist.append(fichier)
-        pygame.mixer.music.load(playlist[0])
-        pygame.mixer.music.play()
+        mixer.music.load(playlist[0])
+        mixer.music.play()
 
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -130,15 +125,15 @@ class MenuFrame(customtkinter.CTkFrame):
         if value == "i j savais.mp3":
             value = 'Si j savais.mp3'
         i = playlist.index('Song/' + value)
-        pygame.mixer.music.load(playlist[i])
-        pygame.mixer.music.play()
+        mixer.music.load(playlist[i])
+        mixer.music.play()
         if i == len(playlist) - 2:
-            pygame.mixer.music.queue(playlist[i + 1])
+            mixer.music.queue(playlist[i + 1])
         else:
-            pygame.mixer.music.queue(playlist[0])
+            mixer.music.queue(playlist[0])
         self.master.main_frame.song_label.configure(text=name_song[i].lstrip('Song/'))
     def slider_event_volume(self, value):
-        pygame.mixer.music.set_volume(value)
+        mixer.music.set_volume(value)
 
     def upvote(self):
         print('add vote')
@@ -205,12 +200,12 @@ class MusicParams(customtkinter.CTkFrame):
     def pause_button_callback(self):
         self.pause_button.grid_forget()
         self.play_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
-        pygame.mixer.music.pause()
+        mixer.music.pause()
 
     def play_button_callback(self):
         self.play_button.grid_forget()
         self.pause_button.grid(row=0, column=1, padx=(10, 0), pady=10, sticky="nsew")
-        pygame.mixer.music.unpause()
+        mixer.music.unpause()
 
     def back_button_callback(self):
         global i
@@ -220,13 +215,13 @@ class MusicParams(customtkinter.CTkFrame):
             i = len(playlist) - 1
 
         playlist_modif = self.Maj_playlist()
-        pygame.mixer.music.load(playlist_modif[i])
-        pygame.mixer.music.play()
+        mixer.music.load(playlist_modif[i])
+        mixer.music.play()
         if i > 0:
-            pygame.mixer.music.queue(playlist_modif[i - 1])
+            mixer.music.queue(playlist_modif[i - 1])
             print(playlist_modif[i - 1])
         else :
-            pygame.mixer.music.queue(playlist_modif[len(playlist_modif)-1])
+            mixer.music.queue(playlist_modif[len(playlist_modif)-1])
             print(playlist_modif[len(playlist_modif)-1])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
@@ -237,13 +232,13 @@ class MusicParams(customtkinter.CTkFrame):
         else:
             i = 0
         playlist_modif = self.Maj_playlist()
-        pygame.mixer.music.load(playlist_modif[i])
-        pygame.mixer.music.play()
+        mixer.music.load(playlist_modif[i])
+        mixer.music.play()
         if i < len(playlist) - 1:
-            pygame.mixer.music.queue(playlist_modif[i + 1])
+            mixer.music.queue(playlist_modif[i + 1])
             print(playlist_modif[i + 1 ])
         else :
-            pygame.mixer.music.queue(playlist_modif[0])
+            mixer.music.queue(playlist_modif[0])
             print(playlist_modif[0])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
