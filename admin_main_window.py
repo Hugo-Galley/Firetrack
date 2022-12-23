@@ -1,3 +1,5 @@
+import time
+
 from PIL import Image
 
 import customtkinter
@@ -11,6 +13,7 @@ from mutagen.mp3 import MP3
 playlist_modif = []
 playlist = []
 name_song = []
+
 global i
 i = 0
 
@@ -219,7 +222,12 @@ class MusicParams(customtkinter.CTkFrame):
         playlist_modif = self.Maj_playlist()
         pygame.mixer.music.load(playlist_modif[i])
         pygame.mixer.music.play()
-        pygame.mixer.music.queue(playlist_modif[i - 1])
+        if i > 0:
+            pygame.mixer.music.queue(playlist_modif[i - 1])
+            print(playlist_modif[i - 1])
+        else :
+            pygame.mixer.music.queue(playlist_modif[len(playlist_modif)])
+            print(playlist_modif[len(playlist_modif)])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
     def next_button_callback(self):
@@ -232,9 +240,11 @@ class MusicParams(customtkinter.CTkFrame):
         pygame.mixer.music.load(playlist_modif[i])
         pygame.mixer.music.play()
         if i < len(playlist) - 1:
-            pygame.mixer.music.queue(playlist_modif[i + 0])
+            pygame.mixer.music.queue(playlist_modif[i + 1])
+            print(playlist_modif[i + 1 ])
         else :
-            pygame.mixer.music.queue(playlist_modif[i + 0])
+            pygame.mixer.music.queue(playlist_modif[0])
+            print(playlist_modif[0])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
 
