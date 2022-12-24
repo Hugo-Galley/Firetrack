@@ -94,27 +94,11 @@ class MenuFrame(customtkinter.CTkFrame):
         self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
         self.slider = customtkinter.CTkSlider(master=self, command= self.slider_event_volume,progress_color='red')
-        self.slider.grid(row=2, column=0, padx=10, pady=20, sticky="nsew")
-
-        # bouton like et dislike (à débattre)
-        self.upvote_image_button = customtkinter.CTkImage(light_image=Image.open('assets/like_light_mode.png'),
-                                                          dark_image=Image.open('assets/like_dark_mode.png'),
-                                                          size= (50,50))
-
-        self.upvote_button = customtkinter.CTkButton(master=self, image=self.upvote_image_button,width=10,height=10,
-                                                     fg_color='transparent',text='',command=self.upvote)
-        self.upvote_button.grid(row=3, column=0, padx=10, pady=20, sticky='nsew')
-
-        self.downvote_button_image = customtkinter.CTkImage(light_image=Image.open('assets/dislike_light_mode.png'),
-                                                            dark_image=Image.open('assets/dislike_dark_mode.png'),
-                                                            size=(30,30))
-        self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button_image, width=10, height=10,
-                                                       fg_color='transparent', text='', command=self.downvote)
-        self.downvote_button.grid(row=4, column=0, padx=10, pady=20, sticky='nsew')
+        self.slider.grid(row=1, column=0, padx=10, pady=20, sticky="nsew")
 
         self.menu_deroulant = customtkinter.CTkComboBox(master=self, values=name_song,
                                                           command=self.choix_musique_button)
-        self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
+        self.menu_deroulant.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
 
     def appearance_mode_button_callback(self, value):
