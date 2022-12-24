@@ -1,9 +1,6 @@
-import customtkinter
-import pygame
-
+import customtkinter, hashlib
 import admin_main_window
-import database
-import window
+import user_main_windows, window, database
 
 
 class CreationWindow(window.Window):
@@ -21,11 +18,19 @@ class CreationWindow(window.Window):
         self.button_frame.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
 
     def create_room(self):
-        admin_main_window.AdminMainWindow(master=self.master,
-                                          username=self.entry_frame.username_entry.get(),
-                                          room_name=self.entry_frame.room_name_entry.get(),
-                                          room_password=self.entry_frame.room_password_entry.get())
+        ## password = Admin
+        if  hashlib.sha256(self.entry_frame.room_password_entry.get().encode('utf-8')).hexdigest()  and   hashlib.sha256(self.entry_frame.username_entry.get().encode('utf-8')).hexdigest() == 'c1c224b03cd9bc7b6a86d77f5dace40191766c485cd55dc48caf9ac873335d6f':
+            admin_main_window.AdminMainWindow(master=self.master,
+                                              username=self.entry_frame.username_entry.get(),
+                                              room_name=self.entry_frame.room_name_entry.get(),
+                                              room_password=self.entry_frame.room_password_entry.get())
 
+        else :
+
+            user_main_windows.UserMainWindow(master=self.master,
+                                             username=self.entry_frame.username_entry.get(),
+                                             room_name=self.entry_frame.room_name_entry.get(),
+                                             room_password=hashlib.sha256(self.entry_frame.room_password_entry.get().encode('utf-8')).hexdigest())
 
 class EntryFrame(customtkinter.CTkFrame):
 

@@ -1,10 +1,5 @@
-import customtkinter
-import webbrowser
-
-import join_window
-import window
-import creation_window
-import dev_credit
+import customtkinter, webbrowser
+import dev_credit, join_window, window, creation_window
 
 
 class OpeningWindow(window.Window):

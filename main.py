@@ -1,10 +1,6 @@
-import customtkinter
 from tkinter import PhotoImage
+import database, opening_window, customtkinter, pygame
 
-import pygame
-
-import database
-import opening_window
 
 # configure theme
 customtkinter.set_appearance_mode("dark")

@@ -1,10 +1,8 @@
-import os
 from string import ascii_letters, digits
 from random import choice
 from mutagen.mp3 import MP3
-import operator
+import operator, sqlite3, os
 
-import sqlite3
 
 
 CHARACTERS: str = ascii_letters + digits
@@ -21,37 +19,35 @@ class DataBase:
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS Rooms(
-                idRoom TEXT PRIMARY KEY UNIQUE,
+                idRoom TEXT UNIQUE,
                 name TEXT,
                 password TEXT,
                 nbr_user INTEGER,
-                idCreator TEXT,
-                FOREIGN KEY(idCreator) REFERENCES Users(idUser)
+                idCreator TEXT
+                
             )
             """
         )
         cursor.execute(
             """    
-            CREATE TABLE IF NOT EXISTS Songs(
-                idSong TEXT PRIMARY KEY UNIQUE,
+            CREATE TABLE IF NOT EXISTS Song(
+                idSong TEXT UNIQUE,
                 title TEXT,
                 vote INTEGER,
-                url TEXT,
                 duration TEXT,
-                idRoom TEXT,
-                FOREIGN KEY(idRoom) REFERENCES Rooms(idRoom)
+                idRoom TEXT
+                
             )
             """
         )
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS Users(
-                idUser TEXT PRIMARY KEY UNIQUE,
+                idUser TEXT UNIQUE,
                 name TEXT,
                 admin BOOL,
                 nbr_vote INTEGER,
-                idRoom TEXT,
-                FOREIGN KEY(idRoom) REFERENCES Rooms(idRoom)
+                idRoom TEXT
             )
         """
         )
@@ -93,13 +89,14 @@ class DataBase:
             i += 1
             j = 0
             id = "".join(choice(CHARACTERS) for _ in range(8))
+            id_room = "".join(choice(CHARACTERS) for _ in range(8))
             duration = set_duartion(file_list[fichier])
             file_list[fichier] = 'Song/' + file_list[fichier]
             playlist.append(file_list[fichier])
-            donnees_liste.append((file_list[fichier], j, duration, id))
+            donnees_liste.append((file_list[fichier], j, duration, id,id_room))
 
         cursor.execute(""" DELETE FROM 'Song' """)
-        cursor.executemany('INSERT INTO Song (title,vote,duration,idSong) VALUES (?, ?, ?, ?)', donnees_liste)
+        cursor.executemany('INSERT INTO Song (title,vote,duration,idSong,idRoom) VALUES (?, ?, ?, ?, ?)', donnees_liste)
         conn.commit()
         conn.close()
         return playlist
