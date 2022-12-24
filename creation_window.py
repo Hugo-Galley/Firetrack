@@ -3,6 +3,7 @@ import pygame
 
 import admin_main_window
 import database
+import user_main_windows
 import window
 
 
@@ -21,10 +22,18 @@ class CreationWindow(window.Window):
         self.button_frame.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
 
     def create_room(self):
-        admin_main_window.AdminMainWindow(master=self.master,
-                                          username=self.entry_frame.username_entry.get(),
-                                          room_name=self.entry_frame.room_name_entry.get(),
-                                          room_password=self.entry_frame.room_password_entry.get())
+        if self.entry_frame.room_password_entry.get() and self.entry_frame.username_entry.get() == 'Admin':
+            admin_main_window.AdminMainWindow(master=self.master,
+                                              username=self.entry_frame.username_entry.get(),
+                                              room_name=self.entry_frame.room_name_entry.get(),
+                                              room_password=self.entry_frame.room_password_entry.get())
+
+        else :
+
+            user_main_windows.UserMainWindow(master=self.master,
+                                             username=self.entry_frame.username_entry.get(),
+                                             room_name=self.entry_frame.room_name_entry.get(),
+                                             room_password=self.entry_frame.room_password_entry.get())
 
 
 class EntryFrame(customtkinter.CTkFrame):
