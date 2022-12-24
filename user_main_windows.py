@@ -1,15 +1,11 @@
 from PIL import Image
-import customtkinter
 from pygame import mixer
-import tkinter.filedialog
-import window
-import database
+import window, user, room, database, customtkinter
 from mutagen.mp3 import MP3
 playlist_modif = []
 playlist = []
 name_song = []
 
-global i
 i = 0
 
 class UserMainWindow(window.Window):

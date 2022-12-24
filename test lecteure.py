@@ -1,11 +1,11 @@
-import tkinter.filedialog
+import hashlib
 
-fichier = tkinter.filedialog.askopenfilename(title="Ouvrir un fichier", defaultextension=".mp3",
-                                   filetypes=[("txt fichier", ".mp3")])
-new = fichier.split('/')
-new = new[-1]
-print(new)
+password = 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e'
 
+#passs = input("entre mdp ")
 
-self.slider = customtkinter.CTkSlider(master=self, command=self.slider_event)
-        self.slider.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
+#if hashlib.sha256(passs.encode('utf-8')).hexdigest() == password:
+    #print('rEusie')
+#else:
+    #print("Cest nul")
+print(hashlib.sha256(b'Admin').hexdigest())

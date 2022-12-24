@@ -1,6 +1,5 @@
 import customtkinter
-import window
-import database
+import window,database
 
 
 class JoinWindow(window.Window):
