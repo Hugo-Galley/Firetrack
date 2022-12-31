@@ -1,5 +1,5 @@
-import customtkinter, webbrowser
-import dev_credit, join_window, window, creation_window
+import customtkinter, webbrowser, hashlib
+import dev_credit, join_window, window, creation_window, user_main_windows
 
 
 class OpeningWindow(window.Window):

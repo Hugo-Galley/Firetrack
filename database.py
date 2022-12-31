@@ -124,7 +124,7 @@ class DataBase:
     def get_password(self, id: str) -> str:
         cursor = self.conn.cursor()
         cursor.execute("SELECT password FROM Rooms WHERE idRoom = ?", (id,))
-        for password in cursor.fetchone():
+        for password in cursor.fetchall():
             cursor.close()
             return password
 
