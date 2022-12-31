@@ -140,7 +140,7 @@ class DataBase:
 
     def get_songs_id(self) -> list[str, ...]:
         cursor = self.conn.cursor()
-        cursor.execute("SELECT idSong FROM Songs")
+        cursor.execute("SELECT idSong FROM Song")
         songs_id: list[str, ...] = []
         for elt in cursor.fetchall():
             for id in elt:

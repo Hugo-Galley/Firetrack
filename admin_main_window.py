@@ -15,14 +15,15 @@ class AdminMainWindow(window.Window):
     def __init__(self, room_name, room_password, username, *args, **kwargs):
         super(AdminMainWindow, self).__init__(*args, **kwargs)
 
-        #self.user = user.User(username)
-        #self.room = room.Room(name=room_name, password=room_password, creator=self.user)
-        #self.database = database.DataBase()
+        self.database = database.DataBase()
+        self.user = user.User(self.database,username)
+        self.room = room.Room(self.database,name=room_name, password=room_password, creator=self.user)
 
-        #self.user.change_room(self.room)
-        #self.room.add_user(user)
-        #self.database.add_room(self.room)
-        #self.database.add_user(self.user)
+
+        self.user.change_room(self.room)
+        self.room.add_user(user)
+        self.database.add_room(self.room)
+        self.database.add_user(self.user)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -88,11 +89,11 @@ class MenuFrame(customtkinter.CTkFrame):
         self.appearance_mode_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
         # slider à changer de place (mon opinion)
-        self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
-        self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+        #self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
+        #self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
         self.slider = customtkinter.CTkSlider(master=self, command= self.slider_event_volume,progress_color='red')
-        self.slider.grid(row=2, column=0, padx=10, pady=20, sticky="nsew")
+        self.slider.grid(row=1, column=0, padx=10, pady=20, sticky="nsew")
 
         # bouton like et dislike (à débattre)
         self.upvote_image_button = customtkinter.CTkImage(light_image=Image.open('assets/like_light_mode.png'),
@@ -101,18 +102,26 @@ class MenuFrame(customtkinter.CTkFrame):
 
         self.upvote_button = customtkinter.CTkButton(master=self, image=self.upvote_image_button,width=10,height=10,
                                                      fg_color='transparent',text='',command=self.upvote)
-        self.upvote_button.grid(row=3, column=0, padx=10, pady=20, sticky='nsew')
+        self.upvote_button.grid(row=2, column=0, padx=10, pady=20, sticky='nsew')
 
         self.downvote_button_image = customtkinter.CTkImage(light_image=Image.open('assets/dislike_light_mode.png'),
                                                             dark_image=Image.open('assets/dislike_dark_mode.png'),
                                                             size=(30,30))
         self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button_image, width=10, height=10,
                                                        fg_color='transparent', text='', command=self.downvote)
-        self.downvote_button.grid(row=4, column=0, padx=10, pady=20, sticky='nsew')
+        self.downvote_button.grid(row=3, column=0, padx=10, pady=20, sticky='nsew')
 
         self.menu_deroulant = customtkinter.CTkComboBox(master=self, values=name_song,
                                                           command=self.choix_musique_button)
-        self.menu_deroulant.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
+        self.menu_deroulant.grid(row=4, column=0, padx=10, pady=10, sticky="nsew")
+
+        self.info_supplementaire_image = customtkinter.CTkImage(light_image=Image.open('assets/light_info_icon (1).png'),
+                                                                dark_image=Image.open('assets/dark_info_icon (1).png'),
+                                                                size=(30,30))
+        self.info_supplementaire = customtkinter.CTkButton(master=self, image=self.info_supplementaire_image,width=10,height=10,
+                                                           fg_color='transparent',text='',command=self.info)
+
+        self.info_supplementaire.grid(row=5, column=0, padx=10, pady=10, sticky='nsew')
 
 
     def appearance_mode_button_callback(self, value):
@@ -151,6 +160,8 @@ class MenuFrame(customtkinter.CTkFrame):
             name_song.append(playlist[fichier].lstrip('Song/'))
         self.menu_deroulant.configure(values=name_song)
 
+    def info(self):
+        print('Ca marche batard')
 
 
 class MusicParams(customtkinter.CTkFrame):
@@ -263,3 +274,15 @@ class MusicParams(customtkinter.CTkFrame):
     def Maj_playlist(self):
         playlist = database.DataBase.recup_vote_and_song()
         return playlist
+
+class InfoUser(customtkinter.CTkFrame):
+    def __init__(self, *args, **kwargs):
+        super(InfoUser, self).__init__(*args, **kwargs)
+
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+
+        self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
+        self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+
+
