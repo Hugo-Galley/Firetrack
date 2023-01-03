@@ -28,9 +28,9 @@ class CreationWindow(window.Window):
         else :
 
             user_main_windows.UserMainWindow(master=self.master,
-                                             username=self.entry_frame.username_entry.get(),
-                                             room_name=self.entry_frame.room_name_entry.get(),
-                                             room_password=hashlib.sha256(self.entry_frame.room_password_entry.get().encode('utf-8')).hexdigest())
+                                            username=self.entry_frame.username_entry.get(),
+                                            room_name=self.entry_frame.room_name_entry.get(),
+                                            room_password=self.entry_frame.room_password_entry.get())
 
 class EntryFrame(customtkinter.CTkFrame):
 

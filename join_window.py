@@ -1,5 +1,7 @@
-import customtkinter
-import window,database
+import customtkinter, hashlib
+
+import user
+import window,database, user_main_windows
 
 
 class JoinWindow(window.Window):
@@ -17,16 +19,21 @@ class JoinWindow(window.Window):
         self.button_frame.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")
 
     def join_room(self):
-        database1 = database.DataBase()
-        room_id = self.entry_frame.room_id_entry.get()
-        if room_id == "":
-            return
-        room_password = database1.get_password(room_id)
-        print(f"{room_password=} et {self.entry_frame.room_password_entry.get()=}")
-        if room_password != "":
-            self.entry_frame.room_password_entry.grid(row=3, column=0, padx=20, pady=20, sticky="nsew")
-        if room_password == self.entry_frame.room_password_entry.get():
-            print("hi")
+        user_main_windows.UserMainWindow(master=self.master,
+                                         username=self.entry_frame.username_entry.get(),
+                                         romm_id=self.entry_frame.room_id_entry.get())
+
+
+        #database1 = database.DataBase()
+        #room_id = self.entry_frame.room_id_entry.get()
+        #if room_id == "":
+            #return
+        #room_password = database1.get_password(room_id)
+        #print(f"{room_password=} et {self.entry_frame.room_password_entry.get()=}")
+        #if room_password != "":
+            #self.entry_frame.room_password_entry.grid(row=3, column=0, padx=20, pady=20, sticky="nsew")
+        #if room_password == self.entry_frame.room_password_entry.get():
+            #print("hi")
 
 
 class EntryFrame(customtkinter.CTkFrame):

@@ -13,14 +13,14 @@ class UserMainWindow(window.Window):
     def __init__(self, room_name, room_password, username, *args, **kwargs):
         super(UserMainWindow, self).__init__(*args, **kwargs)
 
-        #self.user = user.User(username)
-        #self.room = room.Room(name=room_name, password=room_password, creator=self.user)
-        #self.database = database.DataBase()
+        self.database = database.DataBase()
+        self.user = user.User(self.database,username)
+        self.room = room.Room(self.database,name=room_name, password=room_password, creator=self.user)
 
-        #self.user.change_room(self.room)
-        #self.room.add_user(user)
-        #self.database.add_room(self.room)
-        #self.database.add_user(self.user)
+        self.user.change_room(self.room)
+        self.room.add_user(user)
+        self.database.add_room(self.room)
+        self.database.add_user(self.user)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)

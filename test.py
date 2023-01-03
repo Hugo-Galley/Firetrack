@@ -1,3 +1,3 @@
 import hashlib
 
-print(hashlib.sha256(b'Admin').hexdigest())
+print(hashlib.sha512(b'Admin').hexdigest())

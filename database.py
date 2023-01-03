@@ -124,7 +124,7 @@ class DataBase:
     def get_password(self, id: str) -> str:
         cursor = self.conn.cursor()
         cursor.execute("SELECT password FROM Rooms WHERE idRoom = ?", (id,))
-        for password in cursor.fetchone():
+        for password in cursor.fetchall():
             cursor.close()
             return password
 
@@ -140,7 +140,7 @@ class DataBase:
 
     def get_songs_id(self) -> list[str, ...]:
         cursor = self.conn.cursor()
-        cursor.execute("SELECT idSong FROM Songs")
+        cursor.execute("SELECT idSong FROM Song")
         songs_id: list[str, ...] = []
         for elt in cursor.fetchall():
             for id in elt:

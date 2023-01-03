@@ -19,3 +19,5 @@ class Admin(User):
 
         self.admin = True
         self.nbr_vote = -1
+    def change_room(self, room: object):
+        self.room = room
