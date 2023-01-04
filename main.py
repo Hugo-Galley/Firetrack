@@ -1,32 +1,39 @@
+# Importation des modules nécessaires
 from tkinter import PhotoImage
-import database, opening_window, customtkinter, pygame
+import database
+import opening_window
+import customtkinter
+import pygame
 
+# Initialisation de pygame
+pygame.mixer.init()
 
-# configure theme
+# Configuration du thème
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
-pygame.mixer.init()
 
 
 class App(customtkinter.CTk):
     def __init__(self):
         super(App, self).__init__()
 
-        # configure window
+        # Configuration de la fenêtre
         self.geometry("720x480")
         self.title("Firetrack")
         self.minsize(660, 240)
 
+        # Configuration de l'icône de la fenêtre
         self.photo = PhotoImage(file="assets/logo.png")
         self.wm_iconphoto(False, self.photo)
 
-        # configure grid
+        # Configuration de la grille
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        # configure window timeline
+        # Configuration de la timeline de la fenêtre
         self.current_window = None
 
+        # Affichage de la fenêtre d'ouverture
         self.set_current_window(opening_window.OpeningWindow(master=self))
 
     def set_current_window(self, elt: object):
@@ -35,7 +42,10 @@ class App(customtkinter.CTk):
 
 
 if __name__ == "__main__":
+    # Création de la base de données
     database1 = database.DataBase()
     database1.create_database()
+    # Lancement de l'application
     app = App()
     app.mainloop()
+
