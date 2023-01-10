@@ -3,7 +3,7 @@ Playliste collective avec mise en place d'un système de votes
 ---
 Playlist dynamique vis à vis des votes
 ## Site Web
-http://firetrack.alwaysdata.net/
+www.firetrack.space
 ## Outils
 * Liste de musiques (mp3) 
 
