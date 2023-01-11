@@ -17,6 +17,10 @@ class App(customtkinter.CTk):
     def __init__(self):
         super(App, self).__init__()
 
+        # Création de la base de données
+        self.database = database.DataBase()
+        self.database.create_database()
+
         # Configuration de la fenêtre
         self.geometry("720x480")
         self.title("Firetrack")
@@ -42,9 +46,6 @@ class App(customtkinter.CTk):
 
 
 if __name__ == "__main__":
-    # Création de la base de données
-    database1 = database.DataBase()
-    database1.create_database()
     # Lancement de l'application
     app = App()
     app.mainloop()

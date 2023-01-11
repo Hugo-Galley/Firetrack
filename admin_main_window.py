@@ -19,7 +19,7 @@ class AdminMainWindow(window.Window):
     def __init__(self, room_name, room_password, username, *args, **kwargs):
         super(AdminMainWindow, self).__init__(*args, **kwargs)
 
-        self.database = database.DataBase()
+        self.database = self.master.database
         self.user = user.User(self.database, username)
         self.room = room.Room(self.database, name=room_name, password=room_password, creator=self.user)
 

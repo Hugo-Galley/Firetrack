@@ -132,10 +132,11 @@ class DataBase:
     def addvote(self, like):
         cursor = self.conn.cursor()
         if like:
-            command = 'update Song set vote=vote+1 where title=?'
+            command = 'update Song set vote=vote+1 where title=%s'
         else:
-            command = 'update Song set vote=vote-1 where title=?'
-        self.conn.execute(command, (self,))
+            command = 'update Song set vote=vote-1 where title=%s'
+        cursor.execute(command, (self,))
+        cursor.close()
         self.conn.commit()
 
     def get_songs_id(self) -> list[str, ...]:
@@ -143,8 +144,8 @@ class DataBase:
         cursor.execute("SELECT idSong FROM Song")
         songs_id: list[str, ...] = []
         for elt in cursor.fetchall():
-            for id in elt:
-                songs_id.append(id)
+            for id_ in elt:
+                songs_id.append(id_)
         cursor.close()
         return songs_id
 
@@ -153,8 +154,8 @@ class DataBase:
         cursor.execute("SELECT idUser FROM Users")
         users_id: list[str, ...] = []
         for elt in cursor.fetchall():
-            for id in elt:
-                users_id.append(id)
+            for id_ in elt:
+                users_id.append(id_)
         cursor.close()
         return users_id
 
@@ -163,14 +164,14 @@ class DataBase:
         cursor.execute("SELECT idRoom FROM Rooms")
         rooms_id: list[str, ...] = []
         for elt in cursor.fetchall():
-            for id in elt:
-                rooms_id.append(id)
+            for id_ in elt:
+                rooms_id.append(id_)
         cursor.close()
         return rooms_id
 
-    def get_song_title(self, id: str) -> str:
+    def get_song_title(self, id_: str) -> str:
         cursor = self.conn.cursor()
-        cursor.execute("SELECT title FROM Songs WHERE idSongs = ?", (id,))
+        cursor.execute("SELECT title FROM Songs WHERE idSongs = ?", (id_,))
         for title in cursor.fetchone():
             cursor.close()
             return title
@@ -184,5 +185,3 @@ class DataBase:
         for i in range(len(playlist_triee)):
             song_playlist_trie.append(playlist_triee[i][0])
         return song_playlist_trie
-
-
