@@ -1,14 +1,18 @@
 from PIL import Image
 from pygame import mixer
-import window, room, user, database, customtkinter
+import window
+import room
+import user
+import database
+import customtkinter
 from mutagen.mp3 import MP3
+
 playlist_modif = []
 playlist = []
 name_song = []
 
-
-global i
 i = 0
+
 
 class AdminMainWindow(window.Window):
 
@@ -16,9 +20,8 @@ class AdminMainWindow(window.Window):
         super(AdminMainWindow, self).__init__(*args, **kwargs)
 
         self.database = database.DataBase()
-        self.user = user.User(self.database,username)
-        self.room = room.Room(self.database,name=room_name, password=room_password, creator=self.user)
-
+        self.user = user.User(self.database, username)
+        self.room = room.Room(self.database, name=room_name, password=room_password, creator=self.user)
 
         self.user.change_room(self.room)
         self.room.add_user(user)
@@ -89,41 +92,46 @@ class MenuFrame(customtkinter.CTkFrame):
         self.appearance_mode_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
         # slider à changer de place (mon opinion)
-        #self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
-        #self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+        # self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
+        # self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.slider = customtkinter.CTkSlider(master=self, command= self.slider_event_volume,progress_color='red')
+        self.slider = customtkinter.CTkSlider(master=self, command=self.slider_event_volume, progress_color='red')
         self.slider.grid(row=1, column=0, padx=10, pady=20, sticky="nsew")
 
         # bouton like et dislike (à débattre)
         self.upvote_image_button = customtkinter.CTkImage(light_image=Image.open('assets/like_light_mode.png'),
                                                           dark_image=Image.open('assets/like_dark_mode.png'),
-                                                          size= (50,50))
+                                                          size=(50, 50))
 
-        self.upvote_button = customtkinter.CTkButton(master=self, image=self.upvote_image_button,width=10,height=10,
-                                                     fg_color='transparent',text='',command=self.upvote)
+        self.upvote_button = customtkinter.CTkButton(master=self, image=self.upvote_image_button, width=10, height=10,
+                                                     fg_color='transparent', text='', command=self.upvote)
         self.upvote_button.grid(row=2, column=0, padx=10, pady=20, sticky='nsew')
 
         self.downvote_button_image = customtkinter.CTkImage(light_image=Image.open('assets/dislike_light_mode.png'),
                                                             dark_image=Image.open('assets/dislike_dark_mode.png'),
-                                                            size=(30,30))
-        self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button_image, width=10, height=10,
-                                                       fg_color='transparent', text='', command=self.downvote)
+                                                            size=(30, 30))
+        self.downvote_button = customtkinter.CTkButton(master=self, image=self.downvote_button_image, width=10,
+                                                       height=10, fg_color='transparent', text='',
+                                                       command=self.downvote)
         self.downvote_button.grid(row=3, column=0, padx=10, pady=20, sticky='nsew')
 
         self.menu_deroulant = customtkinter.CTkComboBox(master=self, values=name_song,
-                                                          command=self.choix_musique_button)
+                                                        command=self.choix_musique_button)
         self.menu_deroulant.grid(row=4, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.info_supplementaire_image = customtkinter.CTkImage(light_image=Image.open('assets/light_info_icon (1).png'),
-                                                                dark_image=Image.open('assets/dark_info_icon (1).png'),
-                                                                size=(30,30))
-        self.info_supplementaire = customtkinter.CTkButton(master=self, image=self.info_supplementaire_image,width=10,height=10,
-                                                           fg_color='transparent',text='',command=self.info)
+        self.info_supplementaire_image = customtkinter.CTkImage(
+            light_image=Image.open('assets/light_info_icon (1).png'),
+            dark_image=Image.open('assets/dark_info_icon (1).png'),
+            size=(30, 30)
+        )
+        self.info_supplementaire = customtkinter.CTkButton(master=self, image=self.info_supplementaire_image, width=10,
+                                                           height=10, fg_color='transparent', text='',
+                                                           command=self.info)
 
         self.info_supplementaire.grid(row=5, column=0, padx=10, pady=10, sticky='nsew')
 
-    def appearance_mode_button_callback(self, value):
+    @staticmethod
+    def appearance_mode_button_callback(value):
         customtkinter.set_appearance_mode(value)
 
     def choix_musique_button(self, value):
@@ -138,7 +146,9 @@ class MenuFrame(customtkinter.CTkFrame):
         else:
             mixer.music.queue(playlist[0])
         self.master.main_frame.song_label.configure(text=name_song[i].lstrip('Song/'))
-    def slider_event_volume(self, value):
+
+    @staticmethod
+    def slider_event_volume(value):
         mixer.music.set_volume(value)
 
     def upvote(self):
@@ -146,20 +156,21 @@ class MenuFrame(customtkinter.CTkFrame):
         database.DataBase.addvote(playlist[i], True)
         self.Maj_playlist()
 
-
     def downvote(self):
         print('down vote')
         database.DataBase.addvote(playlist[i], False)
         self.Maj_playlist()
 
     def Maj_playlist(self):
+        global playlist, name_song
         playlist = database.DataBase.recup_vote_and_song()
         name_song = []
         for fichier in range(len(playlist)):
             name_song.append(playlist[fichier].lstrip('Song/'))
         self.menu_deroulant.configure(values=name_song)
 
-    def info(self):
+    @staticmethod
+    def info():
         print('Ca marche batard')
 
 
@@ -197,10 +208,13 @@ class MusicParams(customtkinter.CTkFrame):
         self.play_button = customtkinter.CTkButton(master=self, image=self.play_button_image, text="", width=40,
                                                    fg_color="transparent", command=self.play_button_callback)
 
-        #self.progress_bar = customtkinter.CTkProgressBar(master=self,mode='determinate',determinate_speed=float(self.set_duration(playlist[i]))/100.0)
+        # self.progress_bar = customtkinter.CTkProgressBar(master=self,mode='determinate',
+        #                                                  determinate_speed=float(
+        #                                                       self.set_duration(playlist[i]))/100.0
+        #                                                  )
 
-        #self.progress_bar.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
-        #self.progress_bar.start()
+        # self.progress_bar.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
+        # self.progress_bar.start()
 
         self.slider = customtkinter.CTkSlider(master=self, command=self.slider_event)
         self.slider.grid(row=0, column=2, padx=(10, 0), pady=10, sticky="nsew")
@@ -216,7 +230,7 @@ class MusicParams(customtkinter.CTkFrame):
         mixer.music.unpause()
 
     def back_button_callback(self):
-        global i
+        global i, playlist_modif
         if i > 0:
             i -= 1
         else:
@@ -228,13 +242,13 @@ class MusicParams(customtkinter.CTkFrame):
         if i > 0:
             mixer.music.queue(playlist_modif[i - 1])
             print(playlist_modif[i - 1])
-        else :
+        else:
             mixer.music.queue(playlist_modif[len(playlist_modif)-1])
             print(playlist_modif[len(playlist_modif)-1])
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
     def next_button_callback(self):
-        global i
+        global i, playlist_modif
         if i < len(playlist) - 1:
             i += 1
         else:
@@ -244,35 +258,38 @@ class MusicParams(customtkinter.CTkFrame):
         mixer.music.play()
         if i < len(playlist) - 1:
             mixer.music.queue(playlist_modif[i + 1])
-            print(playlist_modif[i + 1 ])
-        else :
+            print(f"Prochaine musique : {playlist_modif[i + 1]}")
+        else:
             mixer.music.queue(playlist_modif[0])
-            print(playlist_modif[0])
+            print(f"Prochaine musique : {playlist_modif[0]}")
         self.master.song_label.configure(text=playlist_modif[i].lstrip('Song/'))
 
-
     def slider_event(self, value):
-        print('On est a ',value * float(self.set_duration(playlist[i])),' min')
+        print('On est a ', value * float(self.set_duration(playlist[i])), ' min')
 
-    def set_duration(self, song):
-        def audio_duration(length):
-            mins = length // 60
-            length %= 60
-            seconds = length
+    @staticmethod
+    def set_duration(song):
+        def audio_duration(duration):
+            mins = duration // 60
+            duration %= 60
+            sec = duration
 
-            return mins, seconds
+            return mins, sec
 
         audio = MP3(song + '')
         audio_info = audio.info
         length = int(audio_info.length)
-        mins, seconds = audio_duration(length)
-        tuple = (mins, seconds)
-        time = ".".join(map(str, tuple))
+        minutes, seconds = audio_duration(length)
+        tuple_ = (minutes, seconds)
+        time = ".".join(map(str, tuple_))
         return time
 
-    def Maj_playlist(self):
+    @staticmethod
+    def Maj_playlist():
+        global playlist
         playlist = database.DataBase.recup_vote_and_song()
         return playlist
+
 
 class InfoUser(customtkinter.CTkFrame):
     def __init__(self, *args, **kwargs):
@@ -281,7 +298,5 @@ class InfoUser(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(2, weight=1)
 
-        self.name_slider = customtkinter.CTkLabel(master=self, text='Volume',text_color='white',font=("",16))
+        self.name_slider = customtkinter.CTkLabel(master=self, text='Volume', text_color='white', font=("", 16))
         self.name_slider.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
-
-

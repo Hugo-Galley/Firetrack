@@ -1,7 +1,10 @@
-import customtkinter, hashlib
+import customtkinter
+import hashlib
 
 import user
-import window,database, user_main_windows
+import window
+import database
+import user_main_windows
 
 
 class JoinWindow(window.Window):

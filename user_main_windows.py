@@ -1,6 +1,10 @@
 from PIL import Image
 from pygame import mixer
-import window, user, room, database, customtkinter
+import window
+import user
+import room
+import database
+import customtkinter
 from mutagen.mp3 import MP3
 playlist_modif = []
 playlist = []

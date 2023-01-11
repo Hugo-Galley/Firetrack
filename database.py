@@ -1,8 +1,9 @@
 from string import ascii_letters, digits
 from random import choice
 from mutagen.mp3 import MP3
-import operator, sqlite3, os
-
+import operator
+import sqlite3
+import os
 
 
 CHARACTERS: str = ascii_letters + digits
@@ -54,28 +55,29 @@ class DataBase:
         cursor.close()
 
     def create_id(self):
-        id: str = "".join(choice(CHARACTERS) for _ in range(8))
+        id_: str = "".join(choice(CHARACTERS) for _ in range(8))
         existing_id = [*self.get_users_id(), *self.get_rooms_id(), *self.get_songs_id()]
-        if id not in existing_id:
-            return id
+        if id_ not in existing_id:
+            return id_
         return self.create_id()
 
+    @staticmethod
     def recup_song():
 
         def set_duartion(song):
-            def audio_duration(length):
-                mins = length // 60
-                length %= 60
-                seconds = length
+            def audio_duration(duration):
+                mins = duration // 60
+                duration %= 60
+                sec = duration
 
-                return mins, seconds
+                return mins, sec
 
             audio = MP3("Song/" + song + '')
             audio_info = audio.info
             length = int(audio_info.length)
-            mins, seconds = audio_duration(length)
-            tuple = (mins, seconds)
-            time = ":".join(map(str, tuple))
+            minutes, seconds = audio_duration(length)
+            tuple_ = (minutes, seconds)
+            time = ":".join(map(str, tuple_))
             return time
 
         file_list = os.listdir("Song")
@@ -175,6 +177,7 @@ class DataBase:
             cursor.close()
             return title
 
+    @staticmethod
     def recup_vote_and_song():
         song_playlist_trie = []
         conn = sqlite3.connect('Data Base/database.db')
