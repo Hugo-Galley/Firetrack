@@ -2,9 +2,8 @@ from string import ascii_letters, digits
 from random import choice
 from mutagen.mp3 import MP3
 import operator
-import sqlite3
 import os
-
+import mysql.connector as mc
 
 CHARACTERS: str = ascii_letters + digits
 
@@ -13,7 +12,8 @@ class DataBase:
     
     def __init__(self):
         self.name: str = "database"
-        self.conn = sqlite3.connect('Data Base/database.db')
+        self.conn = mc.connect(host="mysql-firetrack.alwaysdata.net", user="firetrack", password="Pouleto23",
+                               database="firetrack_bsd")
 
     def create_database(self):
         cursor = self.conn.cursor()
@@ -61,14 +61,13 @@ class DataBase:
             return id_
         return self.create_id()
 
-    @staticmethod
-    def recup_song():
+    def recup_song(self):
 
         def set_duartion(song):
-            def audio_duration(duration):
-                mins = duration // 60
-                duration %= 60
-                sec = duration
+            def audio_duration(duration_):
+                mins = duration_ // 60
+                duration_ %= 60
+                sec = duration_
 
                 return mins, sec
 
@@ -81,8 +80,7 @@ class DataBase:
             return time
 
         file_list = os.listdir("Song")
-        conn = sqlite3.connect('Data Base/database.db')
-        cursor = conn.cursor()
+        cursor = self.conn.cursor()
 
         i = 0
         donnees_liste = []
@@ -90,24 +88,25 @@ class DataBase:
         for fichier in range(len(file_list)):
             i += 1
             j = 0
-            id = "".join(choice(CHARACTERS) for _ in range(8))
+            id_ = "".join(choice(CHARACTERS) for _ in range(8))
             id_room = "".join(choice(CHARACTERS) for _ in range(8))
             duration = set_duartion(file_list[fichier])
             file_list[fichier] = 'Song/' + file_list[fichier]
             playlist.append(file_list[fichier])
-            donnees_liste.append((file_list[fichier], j, duration, id,id_room))
+            donnees_liste.append((file_list[fichier], j, duration, id_, id_room))
 
-        cursor.execute(""" DELETE FROM 'Song' """)
-        cursor.executemany('INSERT INTO Song (title,vote,duration,idSong,idRoom) VALUES (?, ?, ?, ?, ?)', donnees_liste)
-        conn.commit()
-        conn.close()
+        cursor.execute(""" DELETE FROM Song """)
+        cursor.executemany('INSERT INTO Song (title,vote,duration,idSong,idRoom) VALUES (%s, %s, %s, %s, %s)',
+                           donnees_liste)
+        self.conn.commit()
+        self.conn.close()
         return playlist
 
     def add_room(self, room: object):
         cursor = self.conn.cursor()
         cursor.execute(
             """
-            INSERT INTO Rooms VALUES(?, ?, ?, ?, ?)
+            INSERT INTO Rooms VALUES(%s, %s, %s, %s, %s)
             """, (room.id, room.name, room.password, room.nbr_user, room.creator.id)
         )
         cursor.close()
@@ -117,28 +116,27 @@ class DataBase:
         cursor = self.conn.cursor()
         cursor.execute(
             """
-            INSERT INTO Users VALUES(?, ?, ?, ?, ?)
+            INSERT INTO Users VALUES(%s, %s, %s, %s, %s)
             """, (user.id, user.name, user.admin, user.nbr_vote, user.room.id)
         )
         cursor.close()
         self.conn.commit()
 
-    def get_password(self, id: str) -> str:
+    def get_password(self, id_: str) -> str:
         cursor = self.conn.cursor()
-        cursor.execute("SELECT password FROM Rooms WHERE idRoom = ?", (id,))
+        cursor.execute("SELECT password FROM Rooms WHERE idRoom = %s", (id_,))
         for password in cursor.fetchall():
             cursor.close()
             return password
 
-    def addvote(name, like):
-        conn = sqlite3.connect('Data Base/database.db')
-        cursor = conn.cursor()
+    def addvote(self, like):
+        cursor = self.conn.cursor()
         if like:
             command = 'update Song set vote=vote+1 where title=?'
         else:
             command = 'update Song set vote=vote-1 where title=?'
-        conn.execute(command, (name,))
-        conn.commit()
+        self.conn.execute(command, (self,))
+        self.conn.commit()
 
     def get_songs_id(self) -> list[str, ...]:
         cursor = self.conn.cursor()
@@ -177,11 +175,9 @@ class DataBase:
             cursor.close()
             return title
 
-    @staticmethod
-    def recup_vote_and_song():
+    def recup_vote_and_song(self):
         song_playlist_trie = []
-        conn = sqlite3.connect('Data Base/database.db')
-        cur = conn.cursor()
+        cur = self.conn.cursor()
         cur.execute("""SELECT title,vote FROM Song""")
         result = cur.fetchall()
         playlist_triee = sorted(result, key=operator.itemgetter(1), reverse=True)

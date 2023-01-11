@@ -48,4 +48,3 @@ if __name__ == "__main__":
     # Lancement de l'application
     app = App()
     app.mainloop()
-

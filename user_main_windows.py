@@ -50,7 +50,7 @@ class MainFrame(customtkinter.CTkFrame):
     def __init__(self, *args, **kwargs):
         super(MainFrame, self).__init__(*args, **kwargs)
 
-        for fichier in database.DataBase.recup_song():
+        for fichier in self.master.database.recup_song():
             playlist.append(fichier)
         mixer.music.load(playlist[0])
         mixer.music.play()
