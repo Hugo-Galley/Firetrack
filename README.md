@@ -24,5 +24,5 @@ Le site est hebergée sur les serveurs de [Alwaysdata](https://www.alwaysdata.co
 ## Team du Projet
 
 * Développeurs : [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) 
-* Support Morale : [@ACC](https://github.com/Accel-O)
+* Stagiaire : [@ACC](https://github.com/Accel-O)
 * Stagiaire :  [@Densi12](https://github.com/Densi2)
