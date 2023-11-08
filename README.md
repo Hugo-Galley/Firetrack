@@ -23,6 +23,6 @@ Le site est hebergée sur les serveurs de [Alwaysdata](https://www.alwaysdata.co
   On comunique à distance en SSH ou en FTP avec notre serveur. Nottament grace au logiciel [WinscP](https://winscp.net/eng/download.php) et [Putty](https://www.putty.org/)
 ## Team du Projet
 
-* Développeurs : [@Freaks](https://github.com/Hugo-Galley) [@TheShadowGhost745](https://github.com/TheShadowGhost745) 
-* Stagiaire : [@ACC](https://github.com/Accel-O)
-* Stagiaire :  [@Densi12](https://github.com/Densi2)
+* [@Freaks](https://github.com/Hugo-Galley)
+* [@TheShadowGhost745](https://github.com/TheShadowGhost745)
+
